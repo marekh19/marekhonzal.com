@@ -1,0 +1,67 @@
+---
+title: Testing post
+excerpt: This is a first testing post
+date: 2025-06-12
+draft: false
+---
+
+import { Counter } from '@/components/Counter'
+
+# Test Blog Post
+
+Let's see if this MDX file can render a counter
+
+- [x] Render the Counter component and make sure it's interactive
+- [ ] Add some more docs
+
+1. One
+2. Two
+3. Three
+
+Make sure to checkout [tanstack.com](https://tanstack.com/) as it provides awesome libraries!
+
+And you can also read more [About me](/about) to know me better!
+
+## Preact Counter Component
+
+<Counter client:load />
+
+Let's see how to implement the component above in **Preact**.
+
+I love `preact`. Let's have a look below. It's just React
+
+```tsx
+import { useState } from 'preact/hooks'
+
+export const Counter = () => {
+  const [count, setCount] = useState(0)
+
+  const handleIncrement = () => {
+    setCount((prev) => ++prev)
+  }
+
+  return (
+    <button
+      className="btn btn-primary"
+      onClick={handleIncrement}
+    >
+      Count: {count}
+    </button>
+  )
+}
+```
+
+## Invariant
+
+See how to use `tiny-invariant`
+
+```ts
+import invariant from 'tiny-invariant'
+
+const truthyValue = 'Hello World!'
+const falsyValue = null
+
+invariant(truthyValue, 'This should not throw!')
+
+invariant(falsyValue, 'This will throw!')
+```

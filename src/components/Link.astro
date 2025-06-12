@@ -1,0 +1,30 @@
+---
+import { ExternalLink } from '@lucide/astro'
+import type { JSX } from 'astro/jsx-runtime'
+
+type Props = JSX.AnchorHTMLAttributes & {
+  href: string
+}
+
+const { href, ...rest } = Astro.props
+
+const isExternal = !href.startsWith('/')
+---
+
+<a
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  class="inline-flex items-center gap-1 underline"
+  {...rest}
+>
+  <slot />
+  {
+    isExternal && (
+      <ExternalLink
+        class="inline-block size-4 translate-y-px"
+        aria-hidden="true"
+      />
+    )
+  }</a
+>

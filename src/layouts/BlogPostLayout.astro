@@ -1,0 +1,45 @@
+---
+import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
+
+import type { BlogSchema } from '@/content.config'
+
+import '@/styles/global.css'
+
+type Props = BlogSchema
+const { title, excerpt, date } = Astro.props
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon.svg"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width"
+    />
+    <meta
+      name="generator"
+      content={Astro.generator}
+    />
+    <meta
+      name="description"
+      content={excerpt}
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header />
+    <article class="p-4">
+      <h1>{title}</h1>
+      <p class="mb-10"><time>{date.toDateString()}</time></p>
+      <slot />
+    </article>
+    <Footer />
+    <script src="@/scripts/copy-code.ts"></script>
+  </body>
+</html>

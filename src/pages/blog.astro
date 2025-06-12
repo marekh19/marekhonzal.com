@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { ROUTES } from '@/config/routes'
+import { getCollection } from 'astro:content'
+
+const pageTitle = 'My Astro Learning Blog'
+
+const blogPosts = await getCollection(
+  'blog',
+  (post) => !(import.meta.env.PROD && post.data.draft),
+)
+
+const sortedPosts = [...blogPosts].sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+)
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <p>This is where I will post about my journey learning Astro.</p>
+  <ul class="mt-10">
+    {
+      sortedPosts.map((post) => (
+        <li>
+          <a href={ROUTES.post(post.id)}>{post.data.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

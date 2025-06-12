@@ -1,0 +1,15 @@
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: forest --default;
+  logs: false;
+}
+@plugin '@tailwindcss/typography';
+
+/* Copy button in markdown code block */
+.code-block {
+  @apply relative;
+
+  & > button {
+    @apply absolute top-0.5 right-0.5 btn btn-ghost btn-xs;
+  }
+}
