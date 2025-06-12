@@ -1,6 +1,8 @@
 ---
-
+import { cn } from '@/lib/utils'
 ---
 
 <!-- TODO: Style all prose elements -->
-<div class="prose"><slot /></div>
+<div class={cn('prose prose-lg', 'prose-pre:leading-[133%]')}>
+  <slot />
+</div>
