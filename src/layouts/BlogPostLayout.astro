@@ -1,6 +1,8 @@
 ---
 import Header from '@/components/Header.astro'
 import Footer from '@/components/Footer.astro'
+import ArticleHeader from '@/components/Content/ArticleHeader.astro'
+import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
 
 import type { BlogSchema } from '@/content.config'
 
@@ -13,33 +15,24 @@ const { title, excerpt, date } = Astro.props
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/favicon.svg"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width"
-    />
-    <meta
-      name="generator"
-      content={Astro.generator}
-    />
-    <meta
-      name="description"
-      content={excerpt}
-    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={excerpt} />
     <title>{title}</title>
   </head>
   <body>
-    <Header />
-    <article class="p-4">
-      <h1>{title}</h1>
-      <p class="mb-10"><time>{date.toDateString()}</time></p>
-      <slot />
-    </article>
+    <div class="mx-auto max-w-5xl px-8">
+      <main>
+        <Header />
+        <ArticleHeader title={title} date={date} />
+        <article>
+          <slot />
+        </article>
+      </main>
+    </div>
     <Footer />
+    <ScrollProgressBar />
     <script src="@/scripts/copy-code.ts"></script>
   </body>
 </html>

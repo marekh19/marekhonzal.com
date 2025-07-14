@@ -7,28 +7,40 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "format:check": "prettier --check './src/**/*.{ts,tsx,js,cjs,json,astro,md,mdx}'",
+    "format:write": "prettier --write './src/**/*.{ts,tsx,js,cjs,json,astro,md,mdx}'",
+    "lint:check": "echo 'eslint not yet implemented'",
+    "lint:fix": "echo 'eslint not yet implemented'",
+    "prepare": "husky"
   },
   "dependencies": {
     "@astrojs/preact": "^4.1.0",
     "@lucide/astro": "^0.525.0",
-    "astro": "^5.10.1",
+    "astro": "^5.11.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "preact": "^10.26.9",
+    "sharp": "^0.34.3",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/mdx": "^4.3.0",
     "@astrojs/ts-plugin": "^1.10.4",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.11",
     "astro-icon": "^1.1.5",
-    "daisyui": "^5.0.43",
+    "daisyui": "^5.0.46",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3"
   },
-  "packageManager": "pnpm@9.15.9+sha512.68046141893c66fad01c079231128e9afb89ef87e2691d69e4d40eee228988295fd4682181bae55b58418c3a253bde65a505ec7c5f9403ece5cc3cd37dcf2531"
+  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912"
 }

@@ -7,7 +7,7 @@ draft: false
 
 import { Counter } from '@/components/Counter'
 
-# Test Blog Post
+# [Test Blog Post](#test-blog-post)
 
 Let's see if this MDX file can render a counter
 
@@ -22,7 +22,7 @@ Make sure to checkout [tanstack.com](https://tanstack.com/) as it provides aweso
 
 And you can also read more [About me](/about) to know me better!
 
-## Preact Counter Component
+## [Preact Counter Component](#preact-counter-component)
 
 <Counter client:load />
 
@@ -41,17 +41,14 @@ export const Counter = () => {
   }
 
   return (
-    <button
-      className="btn btn-primary"
-      onClick={handleIncrement}
-    >
+    <button className="btn btn-primary" onClick={handleIncrement}>
       Count: {count}
     </button>
   )
 }
 ```
 
-## Invariant
+## [Invariant](#invariant)
 
 See how to use `tiny-invariant`
 
@@ -65,3 +62,115 @@ invariant(truthyValue, 'This should not throw!')
 
 invariant(falsyValue, 'This will throw!')
 ```
+
+## [Test](#test)
+
+```ts
+import {
+  MiniGameCategory,
+  useCatalogMethodologiesQuery,
+  useCatalogMiniGamesQuery,
+  useCatalogVideoExplainersQuery,
+} from '@/__generated__/graphql'
+import type { QueryResult } from '@apollo/client'
+
+import { catalogFiltersToQueryInput } from '../lib/catalogFiltersToQueryInput'
+
+export type Filters = {
+  subjects?: string[]
+  themes?: string[]
+  difficulties?: string[]
+  search?: string
+}
+
+const getDataOrPrevious = <T>(queryResult: QueryResult<T>) =>
+  queryResult.data ?? queryResult.previousData
+
+const getIsInitialLoading = <T>(queryResult: QueryResult<T>) =>
+  queryResult.loading && queryResult.previousData === undefined
+
+export const useCatalog = (filters: Filters) => {
+  const variables = catalogFiltersToQueryInput(filters)
+
+  const methodologiesQuery = useCatalogMethodologiesQuery({ variables })
+  const videoExplainersQuery = useCatalogVideoExplainersQuery({ variables })
+  const miniGamesQuery = useCatalogMiniGamesQuery({
+    variables: { ...variables, categories: [MiniGameCategory.Minigame] },
+  })
+  const eduBooksQuery = useCatalogMiniGamesQuery({
+    variables: { ...variables, categories: [MiniGameCategory.Edubook] },
+  })
+
+  const methodologies =
+    getDataOrPrevious(methodologiesQuery)?.catalog.getMethodologies.filter(
+      (methodology) => !methodology.isProject,
+    ) ?? []
+  const projectMethodologies =
+    getDataOrPrevious(methodologiesQuery)?.catalog.getMethodologies.filter(
+      (methodology) => methodology.isProject,
+    ) ?? []
+  const videos =
+    getDataOrPrevious(videoExplainersQuery)?.catalog.getVideoExplainers ?? []
+  const minigames =
+    getDataOrPrevious(miniGamesQuery)?.catalog.getMiniGamesCollection.results ??
+    []
+  const eduBooks =
+    getDataOrPrevious(eduBooksQuery)?.catalog.getMiniGamesCollection.results ??
+    []
+
+  const isMethodologiesInitialLoading = getIsInitialLoading(methodologiesQuery)
+  const isVideosInitialLoading = getIsInitialLoading(videoExplainersQuery)
+  const isMinigamesInitialLoading = getIsInitialLoading(miniGamesQuery)
+  const isEdubooksInitialLoading = getIsInitialLoading(eduBooksQuery)
+
+  return {
+    results: {
+      methodologies,
+      projectMethodologies,
+      videos,
+      minigames,
+      eduBooks,
+    },
+    isInitialLoading: {
+      methodologies: isMethodologiesInitialLoading,
+      projectMethodologies: isMethodologiesInitialLoading,
+      videos: isVideosInitialLoading,
+      minigames: isMinigamesInitialLoading,
+      eduBooks: isEdubooksInitialLoading,
+    },
+    isLoading: {
+      methodologies: methodologiesQuery.loading,
+      projectMethodologies: methodologiesQuery.loading,
+      videos: videoExplainersQuery.loading,
+      minigames: miniGamesQuery.loading,
+      eduBooks: eduBooksQuery.loading,
+    },
+  }
+}
+```
+
+## [Alerts Playground](#alerts-playground)
+
+<Alert>Hello World</Alert>
+
+hello
+
+<Alert intent="success">Your changes have been saved successfully!</Alert>
+
+hello
+
+<Alert intent="error">
+  We couldn't connect to the server. Please try again later.
+</Alert>
+
+hello
+
+<Alert intent="warning">This may go south!</Alert>
+
+hello
+
+<Alert intent="tip">
+  Use this to make your code super clean! Make sure to keep an eye
+</Alert>
+
+Hello

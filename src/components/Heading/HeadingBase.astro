@@ -1,0 +1,40 @@
+---
+import { cn } from '@/lib/utils'
+import { HashIcon } from '@lucide/astro'
+
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
+type HeadingElement = `h${HeadingLevel}`
+
+type Props = {
+  level: HeadingLevel
+  id?: string
+  class?: string
+}
+
+const { level, class: className, id, ...rest } = Astro.props
+const Tag = `h${level}` as const satisfies HeadingElement
+
+const shouldRenderAnchor = !!id && level !== 1
+---
+
+<Tag
+  class={cn(
+    { 'group relative inline-block scroll-mt-8': shouldRenderAnchor },
+    className,
+  )}
+  id={id}
+  {...rest}
+>
+  {!shouldRenderAnchor && <slot />}
+  {
+    shouldRenderAnchor && (
+      <a href={`#${id}`} class="not-prose">
+        <slot />
+        <HashIcon
+          class="text-neutral-content absolute top-1/2 -left-[0.8em] hidden size-[0.66em] -translate-y-1/2 opacity-0 transition-opacity duration-200 xl:inline-block xl:opacity-0 xl:group-hover:opacity-100"
+          aria-hidden="true"
+        />
+      </a>
+    )
+  }
+</Tag>

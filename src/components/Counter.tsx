@@ -8,11 +8,8 @@ export const Counter = () => {
   }
 
   return (
-    <button
-      className="btn btn-primary"
-      onClick={handleIncrement}
-    >
-      Count: {count}
+    <button className="btn btn-primary" onClick={handleIncrement}>
+      <span className="tabular-nums">Count: {count}</span>
     </button>
   )
 }

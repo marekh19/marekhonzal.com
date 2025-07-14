@@ -1,15 +1,30 @@
 @import 'tailwindcss';
-@plugin "daisyui" {
-  themes: forest --default;
+@import './themes/theme-light.css';
+@import './themes/theme-dark.css';
+@import './fonts.css';
+@import './shiki.css';
+
+@plugin 'daisyui' {
+  themes:;
   logs: false;
 }
+
 @plugin '@tailwindcss/typography';
+
+@theme {
+  --font-sans: 'Open Sans', 'sans-serif';
+  --font-serif: 'Lora', 'serif';
+}
 
 /* Copy button in markdown code block */
 .code-block {
   @apply relative;
 
   & > button {
-    @apply absolute top-0.5 right-0.5 btn btn-ghost btn-xs;
+    @apply absolute top-0.5 right-0.5 btn btn-soft btn-xs;
   }
+}
+
+html {
+  @apply scroll-smooth;
 }

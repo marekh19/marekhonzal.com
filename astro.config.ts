@@ -13,8 +13,10 @@ export default defineConfig({
   trailingSlash: 'ignore',
   markdown: {
     shikiConfig: {
-      theme: 'poimandres',
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'catppuccin-mocha',
+      },
     },
   },
 })
-

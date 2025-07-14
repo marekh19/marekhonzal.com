@@ -3,6 +3,17 @@ import { cn } from '@/lib/utils'
 ---
 
 <!-- TODO: Style all prose elements -->
-<div class={cn('prose prose-lg', 'prose-pre:leading-[133%]')}>
+<div
+  class={cn(
+    'prose xl:prose-lg max-w-none',
+    'prose-pre:leading-[140%]',
+    'prose-p:text-base-content',
+    'prose-headings:text-balance prose-headings:font-serif prose-headings:font-medium prose-headings:text-primary prose-headings:leading-tight',
+    'prose-h1:font-normal',
+    'prose-ul:text-base-content',
+    'prose-ol:text-base-content',
+    'prose-img:rounded-lg',
+  )}
+>
   <slot />
 </div>

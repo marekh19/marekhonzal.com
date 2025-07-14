@@ -1,0 +1,26 @@
+---
+
+---
+
+<div
+  id="scroll-progress-bar"
+  class="bg-accent fixed top-0 left-0 z-50 h-[3px] transition duration-100 ease-out"
+  style="width: 0%"
+>
+</div>
+
+<script>
+  const el = document.getElementById('scroll-progress-bar')
+  if (el) {
+    const update = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.body.scrollHeight - window.innerHeight
+      const progress = (scrollTop / docHeight) * 100
+      el.style.width = `${progress}%`
+    }
+
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    update()
+  }
+</script>

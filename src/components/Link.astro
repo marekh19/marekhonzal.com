@@ -1,30 +1,50 @@
 ---
-import { ExternalLink } from '@lucide/astro'
+import { cn } from '@/lib/utils'
+import { ExternalLinkIcon } from '@lucide/astro'
 import type { JSX } from 'astro/jsx-runtime'
 
 type Props = JSX.AnchorHTMLAttributes & {
   href: string
 }
 
-const { href, ...rest } = Astro.props
+type LinkType = 'internal' | 'external' | 'anchor'
 
-const isExternal = !href.startsWith('/')
+const { href, class: className, ...rest } = Astro.props
+
+const linkType = ((href: string): LinkType => {
+  if (href.startsWith('/')) return 'internal'
+  if (href.startsWith('#')) return 'anchor'
+  return 'external'
+})(href)
+
+if (linkType === 'anchor') {
+  // These are handled by Heading components to autogenerate anchor tags for headings
+  return null
+}
 ---
 
-<a
-  href={href}
-  target={isExternal ? '_blank' : undefined}
-  rel={isExternal ? 'noopener noreferrer' : undefined}
-  class="inline-flex items-center gap-1 underline"
-  {...rest}
->
-  <slot />
-  {
-    isExternal && (
-      <ExternalLink
-        class="inline-block size-4 translate-y-px"
-        aria-hidden="true"
-      />
-    )
-  }</a
->
+{
+  linkType === 'external' && (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      class={cn(
+        'link link-primary link-hover inline-flex items-center gap-1',
+        className,
+      )}
+      {...rest}
+    >
+      <slot />
+      <ExternalLinkIcon class="inline-block size-4" aria-hidden="true" />
+    </a>
+  )
+}
+
+{
+  linkType === 'internal' && (
+    <a href={href} {...rest} class="link link-primary link-hover">
+      <slot />
+    </a>
+  )
+}

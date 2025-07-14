@@ -6,8 +6,8 @@ const config = {
   printWidth: 80,
   semi: false,
   singleQuote: true,
-  singleAttributePerLine: true,
-  plugins: ['prettier-plugin-astro'],
+  plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+  tailwindFunctions: ['cva', 'cn'],
   overrides: [
     {
       files: '*.astro',

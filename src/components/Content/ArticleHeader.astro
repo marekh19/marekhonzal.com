@@ -1,0 +1,20 @@
+---
+import type { BlogSchema } from '@/content.config'
+import { formatDateHuman, formatDateMachine } from '@/lib/utils'
+
+type Props = Pick<BlogSchema, 'title' | 'date'>
+
+const { title, date } = Astro.props
+---
+
+<div class="my-10">
+  <h1
+    class="text-primary font-serif text-3xl leading-tight text-balance lg:text-4xl xl:text-5xl"
+  >
+    {title}
+  </h1>
+  <time
+    class="text-neutral-content mt-6 font-serif"
+    datetime={formatDateMachine(date)}>{formatDateHuman(date)}</time
+  >
+</div>
