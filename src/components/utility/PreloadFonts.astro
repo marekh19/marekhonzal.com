@@ -1,0 +1,39 @@
+---
+type Props = {
+  type: 'sans' | 'serif'
+}
+
+const { type } = Astro.props
+
+const sansFonts = [
+  '/fonts/open-sans-v43-latin-regular.woff2',
+  '/fonts/open-sans-v43-latin-500.woff2',
+  '/fonts/open-sans-v43-latin-600.woff2',
+  '/fonts/open-sans-v43-latin-700.woff2',
+] as const
+
+const serifFonts = [
+  '/fonts/lora-v36-latin-regular.woff2',
+  '/fonts/lora-v36-latin-500.woff2',
+] as const
+---
+
+{
+  type === 'sans' && (
+    <>
+      {sansFonts.map((font) => (
+        <link rel="preload" href={font} as="font" type="font/woff2" />
+      ))}
+    </>
+  )
+}
+
+{
+  type === 'serif' && (
+    <>
+      {serifFonts.map((font) => (
+        <link rel="preload" href={font} as="font" type="font/woff2" />
+      ))}
+    </>
+  )
+}

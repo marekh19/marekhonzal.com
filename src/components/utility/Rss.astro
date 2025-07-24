@@ -1,0 +1,10 @@
+---
+import { defaultSeo } from '@/config/seo'
+---
+
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={defaultSeo.baseTitle}
+  href={new URL('rss.xml', Astro.site)}
+/>

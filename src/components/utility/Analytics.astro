@@ -1,0 +1,12 @@
+---
+const config = {
+  url: 'https://cloud.umami.is/script.js',
+  // TODO: change to the production one
+  websiteId: 'd67ea3c7-9b21-4ec3-897e-8e19cd0d1839',
+} as const
+
+const isProd = import.meta.env.PROD
+if (!isProd) return null
+---
+
+<script is:inline defer src={config.url} data-website-id={config.websiteId}></script>
