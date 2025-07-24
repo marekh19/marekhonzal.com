@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content'
+import { cn } from '@/lib/utils/cn'
+import { getFeaturedSectionPosts, shouldIncludePost } from '@/lib/utils/posts'
+import ArticleCard from '@/components/Content/ArticleCard.astro'
+import { ROUTES } from '@/config/routes'
+
+type Props = {
+  className?: string
+}
+
+const { className } = Astro.props
+
+const sectionId = 'blog'
+
+const blogPosts = await getCollection('blog', shouldIncludePost)
+
+const featuredPosts = getFeaturedSectionPosts(blogPosts)
+---
+
+<section aria-labelledby={sectionId} class={className}>
+  <h2
+    id={sectionId}
+    class={cn('mb-3 text-2xl leading-[140%] font-bold', 'md:text-3xl', 'lg:text-4xl')}
+  >
+    Latest Thoughts
+  </h2>
+  <p class="mb-5 text-lg">
+    A mix of learnings, ideas, and reflections from both dev life and beyond.
+  </p>
+  <div
+    class={cn(
+      'grid grid-cols-1 gap-x-8 gap-y-12',
+      'min-[600px]:grid-cols-2',
+      'lg:grid-cols-3',
+    )}
+  >
+    {
+      featuredPosts.map((post) => (
+        <ArticleCard
+          title={post.data.title}
+          description={post.data.excerpt}
+          targetUrl={ROUTES.blog.post(post.id)}
+          date={post.data.date}
+          thumbnail={post.data.thumbnail}
+          tags={post.data.tags}
+        />
+      ))
+    }
+  </div>
+</section>
