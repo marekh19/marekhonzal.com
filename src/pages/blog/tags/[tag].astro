@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths } from 'astro'
+import {
+  getAllTags,
+  getPostsByTag,
+  shouldIncludePost,
+  getSortedPostsByDateDesc,
+} from '@/lib/utils/posts'
+import { createSlugifiedString } from '@/lib/utils/string'
+import { getCollection } from 'astro:content'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { ROUTES } from '@/config/routes'
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog', shouldIncludePost)
+  const tags = getAllTags(posts)
+
+  return tags.map((tag) => ({
+    params: { tag: createSlugifiedString(tag) },
+    props: { tag, posts: getSortedPostsByDateDesc(getPostsByTag(posts, tag)) },
+  }))
+}) satisfies GetStaticPaths
+
+const { tag, posts } = Astro.props
+---
+
+<BaseLayout>
+  <h1 class="mb-3 text-lg font-bold">{tag}</h1>
+  <ul class="flex flex-col gap-3">
+    {posts.map((post) => <a href={ROUTES.blog.post(post.id)}>{post.data.title}</a>)}
+  </ul>
+</BaseLayout>
