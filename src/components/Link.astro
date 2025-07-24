@@ -1,15 +1,16 @@
 ---
-import { cn } from '@/lib/utils'
-import { ExternalLinkIcon } from '@lucide/astro'
-import type { JSX } from 'astro/jsx-runtime'
+import { cn } from '@/lib/utils/cn'
+import { Icon } from 'astro-icon/components'
+import type { HTMLAttributes } from 'astro/types'
 
-type Props = JSX.AnchorHTMLAttributes & {
+type Props = HTMLAttributes<'a'> & {
   href: string
+  hasIcon?: boolean
 }
 
 type LinkType = 'internal' | 'external' | 'anchor'
 
-const { href, class: className, ...rest } = Astro.props
+const { href, class: className, hasIcon = true, ...rest } = Astro.props
 
 const linkType = ((href: string): LinkType => {
   if (href.startsWith('/')) return 'internal'
@@ -29,14 +30,17 @@ if (linkType === 'anchor') {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      class={cn(
-        'link link-primary link-hover inline-flex items-center gap-1',
-        className,
-      )}
+      class={cn('link link-primary link-hover inline-flex items-center gap-1', className)}
       {...rest}
     >
       <slot />
-      <ExternalLinkIcon class="inline-block size-4" aria-hidden="true" />
+      {hasIcon && (
+        <Icon
+          name="lucide:external-link"
+          class="inline-block size-4"
+          aria-hidden="true"
+        />
+      )}
     </a>
   )
 }
