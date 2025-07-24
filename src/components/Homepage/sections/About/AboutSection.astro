@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets'
+import { cn } from '@/lib/utils/cn'
+import Link from '@/components/Link.astro'
+import marekImg from '@/assets/images/marek.png'
+import SocialIconLinks from './SocialIconLinks.astro'
+import TextBlock from './TextBlock.astro'
+
+type Props = {
+  className?: string
+}
+
+const { className } = Astro.props
+
+const sectionId = 'about'
+---
+
+<section aria-labelledby={sectionId} class={className}>
+  <h2
+    id={sectionId}
+    class={cn('mb-8 text-2xl leading-[140%] font-bold', 'md:text-3xl', 'lg:text-4xl')}
+  >
+    A Bit About Me
+  </h2>
+  <div class={cn('grid grid-cols-1 gap-10', 'lg:grid-cols-[1fr_14rem] lg:gap-16')}>
+    <div>
+      <TextBlock>
+        I believe the web should be not only <strong class="font-bold">usable</strong>,
+        but <strong class="font-bold">maintainable</strong> — for the teams who build it.
+      </TextBlock>
+      <TextBlock>
+        That’s why I focus on <strong class="font-bold"
+          >frontend architecture, state management</strong
+        >, and <strong class="font-bold">developer experience</strong> — the parts of engineering
+        that help codebases grow without growing painful.
+      </TextBlock>
+
+      <TextBlock>
+        I didn’t start my career in tech — I spent <strong class="font-bold"
+          >7 years in sales and marketing</strong
+        >
+        before taking a hard turn into software development. That pivot led me through an intensive
+        bootcamp and into building everything from <strong>greenfield MVPs</strong> to <strong
+          class="font-bold">design systems</strong
+        > and <strong class="font-bold">internal platforms</strong> used by global teams.
+      </TextBlock>
+
+      <TextBlock>
+        Today, I work as a <strong class="font-bold">Senior Frontend Developer</strong> at
+        <Link href="https://applifting.io" hasIcon={false}>Applifting</Link>, where I also <strong
+          class="font-bold">co-lead a 20-person frontend team</strong
+        >, shape our internal tooling, and mentor developers on their growth paths.
+      </TextBlock>
+
+      <TextBlock>
+        I created this site to <strong class="font-bold">share what I’ve learned</strong> —
+        and what I’m still learning — about building better frontends, growing as a developer,
+        and tinkering on side projects that challenge how we think about code.
+      </TextBlock>
+
+      <SocialIconLinks className="mt-10" />
+    </div>
+    <Image
+      src={marekImg}
+      alt="Marek Honzal"
+      width={224}
+      densities={[2]}
+      class="mask mask-squircle size-56"
+    />
+  </div>
+</section>
