@@ -1,38 +1,28 @@
 ---
-import Header from '@/components/Header.astro'
-import Footer from '@/components/Footer.astro'
+import type { CollectionEntry } from 'astro:content'
+import BaseLayout from './BaseLayout.astro'
 import ArticleHeader from '@/components/Content/ArticleHeader.astro'
 import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
+import PreloadFonts from '@/components/utility/PreloadFonts.astro'
+import { defaultSeo } from '@/config/seo'
 
-import type { BlogSchema } from '@/content.config'
-
-import '@/styles/global.css'
-
-type Props = BlogSchema
+type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date' | 'excerpt'>
 const { title, excerpt, date } = Astro.props
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={excerpt} />
-    <title>{title}</title>
-  </head>
-  <body>
-    <div class="mx-auto max-w-5xl px-8">
-      <main>
-        <Header />
-        <ArticleHeader title={title} date={date} />
-        <article>
-          <slot />
-        </article>
-      </main>
-    </div>
-    <Footer />
+<BaseLayout pageTitle={defaultSeo.pageTitle(title)} pageDescription={excerpt}>
+  <Fragment slot="head">
+    <PreloadFonts type="serif" />
+  </Fragment>
+
+  <Fragment slot="beforeContent">
+    <ArticleHeader title={title} date={date} />
+  </Fragment>
+
+  <slot />
+
+  <Fragment slot="endOfBody">
     <ScrollProgressBar />
     <script src="@/scripts/copy-code.ts"></script>
-  </body>
-</html>
+  </Fragment>
+</BaseLayout>

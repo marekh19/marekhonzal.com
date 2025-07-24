@@ -1,30 +1,43 @@
 ---
-import Header from '@/components/Header.astro'
-import Footer from '@/components/Footer.astro'
+import { defaultSeo } from '@/config/seo'
+import LandmarksLayout from './LandmarksLayout.astro'
+import Analytics from '@/components/utility/Analytics.astro'
+import Rss from '@/components/utility/Rss.astro'
+import Favicon from '@/components/utility/Favicon.astro'
+import CanonicalLink from '@/components/utility/CanonicalLink.astro'
+import Meta from '@/components/utility/Meta.astro'
+import Sitemap from '@/components/utility/Sitemap.astro'
+import PreloadFonts from '@/components/utility/PreloadFonts.astro'
 
 import '@/styles/global.css'
 
 type Props = {
-  pageTitle: string
+  pageTitle?: string
+  pageDescription?: string
 }
 
-const { pageTitle } = Astro.props
+const { pageTitle = defaultSeo.baseTitle, pageDescription = defaultSeo.metaDescription } =
+  Astro.props
 ---
 
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
+    <Meta description={pageDescription} />
+    <Favicon />
+    <CanonicalLink />
+    <Rss />
+    <Analytics />
+    <Sitemap />
+    <PreloadFonts type="sans" />
+    <slot name="head" />
   </head>
   <body>
-    <div class="mx-auto max-w-5xl px-8">
-      <Header />
-      <h1>{pageTitle}</h1>
+    <LandmarksLayout>
+      <slot name="beforeContent" />
       <slot />
-      <Footer />
-    </div>
+      <slot name="afterContent" />
+    </LandmarksLayout>
+    <slot name="endOfBody" />
   </body>
 </html>
