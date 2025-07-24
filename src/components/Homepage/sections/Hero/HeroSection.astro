@@ -1,0 +1,81 @@
+---
+import { Icon } from 'astro-icon/components'
+import { cn } from '@/lib/utils/cn'
+import Link from '@/components/Link.astro'
+import { ROUTES } from '@/config/routes'
+import { Image } from 'astro:assets'
+import heroImg from '@/assets/images/hero.png'
+
+const sectionId = 'hero'
+---
+
+<section
+  aria-labelledby={sectionId}
+  class="grid h-[calc(100svh-var(--header-h))] items-center"
+>
+  <Image
+    src={heroImg}
+    alt=""
+    width={500}
+    densities={[1.5]}
+    class="absolute right-[20vw] size-[20vw]"
+  />
+
+  <div class="@container -mt-(--header-h)">
+    <h1 id={sectionId} class="text-lg">
+      <span class={cn('text-primary mb-3 block')}
+        >Hi
+        <span class="animate-wave inline-block origin-bottom">👋</span>, my name is
+      </span>
+      <span
+        class={cn(
+          'block text-4xl leading-[140%] font-bold',
+          '@xl:text-5xl',
+          '@2xl:text-6xl',
+        )}>Marek Honzal</span
+      >
+    </h1>
+    <h2
+      class={cn(
+        'text-base-content/60 text-2xl leading-[140%] font-bold tracking-wide',
+        '@md:text-3xl',
+        '@xl:text-4xl',
+      )}
+    >
+      I build scalable frontends
+    </h2>
+    <p
+      class={cn(
+        'text-base-content/75 mt-6 leading-loose',
+        '@lg:text-base',
+        '@2xl:text-lg',
+      )}
+    >
+      I focus on architecture, state, and the parts of frontend you don't see.
+    </p>
+    <p class={cn('text-base-content/75 leading-loose', '@lg:text-base', '@2xl:text-lg')}>
+      At <Link hasIcon={false} href="https://applifting.io">Applifting</Link>, I help
+      build solid systems and grow the people behind them.
+    </p>
+    <div
+      class={cn(
+        'mt-12 flex flex-col items-start gap-6',
+        '@xl:mt-12 @xl:flex-row @xl:items-center @xl:gap-10',
+      )}
+    >
+      <a href={ROUTES.blog._} class={cn('btn btn-primary group', '@xl:btn-lg')}
+        >Read the Blog <Icon
+          name="lucide:arrow-right"
+          class={cn(
+            'size-[1.25em] transition-transform duration-200 ease-out',
+            'group-hover:translate-x-1',
+            'group-focus-visible:translate-x-1',
+          )}
+        />
+      </a>
+      <a href={ROUTES.projects._} class={cn('btn btn-neutral', '@xl:btn-lg')}
+        >See What I'm Building</a
+      >
+    </div>
+  </div>
+</section>
