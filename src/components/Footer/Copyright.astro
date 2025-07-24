@@ -1,0 +1,13 @@
+---
+const siteFoundedAtYear = new Date('2025-07-21').getFullYear()
+const currentYear = new Date().getFullYear()
+const shouldShowRange = siteFoundedAtYear !== currentYear
+
+const copyrightYear = shouldShowRange
+  ? `${siteFoundedAtYear}-${currentYear}`
+  : `${currentYear}`
+---
+
+<p class="text-base-content/60 text-xs">
+  &copy; {copyrightYear} Marek Honzal. All Rights Reserved.
+</p>

@@ -1,0 +1,21 @@
+---
+import { formatDateHuman } from '@/lib/utils/date'
+import { getLastCommitDateIntoDefaultBranch } from '@/lib/github'
+
+// TODO: Switch to real repo
+const lastCommitDate = await getLastCommitDateIntoDefaultBranch('marekh19/zentodo')
+
+const formattedLastCommit = formatDateHuman(lastCommitDate ?? new Date(), {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: '2-digit',
+  timeZoneName: 'short',
+  hour12: false,
+})
+---
+
+<p class="text-base-content/60 text-xs">
+  Last updated by Marek on {formattedLastCommit}
+</p>

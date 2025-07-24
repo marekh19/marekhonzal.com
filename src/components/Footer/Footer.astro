@@ -1,0 +1,37 @@
+---
+import { cn } from '@/lib/utils/cn'
+import FooterSocialLinks from './FooterSocialLinks.astro'
+import Copyright from './Copyright.astro'
+import FooterNavigation from './FooterNavigation.astro'
+import SiteUpdatedAt from './SiteUpdatedAt.astro'
+---
+
+<div class="divider m-0 h-px"></div>
+
+<footer class={cn('pt-16 pb-8', 'lg:pb-16')}>
+  <div class={cn('mx-auto max-w-5xl px-5', 'md:px-8')}>
+    <div
+      class={cn(
+        'flex flex-col-reverse items-stretch justify-between gap-y-16',
+        'md:flex-row',
+      )}
+    >
+      <div class={cn('flex flex-col gap-y-12', 'md:gap-y-20')}>
+        <div class="space-y-3">
+          <p class="text-lg leading-none">Marek Honzal</p>
+          <p class="text-base-content/75 max-w-60 text-sm">
+            Turning ideas into well-crafted code, one commit at a time.
+          </p>
+        </div>
+        <div class="space-y-5">
+          <FooterSocialLinks />
+          <Copyright />
+        </div>
+      </div>
+      <div class={cn('flex flex-col-reverse justify-between gap-y-8', 'md:flex-col')}>
+        <FooterNavigation />
+        <SiteUpdatedAt />
+      </div>
+    </div>
+  </div>
+</footer>
