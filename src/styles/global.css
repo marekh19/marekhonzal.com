@@ -3,6 +3,7 @@
 @import './themes/theme-dark.css';
 @import './fonts.css';
 @import './shiki.css';
+@import './animation.css';
 
 @plugin 'daisyui' {
   themes:;
@@ -14,6 +15,16 @@
 @theme {
   --font-sans: 'Open Sans', 'sans-serif';
   --font-serif: 'Lora', 'serif';
+
+  --animate-wave: wave 800ms ease-in-out 1;
+}
+
+:root {
+  --header-h: 4.5rem;
+}
+
+html {
+  @apply scroll-smooth;
 }
 
 /* Copy button in markdown code block */
@@ -21,10 +32,6 @@
   @apply relative;
 
   & > button {
-    @apply absolute top-0.5 right-0.5 btn btn-soft btn-xs;
+    @apply btn btn-soft btn-xs absolute top-0.5 right-0.5;
   }
-}
-
-html {
-  @apply scroll-smooth;
 }
