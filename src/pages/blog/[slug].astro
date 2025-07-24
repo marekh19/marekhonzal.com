@@ -11,9 +11,11 @@ import H3 from '@/components/Heading/H3.astro'
 import H4 from '@/components/Heading/H4.astro'
 import H5 from '@/components/Heading/H5.astro'
 import H6 from '@/components/Heading/H6.astro'
+import { shouldIncludePost } from '@/lib/utils/posts'
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection('blog')
+  const posts = await getCollection('blog', shouldIncludePost)
+
   return posts.map((post) => ({
     params: { slug: post.id },
     props: { post },
@@ -23,16 +25,10 @@ export const getStaticPaths = (async () => {
 const { post } = Astro.props
 const { Content } = await render(post)
 
-const { title, draft, date, excerpt } = post.data
-
-if (import.meta.env.PROD && draft) {
-  return new Response(null, {
-    status: 404,
-  })
-}
+const { data } = post
 ---
 
-<BlogPostLayout title={title} draft={draft} excerpt={excerpt} date={date}>
+<BlogPostLayout {...data}>
   <Prose>
     <Content
       components={{
