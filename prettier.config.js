@@ -3,7 +3,7 @@
  * @type {import("prettier").Config}
  */
 const config = {
-  printWidth: 80,
+  printWidth: 90,
   semi: false,
   singleQuote: true,
   plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
