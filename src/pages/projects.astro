@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { defaultSeo } from '@/config/seo'
+
+const meta = {
+  title: 'Projects',
+  description:
+    'A collection of personal projects by Marek Honzal — small experiments, tools, and ideas I’ve built to learn, explore, and have a bit of fun with code.',
+} as const
+---
+
+<BaseLayout
+  pageTitle={defaultSeo.pageTitle(meta.title)}
+  pageDescription={meta.description}
+>
+  Projects
+</BaseLayout>

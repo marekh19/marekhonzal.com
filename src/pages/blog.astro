@@ -1,29 +1,58 @@
 ---
+import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { ROUTES } from '@/config/routes'
-import { getCollection } from 'astro:content'
+import {
+  shouldIncludePost,
+  getSortedPostsByDateDesc,
+  getPostTagMetadata,
+  getAllTags,
+  getSortedTagMetadataByCount,
+} from '@/lib/utils/posts'
+import { defaultSeo } from '@/config/seo'
+import ArticleCard from '@/components/Content/ArticleCard.astro'
+import { TagsNavigation } from '@/components/Blog/TagsNavigation'
+import { cn } from '@/lib/utils/cn'
 
-const pageTitle = 'My Astro Learning Blog'
+const meta = {
+  title: 'Blog',
+  description:
+    'Frontend insights, architecture tips, and developer reflections by Marek Honzal — plus thoughts on dev life, growth, and side projects.',
+} as const
 
-const blogPosts = await getCollection(
-  'blog',
-  (post) => !(import.meta.env.PROD && post.data.draft),
-)
+const blogPosts = await getCollection('blog', shouldIncludePost)
+const sortedPosts = getSortedPostsByDateDesc(blogPosts)
 
-const sortedPosts = [...blogPosts].sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-)
+const uniqueTags = getAllTags(blogPosts)
+const tagsMetadata = getPostTagMetadata(blogPosts, uniqueTags)
+const sortedTagsMetadata = getSortedTagMetadataByCount(tagsMetadata)
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-  <p>This is where I will post about my journey learning Astro.</p>
-  <ul class="mt-10">
+<BaseLayout
+  pageTitle={defaultSeo.pageTitle(meta.title)}
+  pageDescription={meta.description}
+>
+  <h1 class="mb-10 text-2xl font-bold">Blog</h1>
+  <h2 class="mb-3 text-lg">Browse by Tags</h2>
+  <TagsNavigation client:load tags={sortedTagsMetadata} className="mb-10" />
+  <div
+    class={cn(
+      'grid grid-cols-1 gap-x-8 gap-y-12',
+      'min-[600px]:grid-cols-2',
+      'lg:grid-cols-3',
+    )}
+  >
     {
       sortedPosts.map((post) => (
-        <li>
-          <a href={ROUTES.post(post.id)}>{post.data.title}</a>
-        </li>
+        <ArticleCard
+          title={post.data.title}
+          description={post.data.excerpt}
+          targetUrl={ROUTES.blog.post(post.id)}
+          date={post.data.date}
+          thumbnail={post.data.thumbnail}
+          tags={post.data.tags}
+        />
       ))
     }
-  </ul>
+  </div>
 </BaseLayout>

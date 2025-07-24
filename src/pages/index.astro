@@ -1,11 +1,13 @@
 ---
-import { Counter } from '@/components/Counter'
+import { defaultSeo } from '@/config/seo'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-
-const pageTitle = 'Home Page'
+import HeroSection from '@/components/Homepage/sections/Hero/HeroSection.astro'
+import AboutSection from '@/components/Homepage/sections/About/AboutSection.astro'
+import BlogSection from '@/components/Homepage/sections/Blog/BlogSection.astro'
 ---
 
-<BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <Counter client:load />
+<BaseLayout pageTitle={defaultSeo.baseTitle}>
+  <HeroSection />
+  <AboutSection className="mb-40" />
+  <BlogSection />
 </BaseLayout>
