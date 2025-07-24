@@ -1,0 +1,175 @@
+---
+title: Testing post
+excerpt: This is a first testing post
+date: 2025-06-12
+isDraft: false
+isFeatured: false
+tags:
+  - 'Test'
+thumbnail: './test.png'
+---
+
+import { Counter } from '@/components/Counter'
+
+Let's see if this MDX file can render a counter
+
+- [x] Render the Counter component and make sure it's interactive
+- [ ] Add some more docs
+
+1. One
+2. Two
+3. Three
+
+Make sure to checkout [tanstack.com](https://tanstack.com/) as it provides awesome libraries!
+
+And you can also read more [About me](/about) to know me better!
+
+## Preact Counter Component
+
+<div>
+  <Counter client:load />
+</div>
+
+Let's see how to implement the component above in **Preact**.
+
+I love `preact`. Let's have a look below. It's just React
+
+```tsx
+import { useState } from 'preact/hooks'
+
+export const Counter = () => {
+  const [count, setCount] = useState(0)
+
+  const handleIncrement = () => {
+    setCount((prev) => ++prev)
+  }
+
+  return (
+    <button className="btn btn-primary" onClick={handleIncrement}>
+      Count: {count}
+    </button>
+  )
+}
+```
+
+## Invariant
+
+See how to use `tiny-invariant`
+
+```ts
+import invariant from 'tiny-invariant'
+
+const truthyValue = 'Hello World!'
+const falsyValue = null
+
+invariant(truthyValue, 'This should not throw!')
+
+invariant(falsyValue, 'This will throw!')
+```
+
+## Test
+
+```ts
+import {
+  MiniGameCategory,
+  useCatalogMethodologiesQuery,
+  useCatalogMiniGamesQuery,
+  useCatalogVideoExplainersQuery,
+} from '@/__generated__/graphql'
+import type { QueryResult } from '@apollo/client'
+
+import { catalogFiltersToQueryInput } from '../lib/catalogFiltersToQueryInput'
+
+export type Filters = {
+  subjects?: string[]
+  themes?: string[]
+  difficulties?: string[]
+  search?: string
+}
+
+const getDataOrPrevious = <T>(queryResult: QueryResult<T>) =>
+  queryResult.data ?? queryResult.previousData
+
+const getIsInitialLoading = <T>(queryResult: QueryResult<T>) =>
+  queryResult.loading && queryResult.previousData === undefined
+
+export const useCatalog = (filters: Filters) => {
+  const variables = catalogFiltersToQueryInput(filters)
+
+  const methodologiesQuery = useCatalogMethodologiesQuery({ variables })
+  const videoExplainersQuery = useCatalogVideoExplainersQuery({ variables })
+  const miniGamesQuery = useCatalogMiniGamesQuery({
+    variables: { ...variables, categories: [MiniGameCategory.Minigame] },
+  })
+  const eduBooksQuery = useCatalogMiniGamesQuery({
+    variables: { ...variables, categories: [MiniGameCategory.Edubook] },
+  })
+
+  const methodologies =
+    getDataOrPrevious(methodologiesQuery)?.catalog.getMethodologies.filter(
+      (methodology) => !methodology.isProject,
+    ) ?? []
+  const projectMethodologies =
+    getDataOrPrevious(methodologiesQuery)?.catalog.getMethodologies.filter(
+      (methodology) => methodology.isProject,
+    ) ?? []
+  const videos = getDataOrPrevious(videoExplainersQuery)?.catalog.getVideoExplainers ?? []
+  const minigames =
+    getDataOrPrevious(miniGamesQuery)?.catalog.getMiniGamesCollection.results ?? []
+  const eduBooks =
+    getDataOrPrevious(eduBooksQuery)?.catalog.getMiniGamesCollection.results ?? []
+
+  const isMethodologiesInitialLoading = getIsInitialLoading(methodologiesQuery)
+  const isVideosInitialLoading = getIsInitialLoading(videoExplainersQuery)
+  const isMinigamesInitialLoading = getIsInitialLoading(miniGamesQuery)
+  const isEdubooksInitialLoading = getIsInitialLoading(eduBooksQuery)
+
+  return {
+    results: {
+      methodologies,
+      projectMethodologies,
+      videos,
+      minigames,
+      eduBooks,
+    },
+    isInitialLoading: {
+      methodologies: isMethodologiesInitialLoading,
+      projectMethodologies: isMethodologiesInitialLoading,
+      videos: isVideosInitialLoading,
+      minigames: isMinigamesInitialLoading,
+      eduBooks: isEdubooksInitialLoading,
+    },
+    isLoading: {
+      methodologies: methodologiesQuery.loading,
+      projectMethodologies: methodologiesQuery.loading,
+      videos: videoExplainersQuery.loading,
+      minigames: miniGamesQuery.loading,
+      eduBooks: eduBooksQuery.loading,
+    },
+  }
+}
+```
+
+## Alerts Playground
+
+<Alert>Hello World</Alert>
+
+hello
+
+<Alert intent="success">Your changes have been saved successfully!</Alert>
+
+hello
+
+<Alert intent="error">We couldn't connect to the server. Please try again later.</Alert>
+
+hello
+
+<Alert intent="warning">This may go south!</Alert>
+
+hello
+
+<Alert intent="tip">
+  Use this to make your code super clean! Make sure to keep an eye
+</Alert>
+
+Hello
