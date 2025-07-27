@@ -3,8 +3,6 @@ import { Icon } from 'astro-icon/components'
 import { cn } from '@/lib/utils/cn'
 import Link from '@/components/Link.astro'
 import { ROUTES } from '@/config/routes'
-import { Image } from 'astro:assets'
-import heroImg from '@/assets/images/hero.png'
 
 const sectionId = 'hero'
 ---
@@ -13,14 +11,6 @@ const sectionId = 'hero'
   aria-labelledby={sectionId}
   class="grid h-[calc(100svh-var(--header-h))] items-center"
 >
-  <Image
-    src={heroImg}
-    alt=""
-    width={500}
-    densities={[1.5]}
-    class="absolute right-[20vw] size-[20vw]"
-  />
-
   <div class="@container -mt-(--header-h)">
     <h1 id={sectionId} class="text-lg">
       <span class={cn('text-primary mb-3 block')}
