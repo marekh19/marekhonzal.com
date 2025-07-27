@@ -1,9 +1,7 @@
 ---
 import { cn } from '@/lib/utils/cn'
 import Navigation from './Navigation.astro'
-// import SiteLogo from '@/assets/mh-logo.svg'
 import { ROUTES } from '@/config/routes'
-// import { defaultSeo } from '@/config/seo'
 ---
 
 <header class="grid h-(--header-h) items-center">
@@ -18,10 +16,7 @@ import { ROUTES } from '@/config/routes'
       href={ROUTES.home}
       class="focus-visible:outline-primary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2"
     >
-      <!-- TODO: Decide on the logo -->
-      <!-- <SiteLogo class="h-7" /> -->
       <span class="text-xl font-semibold tracking-wide">Marek Honzal</span>
-      <!-- <span class="sr-only">{defaultSeo.baseTitle}</span> -->
     </a>
     <Navigation />
   </nav>
