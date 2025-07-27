@@ -11,10 +11,10 @@ import H3 from '@/components/Heading/H3.astro'
 import H4 from '@/components/Heading/H4.astro'
 import H5 from '@/components/Heading/H5.astro'
 import H6 from '@/components/Heading/H6.astro'
-import { shouldIncludePost } from '@/lib/utils/posts'
+import { shouldIncludeItem } from '@/lib/utils/content'
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection('blog', shouldIncludePost)
+  const posts = await getCollection('blog', shouldIncludeItem)
 
   return posts.map((post) => ({
     params: { slug: post.id },

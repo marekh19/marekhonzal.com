@@ -2,12 +2,11 @@
 import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import {
-  shouldIncludePost,
-  getSortedPostsByDateDesc,
   getPostTagMetadata,
   getAllTags,
   getSortedTagMetadataByCount,
 } from '@/lib/utils/posts'
+import { shouldIncludeItem, getSortedContentByDateDesc } from '@/lib/utils/content'
 import { defaultSeo } from '@/config/seo'
 import ArticleGrid from '@/components/Content/ArticleGrid.astro'
 import { TagsNavigation } from '@/components/Blog/TagsNavigation'
@@ -19,8 +18,8 @@ const meta = {
     'Frontend insights, architecture tips, and developer reflections by Marek Honzal — plus thoughts on dev life, growth, and side projects.',
 } as const
 
-const blogPosts = await getCollection('blog', shouldIncludePost)
-const sortedPosts = getSortedPostsByDateDesc(blogPosts)
+const blogPosts = await getCollection('blog', shouldIncludeItem)
+const sortedPosts = getSortedContentByDateDesc(blogPosts)
 
 const uniqueTags = getAllTags(blogPosts)
 const tagsMetadata = getPostTagMetadata(blogPosts, uniqueTags)

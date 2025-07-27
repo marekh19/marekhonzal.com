@@ -1,11 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import {
-  getAllTags,
-  getPostsByTag,
-  shouldIncludePost,
-  getSortedPostsByDateDesc,
-} from '@/lib/utils/posts'
+import { getAllTags, getPostsByTag } from '@/lib/utils/posts'
+import { shouldIncludeItem, getSortedContentByDateDesc } from '@/lib/utils/content'
 import { createSlugifiedString } from '@/lib/utils/string'
 import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
@@ -22,12 +18,12 @@ const meta = {
 } as const
 
 export const getStaticPaths = (async () => {
-  const posts = await getCollection('blog', shouldIncludePost)
+  const posts = await getCollection('blog', shouldIncludeItem)
   const tags = getAllTags(posts)
 
   return tags.map((tag) => ({
     params: { tag: createSlugifiedString(tag) },
-    props: { tag, posts: getSortedPostsByDateDesc(getPostsByTag(posts, tag)) },
+    props: { tag, posts: getSortedContentByDateDesc(getPostsByTag(posts, tag)) },
   }))
 }) satisfies GetStaticPaths
 
