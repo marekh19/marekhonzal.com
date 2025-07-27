@@ -1,0 +1,14 @@
+---
+import { cn } from '@/lib/utils/cn'
+import { contentGridVariants, type ContentGridVariant } from './contentGridVariants'
+
+type Props = ContentGridVariant & {
+  className?: string
+}
+
+const { type, className } = Astro.props
+---
+
+<div class={cn(contentGridVariants({ type }), className)}>
+  <slot />
+</div>
