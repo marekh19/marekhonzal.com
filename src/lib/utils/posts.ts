@@ -1,7 +1,7 @@
 import { type CollectionEntry } from 'astro:content'
 import { createSlugifiedString } from './string'
 
-type Post = CollectionEntry<'blog'>
+export type Post = CollectionEntry<'blog'>
 
 export type TagMetadata = {
   label: string

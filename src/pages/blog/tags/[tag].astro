@@ -9,7 +9,17 @@ import {
 import { createSlugifiedString } from '@/lib/utils/string'
 import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import ArticleGrid from '@/components/Content/ArticleGrid.astro'
 import { ROUTES } from '@/config/routes'
+import { Icon } from 'astro-icon/components'
+import { cn } from '@/lib/utils/cn'
+import { defaultSeo } from '@/config/seo'
+
+const meta = {
+  title: (tag: string) => `${tag} | Blog | ${defaultSeo.baseTitle}` as const,
+  description: (tag: string) =>
+    `Articles about ${tag} from Marek Honzal’s blog — frontend insights, architecture tips, and lessons from side projects.`,
+} as const
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('blog', shouldIncludePost)
@@ -24,9 +34,25 @@ export const getStaticPaths = (async () => {
 const { tag, posts } = Astro.props
 ---
 
-<BaseLayout>
-  <h1 class="mb-3 text-lg font-bold">{tag}</h1>
-  <ul class="flex flex-col gap-3">
-    {posts.map((post) => <a href={ROUTES.blog.post(post.id)}>{post.data.title}</a>)}
-  </ul>
+<BaseLayout pageTitle={meta.title(tag)} pageDescription={meta.description(tag)}>
+  <a
+    href={ROUTES.blog._}
+    class={cn(
+      'link link-hover text-base-content/75 mt-5 inline-flex items-center gap-1 font-medium transition-colors duration-200 ease-out',
+      'focus:outline-primary focus:rounded-sm focus:outline-offset-2',
+      'hover:text-base-content',
+    )}
+  >
+    <Icon name="lucide:arrow-left" />
+    Back to all articles
+  </a>
+  <div class="mt-5 mb-10 space-y-3">
+    <h1 class="text-3xl">
+      Articles tagged with &ldquo;<strong class="font-bold">{tag}</strong>&rdquo;
+    </h1>
+    <h2 class="text-base-content/75 text-lg">
+      Browse all posts that are related to {tag}.
+    </h2>
+  </div>
+  <ArticleGrid posts={posts} />
 </BaseLayout>

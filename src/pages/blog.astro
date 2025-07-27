@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import { ROUTES } from '@/config/routes'
 import {
   shouldIncludePost,
   getSortedPostsByDateDesc,
@@ -10,7 +9,7 @@ import {
   getSortedTagMetadataByCount,
 } from '@/lib/utils/posts'
 import { defaultSeo } from '@/config/seo'
-import ArticleCard from '@/components/Content/ArticleCard.astro'
+import ArticleGrid from '@/components/Content/ArticleGrid.astro'
 import { TagsNavigation } from '@/components/Blog/TagsNavigation'
 import { cn } from '@/lib/utils/cn'
 
@@ -32,27 +31,11 @@ const sortedTagsMetadata = getSortedTagMetadataByCount(tagsMetadata)
   pageTitle={defaultSeo.pageTitle(meta.title)}
   pageDescription={meta.description}
 >
-  <h1 class="mb-10 text-2xl font-bold">Blog</h1>
-  <h2 class="mb-3 text-lg">Browse by Tags</h2>
-  <TagsNavigation client:load tags={sortedTagsMetadata} className="mb-10" />
-  <div
-    class={cn(
-      'grid grid-cols-1 gap-x-8 gap-y-12',
-      'min-[600px]:grid-cols-2',
-      'lg:grid-cols-3',
-    )}
-  >
-    {
-      sortedPosts.map((post) => (
-        <ArticleCard
-          title={post.data.title}
-          description={post.data.excerpt}
-          targetUrl={ROUTES.blog.post(post.id)}
-          date={post.data.date}
-          thumbnail={post.data.thumbnail}
-          tags={post.data.tags}
-        />
-      ))
-    }
+  <div class="mt-5 mb-10 space-y-5">
+    <h1 class={cn('text-3xl font-bold', 'md:text-4xl')}>Blog</h1>
+    <h2 class="text-lg">On frontend, code, tools, and the ideas that stick.</h2>
   </div>
+  <h2 class="mb-5 text-lg font-semibold">Browse by Tags</h2>
+  <TagsNavigation client:load tags={sortedTagsMetadata} className="mb-10" />
+  <ArticleGrid posts={sortedPosts} />
 </BaseLayout>
