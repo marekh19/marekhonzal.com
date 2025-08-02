@@ -3,4 +3,4 @@
 ## License
 
 Source Code: [MIT License](./LICENSE)  
-Content (e.g. blog posts in `.mdx`): [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+Content (e.g. `.mdx` files inside `src/content/`): [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
