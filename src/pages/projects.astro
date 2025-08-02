@@ -1,17 +1,48 @@
 ---
+import { getCollection } from 'astro:content'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import { cn } from '@/lib/utils/cn'
 import { defaultSeo } from '@/config/seo'
+import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
+import { getProjectsByFeatured } from '@/lib/utils/projects'
+import ProjectGrid from '@/components/Content/ProjectGrid.astro'
 
 const meta = {
   title: 'Projects',
   description:
     'A collection of personal projects by Marek Honzal — small experiments, tools, and ideas I’ve built to learn, explore, and have a bit of fun with code.',
 } as const
+
+const projects = await getCollection('projects', shouldIncludeItem)
+const sortedProjects = getSortedContentByDateDesc(projects)
+
+const { featured, nonFeatured } = getProjectsByFeatured(sortedProjects)
 ---
 
 <BaseLayout
   pageTitle={defaultSeo.pageTitle(meta.title)}
   pageDescription={meta.description}
 >
-  Projects
+  <div class="mt-5 mb-10 space-y-5">
+    <h1 class={cn('text-3xl font-semibold', 'md:text-4xl')}>Projects</h1>
+    <p class="text-lg">
+      Things I've built — some shiny, some scrappy. All part of the journey.
+    </p>
+  </div>
+  <div class="mb-8">
+    <h2 class={cn('mb-3 text-2xl font-semibold', 'md:text-3xl')}>Featured</h2>
+    <p>
+      Recent work that feels good to show — thoughtful, functional, and closer to how I
+      build today.
+    </p>
+  </div>
+  <ProjectGrid projects={featured} className="mb-24" />
+  <div class="mb-8">
+    <h2 class={cn('mb-3 text-2xl font-semibold', 'md:text-3xl')}>The Early Days</h2>
+    <p>
+      Old experiments and awkward first steps. Not perfect, but they got the wheels
+      turning.
+    </p>
+  </div>
+  <ProjectGrid projects={featured} />
 </BaseLayout>

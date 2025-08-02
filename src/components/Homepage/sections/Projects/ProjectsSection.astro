@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content'
+import { cn } from '@/lib/utils/cn'
+import { ROUTES } from '@/config/routes'
+import ProjectGrid from '@/components/Content/ProjectGrid.astro'
+import { shouldIncludeItem } from '@/lib/utils/content'
+
+type Props = {
+  className?: string
+}
+
+const { className } = Astro.props
+
+const sectionId = 'projects'
+
+const projects = await getCollection('projects', shouldIncludeItem)
+---
+
+<section aria-labelledby={sectionId} class={className}>
+  <h2
+    id={sectionId}
+    class={cn('mb-3 text-2xl leading-[140%] font-semibold', 'md:text-3xl', 'lg:text-4xl')}
+  >
+    Stuff I’ve Built
+  </h2>
+  <p class="mb-5 text-lg">
+    A small selection of personal projects. More below if you’re into that kind of thing.
+  </p>
+  <ProjectGrid projects={projects} className="mb-8" />
+  <a class="btn btn-primary" href={ROUTES.projects._}>See all projects</a>
+</section>

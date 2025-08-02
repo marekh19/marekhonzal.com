@@ -6,12 +6,13 @@ import { ROUTES } from '@/config/routes'
 
 type Props = {
   posts: Post[]
+  className?: string
 }
 
-const { posts } = Astro.props
+const { posts, className } = Astro.props
 ---
 
-<ContentGrid type="article">
+<ContentGrid type="article" className={className}>
   {
     posts.map((post) => (
       <ArticleCard

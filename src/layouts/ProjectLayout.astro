@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import BaseLayout from './BaseLayout.astro'
+import PreloadFonts from '@/components/utility/PreloadFonts.astro'
+import { defaultSeo } from '@/config/seo'
+
+type Props = Pick<
+  CollectionEntry<'projects'>['data'],
+  'name' | 'date' | 'description' | 'technologies'
+>
+
+const { name, description, date, technologies } = Astro.props
+---
+
+<BaseLayout pageTitle={defaultSeo.pageTitle(name)} pageDescription={description}>
+  <Fragment slot="head">
+    <PreloadFonts type="serif" />
+  </Fragment>
+
+  <slot />
+</BaseLayout>

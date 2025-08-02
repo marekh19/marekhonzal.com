@@ -17,6 +17,8 @@
   --font-serif: 'Lora', 'serif';
 
   --animate-wave: wave 800ms ease-in-out 1;
+
+  --aspect-og: 1200 / 630;
 }
 
 :root {

@@ -8,10 +8,10 @@ type Content = {
 
 const NUM_FEATURED_ITEMS = 3
 
-const getFeaturedItems = <T extends Content>(items: T[]): T[] =>
+export const getFeaturedItems = <T extends Content>(items: T[]): T[] =>
   items.filter((item) => item.data.isFeatured)
 
-const getNonFeaturedItems = <T extends Content>(items: T[]): T[] =>
+export const getNonFeaturedItems = <T extends Content>(items: T[]): T[] =>
   items.filter((item) => !item.data.isFeatured)
 
 const getTopN = <T extends Content>(items: T[], n: number): T[] => items.slice(0, n)

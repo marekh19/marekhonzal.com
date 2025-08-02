@@ -4,10 +4,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import HeroSection from '@/components/Homepage/sections/Hero/HeroSection.astro'
 import AboutSection from '@/components/Homepage/sections/About/AboutSection.astro'
 import BlogSection from '@/components/Homepage/sections/Blog/BlogSection.astro'
+import ProjectsSection from '@/components/Homepage/sections/Projects/ProjectsSection.astro'
 ---
 
 <BaseLayout pageTitle={defaultSeo.baseTitle}>
   <HeroSection />
   <AboutSection className="mb-40" />
-  <BlogSection />
+  <BlogSection className="mb-40" />
+  <ProjectsSection />
 </BaseLayout>

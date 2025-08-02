@@ -1,9 +1,13 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, render } from 'astro:content'
+import { shouldIncludeItem } from '@/lib/utils/content'
+import ProjectLayout from '@/layouts/ProjectLayout.astro'
+import Prose from '@/components/Prose.astro'
+import { mdxComponents } from '@/components/utility/MDXComponents.astro'
 
 export const getStaticPaths = (async () => {
-  const projects = await getCollection('projects')
+  const projects = await getCollection('projects', shouldIncludeItem)
 
   return projects.map((project) => ({
     params: { slug: project.id },
@@ -13,6 +17,12 @@ export const getStaticPaths = (async () => {
 
 const { project } = Astro.props
 const { Content } = await render(project)
+
+const { data } = project
 ---
 
-<Content />
+<ProjectLayout {...data}>
+  <Prose>
+    <Content components={mdxComponents} />
+  </Prose>
+</ProjectLayout>
