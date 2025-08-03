@@ -50,7 +50,9 @@ export const TagsNavigation = ({ tags, className }: Props) => {
                 'hover:bg-neutral/75',
                 'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
               )}
-              onClick={() => setShouldShowAll(true)}
+              onClick={() => {
+                setShouldShowAll(true)
+              }}
             >
               <EllipsisIcon />
               <span className="sr-only">Show all tags</span>

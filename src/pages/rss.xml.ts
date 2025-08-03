@@ -4,6 +4,7 @@ import rss from '@astrojs/rss'
 
 import { ROUTES } from '@/config/routes'
 import { defaultSeo } from '@/config/seo'
+import { raise } from '@/lib/utils/common'
 import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
 
 export const GET: APIRoute = async (context) => {
@@ -14,7 +15,7 @@ export const GET: APIRoute = async (context) => {
     trailingSlash: false,
     title: defaultSeo.baseTitle,
     description: defaultSeo.metaDescription,
-    site: context.site!,
+    site: context.site ?? raise('"Astro.site" is not set'),
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,

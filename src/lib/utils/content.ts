@@ -35,5 +35,5 @@ export const getFeaturedSectionContent = <T extends Content>(
   return [...featured, ...fallback]
 }
 
-export const shouldIncludeItem = <T extends Content>(item: T): boolean =>
+export const shouldIncludeItem = (item: Content): boolean =>
   import.meta.env.DEV ? true : !item.data.isDraft

@@ -10,13 +10,13 @@ let lastCommitDateIntoDefaultBranch: Date | null | undefined = undefined
 const fetchJson = async <T>(url: string): Promise<T> => {
   const res = await fetch(url)
   if (!res.ok) {
-    throw new Error(`Fetch failed: ${res.status} ${res.statusText}`)
+    throw new Error(`Fetch failed: ${res.status.toString()} ${res.statusText}`)
   }
   return res.json() as Promise<T>
 }
 
 const parseRepoInput = (input: string): RepoInfo => {
-  const match = input.match(/(?:github\.com\/)?([^/]+)\/([^/]+)/)
+  const match = /(?:github\.com\/)?([^/]+)\/([^/]+)/.exec(input)
   if (!match) {
     throw new Error(
       'Invalid GitHub repository format. Expected "owner/repo" or full URL.',
