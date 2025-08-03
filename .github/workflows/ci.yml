@@ -27,7 +27,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 📥 Install dependencies
-        run: pnpm install
+        run: pnpm i --frozen-lockfile
 
       - name: 🎨 Check formatting
         run: pnpm format:check
