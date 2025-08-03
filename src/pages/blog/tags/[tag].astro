@@ -1,15 +1,16 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import { getAllTags, getPostsByTag } from '@/lib/utils/posts'
-import { shouldIncludeItem, getSortedContentByDateDesc } from '@/lib/utils/content'
-import { createSlugifiedString } from '@/lib/utils/string'
 import { getCollection } from 'astro:content'
-import BaseLayout from '@/layouts/BaseLayout.astro'
+import { Icon } from 'astro-icon/components'
+
 import ArticleGrid from '@/components/Content/ArticleGrid.astro'
 import { ROUTES } from '@/config/routes'
-import { Icon } from 'astro-icon/components'
-import { cn } from '@/lib/utils/cn'
 import { defaultSeo } from '@/config/seo'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import { cn } from '@/lib/utils/cn'
+import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
+import { getAllTags, getPostsByTag } from '@/lib/utils/posts'
+import { createSlugifiedString } from '@/lib/utils/string'
 
 const meta = {
   title: (tag: string) => `${tag} | Blog | ${defaultSeo.baseTitle}` as const,

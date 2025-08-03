@@ -1,9 +1,10 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, render } from 'astro:content'
-import BlogPostLayout from '@/layouts/BlogPostLayout.astro'
+
 import Prose from '@/components/Prose.astro'
 import { mdxComponents } from '@/components/utility/MDXComponents.astro'
+import BlogPostLayout from '@/layouts/BlogPostLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
 
 export const getStaticPaths = (async () => {

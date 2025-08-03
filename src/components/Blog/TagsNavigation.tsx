@@ -1,8 +1,9 @@
 import { useState } from 'preact/hooks'
 import clsx from 'clsx'
 import { EllipsisIcon } from 'lucide-preact'
-import type { TagMetadata } from '@/lib/utils/posts'
+
 import { ROUTES } from '@/config/routes'
+import type { TagMetadata } from '@/lib/utils/posts'
 
 // NOTE: Avoid tailwind-merge in client bundle
 const cn = clsx

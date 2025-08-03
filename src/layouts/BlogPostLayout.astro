@@ -1,10 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import BaseLayout from './BaseLayout.astro'
+
 import ArticleHeader from '@/components/Content/ArticleHeader.astro'
 import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
 import PreloadFonts from '@/components/utility/PreloadFonts.astro'
 import { defaultSeo } from '@/config/seo'
+
+import BaseLayout from './BaseLayout.astro'
 
 type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date' | 'excerpt'>
 const { title, excerpt, date } = Astro.props

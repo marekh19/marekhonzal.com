@@ -1,11 +1,12 @@
 ---
 import { getCollection } from 'astro:content'
+
+import ProjectGrid from '@/components/Content/ProjectGrid.astro'
+import { defaultSeo } from '@/config/seo'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import { cn } from '@/lib/utils/cn'
-import { defaultSeo } from '@/config/seo'
 import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
 import { getProjectsByFeatured } from '@/lib/utils/projects'
-import ProjectGrid from '@/components/Content/ProjectGrid.astro'
 
 const meta = {
   title: 'Projects',

@@ -1,5 +1,6 @@
-import { z, defineCollection } from 'astro:content'
+import { defineCollection, z } from 'astro:content'
 import { glob } from 'astro/loaders'
+
 import { TECHNOLOGY_SLUGS } from '@/lib/technologies'
 
 const blogCollection = defineCollection({

@@ -1,4 +1,5 @@
 import { type CollectionEntry } from 'astro:content'
+
 import { createSlugifiedString } from './string'
 
 export type Post = CollectionEntry<'blog'>

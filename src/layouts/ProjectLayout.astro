@@ -1,9 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import BaseLayout from './BaseLayout.astro'
+
+import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
 import PreloadFonts from '@/components/utility/PreloadFonts.astro'
 import { defaultSeo } from '@/config/seo'
-import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
+
+import BaseLayout from './BaseLayout.astro'
 
 type Props = Pick<
   CollectionEntry<'projects'>['data'],

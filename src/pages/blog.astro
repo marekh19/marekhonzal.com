@@ -1,16 +1,17 @@
 ---
 import { getCollection } from 'astro:content'
+
+import { TagsNavigation } from '@/components/Blog/TagsNavigation'
+import ArticleGrid from '@/components/Content/ArticleGrid.astro'
+import { defaultSeo } from '@/config/seo'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import { cn } from '@/lib/utils/cn'
+import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
 import {
-  getPostTagMetadata,
   getAllTags,
+  getPostTagMetadata,
   getSortedTagMetadataByCount,
 } from '@/lib/utils/posts'
-import { shouldIncludeItem, getSortedContentByDateDesc } from '@/lib/utils/content'
-import { defaultSeo } from '@/config/seo'
-import ArticleGrid from '@/components/Content/ArticleGrid.astro'
-import { TagsNavigation } from '@/components/Blog/TagsNavigation'
-import { cn } from '@/lib/utils/cn'
 
 const meta = {
   title: 'Blog',

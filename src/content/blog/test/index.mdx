@@ -70,13 +70,14 @@ invariant(falsyValue, 'This will throw!')
 ## Test
 
 ```ts
+import type { QueryResult } from '@apollo/client'
+
 import {
   MiniGameCategory,
   useCatalogMethodologiesQuery,
   useCatalogMiniGamesQuery,
   useCatalogVideoExplainersQuery,
 } from '@/__generated__/graphql'
-import type { QueryResult } from '@apollo/client'
 
 import { catalogFiltersToQueryInput } from '../lib/catalogFiltersToQueryInput'
 

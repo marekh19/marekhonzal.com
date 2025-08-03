@@ -1,5 +1,7 @@
 import type { CollectionEntry } from 'astro:content'
+
 import { TECHNOLOGIES, type Technology } from '@/lib/technologies'
+
 import { getFeaturedItems, getNonFeaturedItems } from './content'
 
 type Project = CollectionEntry<'projects'>

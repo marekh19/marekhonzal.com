@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content'
-import { cn } from '@/lib/utils/cn'
-import { getFeaturedSectionContent, shouldIncludeItem } from '@/lib/utils/content'
+
 import ArticleGrid from '@/components/Content/ArticleGrid.astro'
 import { ROUTES } from '@/config/routes'
+import { cn } from '@/lib/utils/cn'
+import { getFeaturedSectionContent, shouldIncludeItem } from '@/lib/utils/content'
 
 type Props = {
   className?: string

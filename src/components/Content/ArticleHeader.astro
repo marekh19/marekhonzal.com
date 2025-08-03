@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+
 import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
 
 type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date'>
