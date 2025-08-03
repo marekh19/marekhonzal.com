@@ -15,16 +15,16 @@ jobs:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
 
-      - name: 🧰 Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22.17'
-          cache: 'pnpm'
-
-      - name: 📦 Install pnpm
+      - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v3
         with:
           version: 10.13.1
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.18'
+          cache: 'pnpm'
 
       - name: 📥 Install dependencies
         run: pnpm install
@@ -41,7 +41,6 @@ jobs:
       - name: 🏗️ Build
         run: pnpm build
 
-      # Placeholder for deployment step
       - name: 🚀 Deploy (coming soon)
-        if: ${{ false }} # disabled for now
+        if: ${{ false }}
         run: echo "Deploy step to be added later"
