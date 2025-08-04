@@ -1,7 +1,29 @@
 ---
+import { ROUTES } from '@/config/routes'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 ---
 
 <BaseLayout>
-  <div>Oh bonkers! This page does not exist</div>
+  <div class="-mb-40 grid h-[calc(100svh-var(--header-h))] items-center">
+    <div class="-mt-(--header-h) flex flex-col items-center">
+      <h1 class="mb-3 text-center text-9xl font-bold">404</h1>
+      <h2 class="mb-5 text-center text-2xl font-semibold">Page Not Found</h2>
+      <p
+        class="text-base-content/75 mx-auto mb-8 max-w-xl text-center leading-relaxed text-balance"
+      >
+        This page does not exist and may have never existed in the first place. It seems
+        you've wandered into uncharted territory.
+      </p>
+      <a href={ROUTES.home} class="btn btn-primary mb-10">Go Home</a>
+      <div class="flex gap-2">
+        <span class="bg-base-content/75 size-2 animate-bounce rounded-full"></span>
+        <span
+          class="bg-base-content/75 size-2 animate-bounce rounded-full"
+          style={{ animationDelay: '0.1s' }}></span>
+        <span
+          class="bg-base-content/75 size-2 animate-bounce rounded-full"
+          style={{ animationDelay: '0.2s' }}></span>
+      </div>
+    </div>
+  </div>
 </BaseLayout>
