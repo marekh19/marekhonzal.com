@@ -2,8 +2,9 @@
 import { getLastCommitDateIntoDefaultBranch } from '@/lib/github'
 import { formatDateHuman } from '@/lib/utils/date'
 
-// TODO: Switch to real repo
-const lastCommitDate = await getLastCommitDateIntoDefaultBranch('marekh19/zentodo')
+const lastCommitDate = await getLastCommitDateIntoDefaultBranch(
+  'marekh19/marekhonzal.com',
+)
 
 const formattedLastCommit = formatDateHuman(lastCommitDate ?? new Date(), {
   month: 'long',
