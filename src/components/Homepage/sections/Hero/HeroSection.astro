@@ -13,18 +13,19 @@ const sectionId = 'hero'
   class="grid h-[calc(100svh-var(--header-h))] items-center"
 >
   <div class="@container -mt-(--header-h)">
-    <h1 id={sectionId} class="text-lg">
-      <span class={cn('text-primary mb-3 block')}
-        >Hi
-        <span class="animate-wave inline-block origin-bottom">👋</span>, my name is
-      </span>
-      <span
-        class={cn(
-          'block text-4xl leading-[140%] font-bold',
-          '@xl:text-5xl',
-          '@2xl:text-6xl',
-        )}>Marek Honzal</span
-      >
+    <p class={cn('text-primary mb-3 text-lg')}>
+      Hi
+      <span class="animate-wave inline-block origin-bottom">👋</span>, my name is
+    </p>
+    <h1
+      id={sectionId}
+      class={cn(
+        'block text-4xl leading-[140%] font-bold',
+        '@xl:text-5xl',
+        '@2xl:text-6xl',
+      )}
+    >
+      Marek Honzal
     </h1>
     <h2
       class={cn(
