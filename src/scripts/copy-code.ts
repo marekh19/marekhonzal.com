@@ -21,7 +21,6 @@ const createCopyButton = (pre: HTMLPreElement): HTMLButtonElement => {
     timeoutId = undefined
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   button.addEventListener('click', async () => {
     if (timeoutId) clearTimeout(timeoutId)
 

@@ -12,7 +12,7 @@ type Props = Pick<
   'name' | 'date' | 'description' | 'technologies'
 >
 
-const { name, description, date, technologies } = Astro.props
+const { name, description } = Astro.props
 ---
 
 <BaseLayout pageTitle={defaultSeo.pageTitle(name)} pageDescription={description}>
