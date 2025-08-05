@@ -1,12 +1,11 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-
 import { ROUTES } from '@/config/routes'
+import type { PostData } from '@/lib/types'
 import { cn } from '@/lib/utils/cn'
 import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
 import { getTagsWithSlugs } from '@/lib/utils/posts'
 
-type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date' | 'tags'> & {
+type Props = PostData & {
   className?: string
 }
 

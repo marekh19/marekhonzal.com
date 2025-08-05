@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content'
 
 import Prose from '@/components/Prose.astro'
 import { mdxComponents } from '@/components/utility/MDXComponents.astro'
-import BlogPostLayout from '@/layouts/BlogPostLayout.astro'
+import ArticleLayout from '@/layouts/ArticleLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
 
 export const getStaticPaths = (async () => {
@@ -22,8 +22,8 @@ const { Content } = await render(post)
 const { data } = post
 ---
 
-<BlogPostLayout {...data}>
+<ArticleLayout {...data}>
   <Prose>
     <Content components={mdxComponents} />
   </Prose>
-</BlogPostLayout>
+</ArticleLayout>

@@ -1,12 +1,9 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-
 import { ROUTES } from '@/config/routes'
+import type { Project } from '@/lib/types'
 
 import ContentGrid from './ContentGrid/ContentGrid.astro'
 import ProjectCard from './ProjectCard.astro'
-
-type Project = CollectionEntry<'projects'>
 
 type Props = {
   projects: Project[]

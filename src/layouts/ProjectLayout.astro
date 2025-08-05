@@ -1,17 +1,13 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-
+import ProjectHeader from '@/components/Content/ProjectHeader.astro'
 import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
 import PreloadFonts from '@/components/utility/PreloadFonts.astro'
 import { defaultSeo } from '@/config/seo'
+import type { ProjectData } from '@/lib/types'
 
 import BaseLayout from './BaseLayout.astro'
 
-type Props = Pick<
-  CollectionEntry<'projects'>['data'],
-  'name' | 'date' | 'description' | 'technologies'
->
-
+type Props = ProjectData
 const { name, description } = Astro.props
 ---
 
@@ -21,7 +17,7 @@ const { name, description } = Astro.props
   </Fragment>
 
   <Fragment slot="beforeContent">
-    <span>Project header here</span>
+    <ProjectHeader {...Astro.props} className="mt-5" />
   </Fragment>
 
   <slot />
