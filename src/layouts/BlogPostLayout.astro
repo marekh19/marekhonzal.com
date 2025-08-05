@@ -8,8 +8,8 @@ import { defaultSeo } from '@/config/seo'
 
 import BaseLayout from './BaseLayout.astro'
 
-type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date' | 'excerpt'>
-const { title, excerpt, date } = Astro.props
+type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date' | 'excerpt' | 'tags'>
+const { title, excerpt, date, tags } = Astro.props
 ---
 
 <BaseLayout pageTitle={defaultSeo.pageTitle(title)} pageDescription={excerpt}>
@@ -18,7 +18,7 @@ const { title, excerpt, date } = Astro.props
   </Fragment>
 
   <Fragment slot="beforeContent">
-    <ArticleHeader title={title} date={date} />
+    <ArticleHeader title={title} date={date} tags={tags} className="mt-5" />
   </Fragment>
 
   <slot />

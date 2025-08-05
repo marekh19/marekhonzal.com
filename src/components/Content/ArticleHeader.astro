@@ -1,24 +1,58 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 
+import { ROUTES } from '@/config/routes'
+import { cn } from '@/lib/utils/cn'
 import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
+import { getTagsWithSlugs } from '@/lib/utils/posts'
 
-type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date'>
+type Props = Pick<CollectionEntry<'blog'>['data'], 'title' | 'date' | 'tags'> & {
+  className?: string
+}
 
-const { title, date } = Astro.props
+const { title, date, tags, className } = Astro.props
+
+const tagsWithSlugs = getTagsWithSlugs(tags)
 ---
 
-<div class="my-10">
-  <h1
-    class:list={[
-      'text-primary font-serif text-3xl leading-tight text-balance',
-      'lg:text-4xl',
-      'xl:text-5xl',
-    ]}
-  >
-    {title}
-  </h1>
-  <time class="text-neutral-content mt-6 font-serif" datetime={formatDateMachine(date)}
-    >{formatDateHuman(date)}</time
-  >
+<div class={cn('mb-10', className)}>
+  <div class="space-y-3">
+    <time
+      class="text-neutral-content inline-block font-serif"
+      datetime={formatDateMachine(date)}
+    >
+      {formatDateHuman(date)}
+    </time>
+    <h1
+      class:list={[
+        'text-primary font-serif text-4xl leading-tight text-balance',
+        'lg:text-5xl',
+        'xl:text-6xl',
+      ]}
+    >
+      {title}
+    </h1>
+    {
+      !!tagsWithSlugs && (
+        <ul class={cn('flex flex-wrap gap-3', 'md:gap-x-5')}>
+          {tagsWithSlugs.map((tag) => (
+            <li>
+              <a
+                href={ROUTES.blog.tag(tag.slug)}
+                class={cn(
+                  'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                  'md:badge-md',
+                  'hover:bg-neutral/75',
+                  'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
+                )}
+              >
+                {tag.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+  <div class="divider"></div>
 </div>

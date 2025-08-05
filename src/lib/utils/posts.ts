@@ -29,3 +29,11 @@ export const getSortedTagMetadataByCount = (tagMetadata: TagMetadata[]): TagMeta
 
 export const getPostsByTag = (posts: Post[], tag: string): Post[] =>
   posts.filter((post) => post.data.tags?.includes(tag))
+
+export const getTagsWithSlugs = (tags?: string[]) =>
+  tags
+    ? tags.map((tag) => ({
+        label: tag,
+        slug: createSlugifiedString(tag),
+      }))
+    : null
