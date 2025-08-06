@@ -1,0 +1,78 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import type { Technology } from '@/lib/types'
+import { cn } from '@/lib/utils/cn'
+import { getDisplayDomain, getGitHubRepoPart } from '@/lib/utils/string'
+
+type Props = {
+  technologies: Technology[]
+  githubUrl?: string
+  demoUrl?: string
+  className?: string
+}
+
+const { technologies, demoUrl, githubUrl, className } = Astro.props
+---
+
+<dl
+  class={cn(
+    'text-base-content/75 grid grid-cols-[auto_1fr] items-center gap-x-8 gap-y-3',
+    'lg:gap-x-10 lg:gap-y-5',
+    className,
+  )}
+>
+  {
+    technologies.length > 0 && (
+      <>
+        <dt>Technologies</dt>
+        <dd>
+          <ul class="flex items-center gap-5">
+            {technologies.map(({ iconName, title }) => (
+              <li class="tooltip" data-tip={title}>
+                <Icon name={iconName} class="size-6" />
+                <span class="sr-only">{title}</span>
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </>
+    )
+  }
+  {
+    !!githubUrl && (
+      <>
+        <dt>Source code</dt>
+        <dd>
+          <a
+            href={githubUrl}
+            class="text-base-content inline-flex items-center gap-1 font-medium"
+          >
+            <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
+              {getGitHubRepoPart(githubUrl)}
+            </span>
+            <Icon name="lucide:github" class="size-5 shrink-0" />
+          </a>
+        </dd>
+      </>
+    )
+  }
+  {
+    !!demoUrl && (
+      <>
+        <dt>View the app</dt>
+        <dd>
+          <a
+            href={demoUrl}
+            class="text-base-content inline-flex items-center gap-1 font-medium"
+          >
+            <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
+              {getDisplayDomain(demoUrl)}
+            </span>
+            <Icon name="lucide:arrow-up-right" class="size-5 shrink-0" />
+          </a>
+        </dd>
+      </>
+    )
+  }
+</dl>

@@ -29,6 +29,8 @@ const projectsCollection = defineCollection({
       isFeatured: z.boolean().optional().default(false),
       thumbnail: image(),
       technologies: z.array(z.enum(TECHNOLOGY_SLUGS)),
+      githubUrl: z.string().url().optional(),
+      demoUrl: z.string().url().optional(),
     }),
 })
 

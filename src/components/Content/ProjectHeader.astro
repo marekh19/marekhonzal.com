@@ -1,0 +1,39 @@
+---
+import type { ProjectData } from '@/lib/types'
+import { cn } from '@/lib/utils/cn'
+import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
+import { getTechnologiesByProject } from '@/lib/utils/projects'
+
+import ProjectHeaderDetails from './ProjectHeaderDetails.astro'
+
+type Props = ProjectData & {
+  className?: string
+}
+
+const { name, date, demoUrl, githubUrl, className } = Astro.props
+
+const technologiesWithIcons = getTechnologiesByProject(Astro.props)
+const details = { demoUrl, githubUrl, technologies: technologiesWithIcons }
+---
+
+<div class={cn('mb-10', className)}>
+  <div class="space-y-3">
+    <time
+      class="text-base-content/75 inline-block font-serif"
+      datetime={formatDateMachine(date)}
+    >
+      {formatDateHuman(date)}
+    </time>
+    <h1
+      class:list={[
+        'text-primary font-serif text-4xl leading-tight text-balance',
+        'lg:text-5xl',
+        'xl:text-6xl',
+      ]}
+    >
+      {name}
+    </h1>
+  </div>
+  <ProjectHeaderDetails {...details} className="mt-5" />
+  <div class="divider"></div>
+</div>

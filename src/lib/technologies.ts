@@ -1,7 +1,4 @@
-export type Technology = {
-  title: string
-  iconName: `logos:${string}`
-}
+import type { Technology } from './types'
 
 type TechnologySlug = keyof typeof TECHNOLOGIES
 

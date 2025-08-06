@@ -17,7 +17,7 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
 <div class={cn('mb-10', className)}>
   <div class="space-y-3">
     <time
-      class="text-neutral-content inline-block font-serif"
+      class="text-base-content/75 inline-block font-serif"
       datetime={formatDateMachine(date)}
     >
       {formatDateHuman(date)}
@@ -31,27 +31,27 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
     >
       {title}
     </h1>
-    {
-      !!tagsWithSlugs && (
-        <ul class={cn('flex flex-wrap gap-3', 'md:gap-x-5')}>
-          {tagsWithSlugs.map((tag) => (
-            <li>
-              <a
-                href={ROUTES.blog.tag(tag.slug)}
-                class={cn(
-                  'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
-                  'md:badge-md',
-                  'hover:bg-neutral/75',
-                  'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
-                )}
-              >
-                {tag.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )
-    }
   </div>
+  {
+    !!tagsWithSlugs && (
+      <ul class={cn('mt-5 flex flex-wrap gap-3', 'md:gap-x-5')}>
+        {tagsWithSlugs.map((tag) => (
+          <li>
+            <a
+              href={ROUTES.blog.tag(tag.slug)}
+              class={cn(
+                'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'md:badge-md',
+                'hover:bg-neutral/75',
+                'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
+              )}
+            >
+              {tag.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
   <div class="divider"></div>
 </div>
