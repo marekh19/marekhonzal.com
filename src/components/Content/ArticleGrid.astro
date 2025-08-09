@@ -18,7 +18,7 @@ const { posts, className } = Astro.props
     posts.map((post) => (
       <ArticleCard
         title={post.data.title}
-        description={post.data.excerpt}
+        description={post.data.description}
         targetUrl={ROUTES.blog.post(post.id)}
         date={post.data.date}
         thumbnail={post.data.thumbnail}

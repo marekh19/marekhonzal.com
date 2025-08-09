@@ -19,7 +19,7 @@ export const GET: APIRoute = async (context) => {
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,
-      description: post.data.excerpt,
+      description: post.data.description,
       link: ROUTES.blog.post(post.id),
     })),
   })

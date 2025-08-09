@@ -10,7 +10,7 @@ type Props = ProjectData & {
   className?: string
 }
 
-const { name, date, demoUrl, githubUrl, className } = Astro.props
+const { title, date, demoUrl, githubUrl, className } = Astro.props
 
 const technologiesWithIcons = getTechnologiesByProject(Astro.props)
 const details = { demoUrl, githubUrl, technologies: technologiesWithIcons }
@@ -31,7 +31,7 @@ const details = { demoUrl, githubUrl, technologies: technologiesWithIcons }
         'xl:text-6xl',
       ]}
     >
-      {name}
+      {title}
     </h1>
   </div>
   <ProjectHeaderDetails {...details} className="mt-5" />

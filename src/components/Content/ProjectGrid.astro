@@ -17,7 +17,7 @@ const { projects, className } = Astro.props
   {
     projects.map((project) => (
       <ProjectCard
-        title={project.data.name}
+        title={project.data.title}
         description={project.data.description}
         targetUrl={ROUTES.projects.detail(project.id)}
         date={project.data.date}

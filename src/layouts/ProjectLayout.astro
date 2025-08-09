@@ -8,10 +8,10 @@ import type { ProjectData } from '@/lib/types'
 import BaseLayout from './BaseLayout.astro'
 
 type Props = ProjectData
-const { name, description } = Astro.props
+const { title, description } = Astro.props
 ---
 
-<BaseLayout pageTitle={defaultSeo.pageTitle(name)} pageDescription={description}>
+<BaseLayout pageTitle={defaultSeo.pageTitle(title)} pageDescription={description}>
   <Fragment slot="head">
     <PreloadFonts type="serif" />
   </Fragment>

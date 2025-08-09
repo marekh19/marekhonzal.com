@@ -8,7 +8,7 @@ const blogCollection = defineCollection({
   schema: ({ image }) =>
     z.object({
       title: z.string(),
-      excerpt: z.string(),
+      description: z.string(),
       date: z.date(),
       isDraft: z.boolean().optional().default(false),
       isFeatured: z.boolean().optional().default(false),
@@ -22,7 +22,7 @@ const projectsCollection = defineCollection({
   loader: glob({ pattern: '**/*.{mdx,md}', base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
-      name: z.string(),
+      title: z.string(),
       description: z.string(),
       date: z.date(),
       isDraft: z.boolean().optional().default(false),
