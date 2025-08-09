@@ -1,5 +1,5 @@
-import { TECHNOLOGIES, type Technology } from '@/lib/technologies'
-import type { Project, ProjectData } from '@/lib/types'
+import { TECHNOLOGIES } from '@/lib/technologies'
+import type { Project, ProjectData, Technology } from '@/lib/types'
 
 import { getFeaturedItems, getNonFeaturedItems } from './content'
 
