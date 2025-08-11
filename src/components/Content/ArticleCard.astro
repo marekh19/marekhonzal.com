@@ -28,8 +28,8 @@ const hasTags = !!tags && tags.length > 0
 <a
   href={targetUrl}
   class={cn(
-    'border-base-content/15 group overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
-    'hover:border-base-content/30',
+    'border-base-content/20 group overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
+    'hover:border-base-content/40',
     'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
   )}
 >
@@ -40,7 +40,7 @@ const hasTags = !!tags && tags.length > 0
         alt={title}
         class={cn(
           'size-full object-cover transition-transform duration-300 ease-out',
-          'group-hover:scale-105 group-focus-visible:scale-105',
+          'motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105',
         )}
         {...IMAGE_CONFIG}
       />
@@ -65,7 +65,7 @@ const hasTags = !!tags && tags.length > 0
       <span class="mt-auto inline-flex items-center gap-1"
         >Read more<Icon
           name="lucide:arrow-right"
-          class="size-4 transition-transform duration-200 ease-out group-hover:translate-x-1 group-focus-visible:translate-x-1"
+          class="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1"
         /></span
       >
     </div>

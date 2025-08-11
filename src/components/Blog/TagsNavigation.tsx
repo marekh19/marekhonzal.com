@@ -37,7 +37,9 @@ export const TagsNavigation = ({ tags, className }: Props) => {
               href={ROUTES.blog.tag(slug)}
             >
               <span>{label}</span>
-              <span className="badge badge-xs badge-primary badge-soft">{count}</span>
+              <span className="badge badge-xs badge-primary badge-soft font-bold">
+                {count}
+              </span>
             </a>
           </li>
         ))}

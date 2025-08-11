@@ -16,13 +16,14 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
       </p>
       <a href={ROUTES.home} class="btn btn-primary mb-10">Go Home</a>
       <div class="flex gap-2">
-        <span class="bg-base-content/75 size-2 animate-bounce rounded-full"></span>
+        <span class="bg-base-content/75 size-2 rounded-full motion-safe:animate-bounce"
+        ></span>
         <span
-          class="bg-base-content/75 size-2 animate-bounce rounded-full"
-          style={{ animationDelay: '0.1s' }}></span>
+          class="bg-base-content/75 size-2 rounded-full motion-safe:animate-bounce motion-safe:[animation-delay:100ms]"
+        ></span>
         <span
-          class="bg-base-content/75 size-2 animate-bounce rounded-full"
-          style={{ animationDelay: '0.2s' }}></span>
+          class="bg-base-content/75 size-2 rounded-full motion-safe:animate-bounce motion-safe:[animation-delay:200ms]"
+        ></span>
       </div>
     </div>
   </div>
