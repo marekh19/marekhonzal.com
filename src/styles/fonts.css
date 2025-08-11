@@ -4,7 +4,9 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/open-sans-v43-latin-regular.woff2') format('woff2');
+  src:
+    url('/fonts/open-sans-v43-latin-regular.woff2') format('woff2'),
+    url('/fonts/open-sans-v43-latin-regular.woff') format('woff');
 }
 
 /* open-sans-italic - latin */
@@ -49,7 +51,9 @@
   font-family: 'Lora';
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/lora-v36-latin-regular.woff2') format('woff2');
+  src:
+    url('/fonts/lora-v36-latin-regular.woff2') format('woff2'),
+    url('/fonts/lora-v36-latin-regular.woff') format('woff');
 }
 
 /* lora-500 - latin */

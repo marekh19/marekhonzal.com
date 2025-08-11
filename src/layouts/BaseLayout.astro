@@ -3,10 +3,11 @@ import Analytics from '@/components/utility/Analytics.astro'
 import CanonicalLink from '@/components/utility/CanonicalLink.astro'
 import Favicon from '@/components/utility/Favicon.astro'
 import Meta from '@/components/utility/Meta.astro'
+import OpenGraph from '@/components/utility/OpenGraph.astro'
 import PreloadFonts from '@/components/utility/PreloadFonts.astro'
 import Rss from '@/components/utility/Rss.astro'
 import Sitemap from '@/components/utility/Sitemap.astro'
-import { defaultSeo } from '@/config/seo'
+import { defaultSeo, OG_FALLBACK_SLUG } from '@/config/seo'
 
 import LandmarksLayout from './LandmarksLayout.astro'
 
@@ -19,6 +20,9 @@ type Props = {
 
 const { pageTitle = defaultSeo.baseTitle, pageDescription = defaultSeo.metaDescription } =
   Astro.props
+
+const [maybeSlug] = Object.values(Astro.params)
+const ogImageUrl = `/og/${maybeSlug ?? OG_FALLBACK_SLUG}.png` as const
 ---
 
 <html lang="en">
@@ -31,6 +35,7 @@ const { pageTitle = defaultSeo.baseTitle, pageDescription = defaultSeo.metaDescr
     <Analytics />
     <Sitemap />
     <PreloadFonts type="sans" />
+    <OpenGraph title={pageTitle} description={pageDescription} imagePath={ogImageUrl} />
     <slot name="head" />
   </head>
   <body>
