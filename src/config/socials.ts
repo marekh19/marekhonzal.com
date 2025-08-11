@@ -22,7 +22,7 @@ export const socials = [
   },
   {
     label: 'Mail',
-    url: 'mailto:marek.honzal@gmail.com',
+    url: 'mailto:hi@marekhonzal.com',
     iconName: 'ph:envelope',
   },
 ] as const satisfies readonly SocialLink[]
