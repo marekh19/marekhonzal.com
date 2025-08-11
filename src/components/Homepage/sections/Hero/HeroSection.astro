@@ -5,6 +5,8 @@ import Link from '@/components/Link.astro'
 import { ROUTES } from '@/config/routes'
 import { cn } from '@/lib/utils/cn'
 
+import PortraitCircles from './PortraitCircles.astro'
+
 const sectionId = 'hero'
 ---
 
@@ -13,10 +15,8 @@ const sectionId = 'hero'
   class="grid h-[calc(100svh-var(--header-h))] items-center"
 >
   <div class="@container -mt-(--header-h)">
-    <p class={cn('text-primary mb-3 text-lg')}>
-      Hi
-      <span class="animate-wave inline-block origin-bottom">👋</span>, my name is
-    </p>
+    <PortraitCircles className="mb-8" />
+    <p class={cn('mb-3 text-lg')}>Hi 👋, my name is</p>
     <h1
       id={sectionId}
       class={cn(
@@ -29,12 +29,15 @@ const sectionId = 'hero'
     </h1>
     <h2
       class={cn(
-        'text-base-content/60 text-2xl leading-[140%] font-bold tracking-wide',
+        'text-base-content/60 relative inline-block text-2xl leading-[140%] font-bold tracking-wide',
         '@md:text-3xl',
         '@xl:text-4xl',
       )}
     >
       I build scalable frontends
+      <span
+        class="bg-base-content/60 motion-safe:animate-underline-wipe absolute bottom-0 left-0 h-0.5 w-full origin-left motion-safe:[animation-delay:800ms] motion-reduce:w-0"
+      ></span>
     </h2>
     <p
       class={cn(
@@ -60,8 +63,8 @@ const sectionId = 'hero'
           name="lucide:arrow-right"
           class={cn(
             'size-[1.25em] transition-transform duration-200 ease-out',
-            'group-hover:translate-x-1',
-            'group-focus-visible:translate-x-1',
+            'motion-safe:group-hover:translate-x-1',
+            'motion-safe:group-focus-visible:translate-x-1',
           )}
         />
       </a>
