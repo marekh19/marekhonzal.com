@@ -9,5 +9,9 @@ export const OG_FALLBACK_SLUG = 'base'
 
 export const staticPageOgFallback = {
   id: OG_FALLBACK_SLUG,
-  data: { title: defaultSeo.baseTitle, description: defaultSeo.metaDescription },
+  data: {
+    title: 'Marek Honzal',
+    description:
+      'Frontend developer sharing insights on architecture, state management, and building scalable apps.',
+  },
 } as const

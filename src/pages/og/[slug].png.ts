@@ -22,32 +22,50 @@ type OGAPIRoute = APIRoute<
 
 type OGHtmlData = Pick<CollectionEntryItem['data'], 'title' | 'description'>
 
+const tintSvg = (svg: string, color: string) => {
+  const tinted = svg.replace(/fill="currentColor"/gi, `fill="${color}"`)
+
+  return `data:image/svg+xml;base64,${Buffer.from(tinted).toString('base64')}`
+}
+
 const generateHtml = (data: OGHtmlData): JSX.Element => {
+  const rawSvg = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/assets/portrait.svg'),
+    'utf8',
+  )
+  const svgDataUrl = tintSvg(rawSvg, '#010204')
+
   return h(
     'div',
-    { tw: 'h-full w-full bg-black flex items-center justify-center p-40' },
-    h('div', { tw: 'absolute w-8 bg-[#9ca6f9] h-full left-0 top-0' }),
+    { tw: 'h-full w-full bg-[#010204] flex items-center justify-start p-40' },
     h(
       'div',
-      { tw: 'flex flex-col' },
+      { tw: 'flex flex-col text-[#d5d7de]' },
       h(
         'div',
         {
-          tw: 'flex items-center self-start rounded-full mb-10 py-3 px-5 border border-slate-600 text-white',
+          tw: 'flex items-center self-start rounded-full mb-16 py-1.5 px-5 border-2 border-slate-700',
         },
-        h('span', { tw: 'text-xl mr-5' }, 'Marek Honzal'),
-        h('span', { tw: 'text-xl mr-5' }, '|'),
-        h('span', { tw: 'text-xl' }, 'marekhonzal.com'),
+        h(
+          'div',
+          {
+            tw: 'flex items-center justify-center bg-[#d5d7de] rounded-full mr-3',
+          },
+          h('img', { tw: 'fill-white', src: svgDataUrl, width: 56, height: 56, alt: '' }),
+        ),
+        h('span', { tw: 'text-2xl mr-3' }, 'Marek Honzal'),
+        h('span', { tw: 'text-2xl mr-3' }, '|'),
+        h('span', { tw: 'text-2xl' }, 'marekhonzal.com'),
       ),
       h(
         'div',
-        { tw: 'text-7xl text-white mb-10', style: { fontFamily: 'Lora Regular' } },
+        { tw: 'text-7xl mb-16 tracking-wide', style: { fontFamily: 'Lora Regular' } },
         data.title,
       ),
       h(
         'div',
         {
-          tw: 'text-xl text-white',
+          tw: 'text-3xl leading-[150%]',
           style: { fontFamily: 'Open Sans Regular' },
         },
         data.description,
