@@ -59,14 +59,17 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
       ),
       h(
         'div',
-        { tw: 'text-7xl mb-16 tracking-wide', style: { fontFamily: 'Lora Regular' } },
+        {
+          tw: 'text-7xl mb-16 font-medium tracking-wide',
+          style: { fontFamily: 'Lora Medium' },
+        },
         data.title,
       ),
       h(
         'div',
         {
-          tw: 'text-3xl leading-[150%]',
-          style: { fontFamily: 'Open Sans Regular' },
+          tw: 'text-3xl font-semibold leading-[150%]',
+          style: { fontFamily: 'Open Sans Semibold' },
         },
         data.description,
       ),
@@ -80,11 +83,11 @@ export const GET: OGAPIRoute = async ({ props }) => {
   } = props
 
   const loraRegular = fs.readFileSync(
-    path.resolve(process.cwd(), 'public/fonts/lora-v36-latin-regular.woff'),
+    path.resolve(process.cwd(), 'public/fonts/lora-v36-latin-500.woff'),
   )
 
   const openSansRegular = fs.readFileSync(
-    path.resolve(process.cwd(), 'public/fonts/open-sans-v43-latin-regular.woff'),
+    path.resolve(process.cwd(), 'public/fonts/open-sans-v43-latin-600.woff'),
   )
 
   const html = generateHtml(data)
@@ -94,12 +97,12 @@ export const GET: OGAPIRoute = async ({ props }) => {
     height: 630,
     fonts: [
       {
-        name: 'Open Sans Regular',
+        name: 'Open Sans Semibold',
         data: openSansRegular.buffer,
         style: 'normal',
       },
       {
-        name: 'Lora Regular',
+        name: 'Lora Medium',
         data: loraRegular.buffer,
         style: 'normal',
       },

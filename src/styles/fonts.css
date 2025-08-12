@@ -4,9 +4,7 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src:
-    url('/fonts/open-sans-v43-latin-regular.woff2') format('woff2'),
-    url('/fonts/open-sans-v43-latin-regular.woff') format('woff');
+  src: url('/fonts/open-sans-v43-latin-regular.woff2') format('woff2');
 }
 
 /* open-sans-italic - latin */
@@ -33,7 +31,9 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
-  src: url('/fonts/open-sans-v43-latin-600.woff2') format('woff2');
+  src:
+    url('/fonts/open-sans-v43-latin-600.woff2') format('woff2'),
+    url('/fonts/open-sans-v43-latin-600.woff') format('woff');
 }
 
 /* open-sans-700 - latin */
@@ -51,9 +51,7 @@
   font-family: 'Lora';
   font-style: normal;
   font-weight: 400;
-  src:
-    url('/fonts/lora-v36-latin-regular.woff2') format('woff2'),
-    url('/fonts/lora-v36-latin-regular.woff') format('woff');
+  src: url('/fonts/lora-v36-latin-regular.woff2') format('woff2');
 }
 
 /* lora-500 - latin */
@@ -62,5 +60,7 @@
   font-family: 'Lora';
   font-style: normal;
   font-weight: 500;
-  src: url('/fonts/lora-v36-latin-500.woff2') format('woff2');
+  src:
+    url('/fonts/lora-v36-latin-500.woff2') format('woff2'),
+    url('/fonts/lora-v36-latin-500.woff') format('woff');
 }
