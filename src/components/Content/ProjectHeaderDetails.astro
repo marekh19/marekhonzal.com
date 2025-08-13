@@ -28,10 +28,14 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
         <dt>Technologies</dt>
         <dd>
           <ul class="flex items-center gap-5">
-            {technologies.map(({ iconName, title }) => (
-              <li class="tooltip" data-tip={title}>
-                <Icon name={iconName} class="size-6" />
-                <span class="sr-only">{title}</span>
+            {technologies.map((t) => (
+              <li class="tooltip" data-tip={t.title}>
+                {'iconName' in t ? (
+                  <Icon name={t.iconName} class="size-6" />
+                ) : (
+                  <t.Icon class="size-6" />
+                )}
+                <span class="sr-only">{t.title}</span>
               </li>
             ))}
           </ul>
@@ -47,6 +51,8 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
           <a
             href={githubUrl}
             class="text-base-content inline-flex items-center gap-1 font-medium"
+            target="_blank"
+            rel="noopener"
           >
             <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
               {getGitHubRepoPart(githubUrl)}
@@ -65,6 +71,8 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
           <a
             href={demoUrl}
             class="text-base-content inline-flex items-center gap-1 font-medium"
+            target="_blank"
+            rel="noopener"
           >
             <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
               {getDisplayDomain(demoUrl)}
