@@ -27,9 +27,12 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
       <>
         <dt>Technologies</dt>
         <dd>
-          <ul class="flex items-center gap-5">
+          <ul class="flex items-center gap-3">
             {technologies.map((t) => (
-              <li class="tooltip" data-tip={t.title}>
+              <li
+                class="tooltip bg-neutral inline-flex size-9 items-center justify-center rounded-lg"
+                data-tip={t.title}
+              >
                 {'iconName' in t ? (
                   <Icon name={t.iconName} class="size-6" />
                 ) : (
