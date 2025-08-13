@@ -51,7 +51,7 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
           {
             tw: 'flex items-center justify-center bg-[#d5d7de] rounded-full mr-3',
           },
-          h('img', { tw: 'fill-white', src: svgDataUrl, width: 56, height: 56, alt: '' }),
+          h('img', { src: svgDataUrl, width: 56, height: 56, alt: '' }),
         ),
         h('span', { tw: 'text-2xl mr-3' }, 'Marek Honzal'),
         h('span', { tw: 'text-2xl mr-3' }, '|'),
@@ -60,7 +60,7 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
       h(
         'div',
         {
-          tw: 'text-7xl mb-16 font-medium tracking-wide',
+          tw: 'text-7xl mb-16 font-medium tracking-wide leading-[133%]',
           style: { fontFamily: 'Lora Medium' },
         },
         data.title,
