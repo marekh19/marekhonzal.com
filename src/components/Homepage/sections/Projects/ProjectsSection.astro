@@ -4,7 +4,7 @@ import { getCollection } from 'astro:content'
 import ProjectGrid from '@/components/Content/ProjectGrid.astro'
 import { ROUTES } from '@/config/routes'
 import { cn } from '@/lib/utils/cn'
-import { shouldIncludeItem } from '@/lib/utils/content'
+import { getFeaturedSectionContent, shouldIncludeItem } from '@/lib/utils/content'
 
 type Props = {
   className?: string
@@ -15,6 +15,7 @@ const { className } = Astro.props
 const sectionId = 'projects'
 
 const projects = await getCollection('projects', shouldIncludeItem)
+const featuredProjects = getFeaturedSectionContent(projects)
 ---
 
 <section aria-labelledby={sectionId} class={className}>
@@ -27,6 +28,6 @@ const projects = await getCollection('projects', shouldIncludeItem)
   <p class="mb-5 text-lg">
     A small selection of personal projects. More below if you’re into that kind of thing.
   </p>
-  <ProjectGrid projects={projects} className="mb-8" />
+  <ProjectGrid projects={featuredProjects} className="mb-8" />
   <a class="btn btn-lg btn-primary" href={ROUTES.projects._}>See all projects</a>
 </section>
