@@ -12,6 +12,9 @@ export const TECHNOLOGIES = {
   nextjs: { title: 'Next.js', iconName: 'logos:nextjs-icon' },
   moduleFederation: { title: 'Module federation', Icon: ModuleFederation },
   turboRepo: { title: 'Turborepo', Icon: TurboRepo },
+  prisma: { title: 'Prisma', iconName: 'logos:prisma' },
+  trpc: { title: 'tRPC', iconName: 'logos:trpc' },
+  python: { title: 'Python', iconName: 'logos:python' },
 } as const satisfies Record<string, Technology>
 
 export const TECHNOLOGY_SLUGS = Object.keys(TECHNOLOGIES) as [
