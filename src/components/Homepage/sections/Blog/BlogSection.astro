@@ -15,7 +15,6 @@ const { className } = Astro.props
 const sectionId = 'blog'
 
 const blogPosts = await getCollection('blog', shouldIncludeItem)
-
 const featuredPosts = getFeaturedSectionContent(blogPosts)
 ---
 
