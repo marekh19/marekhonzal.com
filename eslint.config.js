@@ -1,7 +1,6 @@
 // @ts-check
 import eslint from '@eslint/js'
 import eslintPluginAstro from 'eslint-plugin-astro'
-import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -30,11 +29,13 @@ export default tseslint.config(
   // Astro
   ...eslintPluginAstro.configs.recommended,
 
-  // Set globals for Node scripts.
+  // Enable TypeScript in Astro frontmatter scripts
   {
-    files: ['scripts/**'],
+    files: ['**/*.astro'],
     languageOptions: {
-      globals: globals.node,
+      parserOptions: {
+        parser: tseslint.parser,
+      },
     },
   },
 )
