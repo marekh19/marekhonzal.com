@@ -1,0 +1,37 @@
+version: 2
+updates:
+  # npm package updates
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'sunday'
+      time: '03:00'
+      timezone: 'Europe/Prague'
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    groups:
+      majors:
+        update-types:
+          - 'major'
+      minors-and-patches:
+        update-types:
+          - 'minor'
+          - 'patch'
+
+  # GitHub Actions updates
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'sunday'
+      time: '03:15'
+      timezone: 'Europe/Prague'
+    groups:
+      majors:
+        update-types:
+          - 'major'
+      minors-and-patches:
+        update-types:
+          - 'minor'
+          - 'patch'
