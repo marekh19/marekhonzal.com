@@ -14,6 +14,139 @@ githubUrl: https://github.com/marekh19/cutest-mon
 demoUrl: https://cutest-mon.marek.work/
 ---
 
-I wanted to learn more about **connecting Next.js app to a database**. So I created a very similar app that Theo shows in his [tutorial](https://youtu.be/PKy2lYEnhgs). I used styled-components instead of TailwindCSS and did some things differently to not just blindly follow a tutorial video.
+import { Image } from 'astro:assets'
 
-I learned how to use **SSG** for the results page, **tRPC**, and interact with a database through **Prisma** ORM.
+import resultsImg from './cutest-mon-results.png'
+import voteImg from './cutest-mon-vote.png'
+
+## The Project
+
+I wanted to learn more about connecting Next.js apps to databases, so I built upon Theo's excellent [tRPC tutorial](https://youtu.be/PKy2lYEnhgs). The result was "Cutest Pokémon" - a simple voting app where users choose between two randomly selected Pokémon. While heavily based on the tutorial, I made some modifications to make it my own learning experience.
+
+## What I Actually Built
+
+### Core Functionality
+
+The app randomly selects two Pokémon from the Pokedex and lets users vote on which is cuter. Votes are stored in a simple database schema:
+
+```prisma
+model Vote {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  votedFor       Pokemon @relation(name: "votesFor", fields: [votedForId], references: [id])
+  votedForId     Int
+  votedAgainst   Pokemon @relation(name: "votesAgainst", fields: [votedAgainstId], references: [id])
+  votedAgainstId Int
+}
+```
+
+<Image
+  src={voteImg}
+  alt="Voting page screenshot"
+  width={voteImg.width / 2}
+  densities={[2]}
+  class="not-prose rounded-md"
+/>
+
+### Random Selection Logic
+
+Basic random number generation with duplicate prevention:
+
+```typescript
+export const getOptionsForVote = () => {
+  const firstId = getRandomPokemon()
+  const secondId = getRandomPokemon(firstId)
+  return [first, second]
+}
+```
+
+### tRPC API
+
+Two simple endpoints - one to get a Pokémon pair, another to record votes:
+
+```typescript
+export const appRouter = trpc
+  .router()
+  .query('get-pokemon-pair', {
+    async resolve() {
+      const [first, second] = getOptionsForVote()
+      const bothPokemon = await prisma.pokemon.findMany({
+        where: { id: { in: [first, second] } },
+      })
+      return { firstPokemon: bothPokemon[0], secondPokemon: bothPokemon[1] }
+    },
+  })
+  .mutation('cast-vote', {
+    input: z.object({
+      votedFor: z.number(),
+      votedAgainst: z.number(),
+    }),
+    async resolve({ input }) {
+      return await prisma.vote.create({
+        data: {
+          votedAgainstId: input.votedAgainst,
+          votedForId: input.votedFor,
+        },
+      })
+    },
+  })
+```
+
+## What I Did Differently from the Tutorial
+
+1. **Styled Components**: Used CSS-in-JS instead of Tailwind for styling
+2. **Project Structure**: Organized code into features rather than by file type
+3. **Database Seeding**: Created a script to populate the database with Pokémon data from the PokeAPI
+4. **Results Page**: Added a simple results page showing Pokémon rankings
+
+## Key Learning Outcomes
+
+### Prisma Basics
+
+- Setting up database schemas and relationships
+- Basic CRUD operations with the Prisma client
+- Database migrations and seeding
+
+### tRPC Fundamentals
+
+- Creating type-safe API endpoints
+- Connecting frontend and backend with shared types
+- Basic query and mutation patterns
+
+### Next.js Features
+
+- API routes for backend functionality
+- Static generation for the results page
+- Basic routing between pages
+
+<Image
+  src={resultsImg}
+  alt="Results page screenshot"
+  width={resultsImg.width / 2}
+  densities={[2]}
+  class="not-prose rounded-md"
+/>
+
+## The Reality Check
+
+This was very much a beginner project. The code is straightforward, the features are basic, and there's nothing particularly innovative here. But it served its purpose:
+
+- **Hands-on experience** with modern tools I'd only read about
+- **Understanding the flow** from database to frontend
+- **Building confidence** in working with full-stack TypeScript
+- **Learning through modification** rather than just copying
+
+## What I'd Do Differently Now
+
+Looking back, I'd focus more on:
+
+- **Error handling** and edge cases
+- **Testing** the application
+- **Performance considerations** beyond basic functionality
+- **User experience** improvements
+
+## Conclusion
+
+"Cutest Pokémon" is exactly what it sounds like - a learning project that helped me understand the basics of modern full-stack development. It's not impressive code, but it represents an important step in my development journey. Sometimes the best way to learn is to build something simple, make it work, and then understand why it works.
+
+The project taught me that modern tools like Prisma and tRPC make full-stack development much more approachable than I initially thought, even if the end result is just a basic voting app.
