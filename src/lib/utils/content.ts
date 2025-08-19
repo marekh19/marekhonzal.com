@@ -1,10 +1,4 @@
-type Content = {
-  data: {
-    isFeatured: boolean
-    isDraft: boolean
-    date: Date
-  }
-}
+import type { Content } from '@/lib/types'
 
 const NUM_FEATURED_ITEMS = 3
 

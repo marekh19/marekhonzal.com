@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { EllipsisIcon } from 'lucide-preact'
 
 import { ROUTES } from '@/config/routes'
-import type { TagMetadata } from '@/lib/utils/posts'
+import type { TagMetadata } from '@/lib/types'
 
 // NOTE: Avoid tailwind-merge in client bundle
 const cn = clsx

@@ -17,3 +17,17 @@ export type Technology = {
       Icon: AstroComponentFactory
     }
 )
+
+export type Content = {
+  data: {
+    isFeatured: boolean
+    isDraft: boolean
+    date: Date
+  }
+}
+
+export type TagMetadata = {
+  label: string
+  count: number
+  slug: string
+}

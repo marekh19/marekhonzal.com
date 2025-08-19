@@ -1,12 +1,6 @@
-import type { Post } from '@/lib/types'
+import type { Post, TagMetadata } from '@/lib/types'
 
 import { createSlugifiedString } from './string'
-
-export type TagMetadata = {
-  label: string
-  count: number
-  slug: string
-}
 
 export const getAllTags = (posts: Post[]): string[] => [
   ...new Set(posts.flatMap((post) => post.data.tags ?? [])),
