@@ -30,6 +30,7 @@ I wanted to learn more about connecting Next.js apps to databases, so I built up
 The app randomly selects two Pokémon from the Pokedex and lets users vote on which is cuter. Votes are stored in a simple database schema:
 
 ```prisma
+// schema.prisma
 model Vote {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -57,6 +58,13 @@ export const getOptionsForVote = () => {
   const firstId = getRandomPokemon()
   const secondId = getRandomPokemon(firstId)
   return [first, second]
+}
+
+export const getRandomPokemon: (notThisOne?: number) => number = (notThisOne) => {
+  const pokedexNumber = Math.floor(Math.random() * MAX_POKEDEX_ID) + 1
+
+  if (pokedexNumber !== notThisOne) return pokedexNumber
+  return getRandomPokemon(notThisOne)
 }
 ```
 
@@ -94,10 +102,8 @@ export const appRouter = trpc
 
 ## What I Did Differently from the Tutorial
 
-1. **Styled Components**: Used CSS-in-JS instead of Tailwind for styling
+1. **Styled Components**: Used CSS-in-JS for styling (the tutorial used Tailwind)
 2. **Project Structure**: Organized code into features rather than by file type
-3. **Database Seeding**: Created a script to populate the database with Pokémon data from the PokeAPI
-4. **Results Page**: Added a simple results page showing Pokémon rankings
 
 ## Key Learning Outcomes
 
@@ -138,15 +144,20 @@ This was very much a beginner project. The code is straightforward, the features
 
 ## What I'd Do Differently Now
 
-Looking back, I'd focus more on:
+Looking back, I’d change quite a few things:
 
-- **Error handling** and edge cases
-- **Testing** the application
-- **Performance considerations** beyond basic functionality
-- **User experience** improvements
+- I don’t use **CSS-in-JS** anymore — I don’t think it’s the right approach, but that’s a topic for another article
+- Extract more **logic into custom hooks** instead of keeping it inside components
+- Use a proper **feature-sliced project structure**
+- Avoid the old pattern of naming everything `index.ts` inside nested folders (I cringe looking back 😅)
+- Split components more thoughtfully
+- Use **constants instead of magic numbers/strings**
+- Dependencies are outdated — upgrading would cause too many breaking changes, so not worth it here
+
+On a practical note, I recently had to switch the database provider to **Turso** to keep the app running on a free tier. It was initially on **PlanetScale**, but they killed their free tier a while back, so I resurrected this project with Turso just to make it usable again.
 
 ## Conclusion
 
-"Cutest Pokémon" is exactly what it sounds like - a learning project that helped me understand the basics of modern full-stack development. It's not impressive code, but it represents an important step in my development journey. Sometimes the best way to learn is to build something simple, make it work, and then understand why it works.
+"Cutest Pokémon" is exactly what it sounds like — a learning project that helped me understand the basics of modern full-stack development. It’s not impressive code, but it represents an important step in my journey. Sometimes the best way to learn is to build something simple, make it work, and then understand why it works.
 
-The project taught me that modern tools like Prisma and tRPC make full-stack development much more approachable than I initially thought, even if the end result is just a basic voting app.
+The project taught me that tools like Prisma and tRPC make full-stack development much more approachable than I initially thought, even if the end result is just a basic voting app.
