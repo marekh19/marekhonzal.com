@@ -11,11 +11,219 @@ technologies:
   - vite
   - moduleFederation
   - turboRepo
+  - zustand
 githubUrl: https://github.com/marekh19/rsbuild-module-federation
 ---
 
-import { Image } from 'astro:assets'
+> A proof of concept that demonstrates how to create independent microfrontends that can run solo or together, sharing state across boundaries.
 
-Test
+## What I Built
 
-## Hello
+This project showcases **Module Federation 2.0** using manifests - the next evolution of microfrontend architecture. We've created a system where three applications can operate independently or as a unified experience, all while sharing state and dependencies intelligently.
+
+### Architecture Overview
+
+```
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│    Shell    │    │  Remote 1   │    │  Remote 2   │
+│  (Consumer) │◄──►│ (Provider)  │    │ (Provider)  │
+└─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │
+       └───────────────────┼───────────────────┘
+                           │
+                    ┌─────────────┐
+                    │   Shared    │
+                    │  Packages   │
+                    └─────────────┘
+```
+
+## Key Features
+
+- **Independence**: Each app runs standalone or as part of the federation
+- **State Sharing**: Zustand store singleton across all apps
+- **Dependency Management**: Monorepo + pnpm catalog ensures consistent dependency sharing
+- **Modern Tooling**: Rsbuild + Module Federation 2.0 + Turborepo
+
+## The Smart Parts
+
+### 1. Module Federation Configuration
+
+The shell app consumes remotes using manifest files:
+
+```typescript
+export default createModuleFederationConfig({
+  name: 'shell',
+  remotes: {
+    remote_1: `remote_1@${process.env.REMOTE1_BASE_URL}/mf-manifest.json`,
+    remote_2: `remote_2@${process.env.REMOTE2_BASE_URL}/mf-manifest.json`,
+  },
+  shareStrategy: 'loaded-first',
+  shared: {
+    react: { singleton: true },
+    'react-dom': { singleton: true },
+    zustand: { singleton: true },
+    'shared-counter': { singleton: true },
+    ui: { singleton: true },
+  },
+})
+```
+
+Remote apps expose their components:
+
+```typescript
+export default createModuleFederationConfig({
+  name: 'remote_1',
+  exposes: {
+    '.': './src/components/Remote1Component.tsx',
+  },
+  shared: {
+    react: { singleton: true },
+    'react-dom': { singleton: true },
+    zustand: { singleton: true },
+    'shared-counter': { singleton: true },
+    ui: { singleton: true },
+  },
+})
+```
+
+### 2. The Singleton Pattern
+
+Our shared counter store demonstrates a clean approach to state sharing:
+
+```typescript
+import { create } from 'zustand'
+
+export type CounterStore = {
+  count: number
+  increment: () => void
+}
+
+export const useCounterStore = create<CounterStore>((set) => ({
+  count: 0,
+  increment: () => set((state) => ({ count: state.count + 1 })),
+}))
+```
+
+**Why this works well**: We treat the `shared-counter` package as a singleton across all three apps. That means they all point to the same store instance. When one app updates the counter, all others see the change instantly. No complex synchronization or messaging layer needed.
+
+### 3. Dynamic Remote Loading
+
+The shell app dynamically loads remote components with error handling:
+
+```typescript
+export function useRemoteComponent<T = {}>(
+  importFn: () => Promise<{ default: ComponentType<T> }>,
+): UseRemoteComponentResult<T> {
+  const [Component, setComponent] = useState<ComponentType<T> | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
+
+  // ... error handling and retry logic
+
+  useEffect(() => {
+    let isMounted = true
+
+    importFn()
+      .then((mod) => {
+        if (!isMounted) return
+        setComponent(() => mod.default)
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        console.warn('Failed to load remote module:', err)
+        if (!isMounted) return
+        setHasError(true)
+        setIsLoading(false)
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [importFn, retryCount])
+
+  return { Component, isLoading, hasError, retry }
+}
+```
+
+### 4. Seamless Integration
+
+Remote components are wrapped and loaded dynamically:
+
+```typescript
+export const Remote1Wrapper = () => {
+  const importRemote = useCallback(() => import("remote_1"), []);
+
+  const { Component: Remote1, isLoading, hasError, retry } =
+    useRemoteComponent(importRemote);
+
+  if (isLoading) return <div>⏳ Loading...</div>;
+  if (hasError) {
+    return (
+      <div>
+        ❌ Remote 1 is not available.
+        <Button onClick={retry}>Try again</Button>
+      </div>
+    );
+  }
+
+  return <Remote1 />;
+};
+```
+
+### 5. The pnpm workspace catalog
+
+```yaml
+# pnpm-workspace.yaml
+catalog:
+  react: ^19.1
+  react-dom: ^19.1
+  zustand: ^5.0.6
+```
+
+```jsonc
+// Inside package.json of every app
+{
+  "dependencies": {
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "shared-counter": "workspace:*",
+    "ui": "workspace:*",
+    "zustand": "catalog:",
+  },
+}
+```
+
+This ensures that all apps use the exact same versions of shared dependencies, making the singleton pattern work reliably across the federation.
+
+## Running the Demo
+
+```bash
+# Start all apps in parallel
+pnpm dev
+
+# Or run individually
+pnpm --F remote_1 dev
+pnpm --F remote_2 dev
+pnpm --F shell dev
+
+# Or try the production build
+pnpm build && pnpm preview
+```
+
+<video
+  src="/videos/rsbuild-mfe.webm"
+  className="h-auto w-full rounded-md"
+  autoplay
+  loop
+  muted
+  playsinline
+/>
+
+## The Takeaway
+
+About a year ago, I tried building microfrontend apps with **Webpack and Module Federation 1.0**, and the developer experience wasn’t great — lots of boilerplate and tricky configuration.
+
+With **Rsbuild** and its **Module Federation plugin**, things feel a lot smoother. Setting up manifests and sharing dependencies is straightforward, and having everything inside a **monorepo** makes the developer experience even better. It also makes global state sharing (like our counter) almost effortless.
+
+👉 Don’t take my word for it — clone the repo, run the apps, and see how it works for yourself!
