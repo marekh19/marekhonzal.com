@@ -10,4 +10,183 @@ technologies:
 githubUrl: https://github.com/marekh19/cutest-mon
 ---
 
-Simple game with a pixel art style. It's very similar to the "jumping dinosaur" Google Chrome game when your internet connection is down. There are 2 types of monsters and you have to jump to avoid them. It calculates a score (1 point per second) and stores a high score locally in a file.
+import { Image } from 'astro:assets'
+
+import gameOverImg from './game-over.png'
+import introImg from './intro.png'
+import playImg from './play.png'
+
+## What is Jumpy Knight?
+
+Jumpy Knight is a simple 2D platformer game built with Python and Pygame. Think of it as the lovechild of Google Chrome's dinosaur game and a medieval knight's training session. You control a pixelated knight who must jump over obstacles to survive as long as possible.
+
+The game features:
+
+- **Two enemy types**: Bats (flying) and Shadowwalkers (ground-based)
+- **Score system**: 1 point per second survived
+- **Local high score tracking**: Stored in a simple text file
+- **Pixel art aesthetics**: Custom sprites with animation frames
+
+## The Learning Journey
+
+Built after just a couple of months of Python experience, this project was an experiment in game development fundamentals. While the code structure leaves much to be desired (everything crammed into one file, hardcoded values galore), it successfully demonstrates several core game development concepts.
+
+<video
+  src="/videos/jumpy-knight.webm"
+  className="h-auto w-full rounded-md"
+  autoplay
+  loop
+  muted
+  playsinline
+/>
+
+## Key Concepts Explored
+
+### 1. The Game Loop
+
+The heart of any game is the main loop that runs continuously:
+
+```python
+while True:
+    for event in pygame.event.get():
+        # Handle events (keyboard, mouse, etc.)
+
+    if game_active:
+        # Update game state
+        # Render everything
+        # Check collisions
+
+    pygame.display.update()
+    clock.tick(60)  # 60 FPS
+```
+
+### 2. Gravity Implementation
+
+A simple but effective gravity system:
+
+```python
+def apply_gravity(self):
+    self.gravity += 1          # Gravity increases over time
+    self.rect.y += self.gravity  # Apply gravity to position
+    if self.rect.bottom >= 500:  # Ground collision
+        self.rect.bottom = 500
+```
+
+### 3. Sprite Animation
+
+Basic frame-based animation using a timer:
+
+```python
+def animation_state(self):
+    self.animation_index += 0.1
+    if self.animation_index >= len(self.frames):
+        self.animation_index = 0
+    self.image = self.frames[int(self.animation_index)]
+```
+
+### 4. Collision Detection
+
+Simple sprite collision checking:
+
+```python
+def collision_sprite():
+    if pygame.sprite.spritecollide(player.sprite, obstacle_group, False):
+        obstacle_group.empty()
+        return False
+    else:
+        return True
+```
+
+## What I Learned
+
+Despite the "everything in one file" approach, this project successfully taught:
+
+- **Game loop mechanics** - How to structure continuous game execution
+- **Physics simulation** - Basic gravity and collision detection
+- **Sprite management** - Loading, animating, and organizing game objects
+- **Event handling** - Responding to user input and game events
+- **State management** - Switching between game states (active, game over, intro)
+
+## Technical Implementation
+
+### Obstacle Generation
+
+The game uses a timer-based system to spawn enemies:
+
+```python
+obstacle_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(obstacle_timer, 1400)  # Spawn every 1.4 seconds
+
+# In the event loop:
+if event.type == obstacle_timer:
+    obstacle_group.add(Obstacle(choice(['bat', 'shadowwalker', 'shadowwalker'])))
+```
+
+### High Score Persistence
+
+Simple file-based score saving:
+
+```python
+def read_highscore():
+    high_score_file = open(r'highscore', 'w+')
+    high_score_from_file = high_score_file.read()
+    if high_score_from_file == '':
+        high_score_from_file = 0
+    high_score = int(high_score_from_file)
+    high_score_file.close()
+    return high_score
+```
+
+## Visual Elements
+
+<Image
+  src={introImg}
+  alt="Game intro screen with title and instructions"
+  width={introImg.width / 2}
+  densities={[2]}
+  class="not-prose rounded-md"
+/>
+
+<Image
+  src={playImg}
+  alt="Active gameplay showing knight jumping over obstacles"
+  width={playImg.width / 2}
+  densities={[2]}
+  class="not-prose rounded-md"
+/>
+
+<Image
+  src={gameOverImg}
+  alt="Game over screen with score display"
+  width={gameOverImg.width / 2}
+  densities={[2]}
+  class="not-prose rounded-md"
+/>
+
+<div className="mx-auto w-fit">
+  <a
+    href={`https://github.com/marekh19/jumpy-knight`}
+    className="btn btn-lg btn-primary"
+    rel="noopener"
+    target="_blank"
+  >
+    <span className="text-primary-content">Play Jumpy Knight Now</span>
+  </a>
+</div>
+
+## Code Quality Notes
+
+Let's be honest - this code has some... _interesting_ characteristics:
+
+- **Single file architecture** - Everything from player logic to main loop in one place
+- **Magic numbers** - Hardcoded positions like `(640, 360)` scattered throughout
+- **Mixed responsibilities** - Game logic, rendering, and input handling all tangled together
+- **File I/O in main loop** - High score file opened and closed every frame
+
+But hey, it works! And sometimes that's the most important thing when learning.
+
+## Key Takeaways
+
+Building Jumpy Knight taught me that **functionality comes before perfection**. While the code structure isn't ideal, the game successfully demonstrates fundamental game development concepts that can be applied to more complex projects.
+
+Sometimes the best way to learn is to build something that works, even if it's not pretty. You can always refactor later.
