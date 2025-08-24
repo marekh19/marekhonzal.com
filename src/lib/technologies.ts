@@ -17,6 +17,8 @@ export const TECHNOLOGIES = {
   trpc: { title: 'tRPC', iconName: 'logos:trpc' },
   python: { title: 'Python', iconName: 'logos:python' },
   zustand: { title: 'Zustand', Icon: Zustand },
+  mantine: { title: 'Mantine', iconName: 'logos:mantine-icon' },
+  pwa: { title: 'Progressive Web App', iconName: 'logos:pwa' },
 } as const satisfies Record<string, Technology>
 
 export const TECHNOLOGY_SLUGS = Object.keys(TECHNOLOGIES) as [

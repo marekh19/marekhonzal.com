@@ -9,10 +9,168 @@ technologies:
   - react
   - typescript
   - vite
+  - pwa
+  - mantine
 githubUrl: https://github.com/marekh19/zentodo
 demoUrl: https://zentodo.marek.work
 ---
 
-Test
+import { Image } from 'astro:assets'
 
-## Hello
+import mobileScreenshotImg from './mobile-screenshot.png'
+import pwaPromptImg from './pwa-prompt.png'
+
+> _I use this app as a shopping list when going to supermarket_ - Me
+
+## What's Special About This Todo App?
+
+Most todo apps are just "Hello World" examples. This one has a few interesting technical features that make it worth looking at.
+
+## The Cool Parts
+
+### 1. Custom Zustand Persistence Driver
+
+Instead of the usual `localStorage`, this app uses IndexedDB through a custom storage driver:
+
+```typescript
+export const storage: StateStorage = {
+  getItem: async (id: string): Promise<string | null> => {
+    const value = await getItem(id)
+    return value ? JSON.stringify(value) : null
+  },
+  setItem: async (id: string, value: string): Promise<void> => {
+    const parsedValue = JSON.parse(value)
+    await setItem(id, parsedValue)
+  },
+  removeItem: async (id: string): Promise<void> => {
+    await removeItem(id)
+  },
+}
+```
+
+The IndexedDB wrapper is clean and simple:
+
+```typescript
+const dbPromise = openDB(DB_NAME, DB_VERSION, {
+  upgrade(db) {
+    db.createObjectStore(STORE_NAME)
+  },
+})
+
+export const setItem = async (key: string, value: unknown) => {
+  const db = await dbPromise
+  await db.put(STORE_NAME, value, key)
+}
+```
+
+### 2. Smart Todo Store with Timestamps
+
+The Zustand store handles completion timestamps automatically:
+
+```typescript
+setIsCompleted: (id, isCompleted) =>
+  set((state) => ({
+    todos: state.todos.map((todo) =>
+      todo.id === id
+        ? {
+            ...todo,
+            isCompleted: isCompleted,
+            completedAt: isCompleted ? new Date() : null,
+          }
+        : todo
+    ),
+  })),
+```
+
+### 3. Elegant Form Handling with Mantine
+
+The add todo form uses Mantine's form hook with validation:
+
+```typescript
+const form = useForm<FormValues>({
+  mode: 'uncontrolled',
+  initialValues: { title: '' },
+  validate: {
+    title: (value) =>
+      value.trim().length < MIN_TASK_TITLE_LENGTH
+        ? 'Todo must have at least 2 letters'
+        : null,
+  },
+})
+```
+
+### 4. Mobile-First Drawer Pattern
+
+Todo items open in a bottom drawer (perfect for mobile):
+
+```tsx
+<Drawer
+  opened={isOpen}
+  onClose={close}
+  position="bottom"
+  size="xs"
+  withCloseButton={false}
+>
+  <TodoDetail todo={todo} />
+</Drawer>
+```
+
+### 5. Smart Todo Filtering and Sorting
+
+The `useTodos` hook provides filtered lists with automatic sorting:
+
+```typescript
+const getFilteredTodos = useMemo(() => {
+  return (type: TodoListType) => {
+    const filteredTodos =
+      type === 'todo'
+        ? todos.filter((todo) => !todo.isCompleted)
+        : todos.filter((todo) => todo.isCompleted)
+
+    return sortByCreatedAt(filteredTodos)
+  }
+}, [todos])
+```
+
+## PWA Features
+
+The app is fully installable with:
+
+- Service worker for offline functionality
+- App icons in multiple sizes
+- Firebase messaging setup (ready for future push notifications)
+- Custom Vite build configuration for service workers
+
+## Screenshots
+
+<div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2">
+  <div class="mockup-phone max-w-full w-fit border-primary">
+    <div class="mockup-phone-camera" />
+    <div class="mockup-phone-display overflow-hidden w-fit h-fit max-w-full">
+      <Image
+        src={mobileScreenshotImg}
+        alt="ZenToDo mobile screenshot"
+        width={mobileScreenshotImg.width / 2}
+        densities={[2]}
+        class="not-prose"
+      />
+    </div>
+  </div>
+
+  <div class="mockup-phone max-w-full w-fit border-primary">
+    <div class="mockup-phone-camera" />
+    <div class="mockup-phone-display w-fit overflow-hidden h-fit max-w-full">
+      <Image
+        src={pwaPromptImg}
+        alt="ZenToDo PWA installation prompt"
+        width={pwaPromptImg.width / 2}
+        densities={[2]}
+        class="not-prose"
+      />
+    </div>
+  </div>
+</div>
+
+## Conclusion
+
+This isn't just another todo app tutorial. It's a PWA with some thoughtful technical implementations, particularly the custom IndexedDB persistence layer for offline storage.
