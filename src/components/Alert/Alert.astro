@@ -25,14 +25,12 @@ const title = titleProp ?? defaultTitles[intent]
 const iconName = iconIntentMap[intent]
 ---
 
-<div class={cn(alertRootVariants({ intent }), className)}>
-  <div class="mb-3 flex items-start gap-3">
-    <span class={alertIconVariants({ intent })}>
-      <Icon name={iconName} />
-    </span>
-    <div class={alertTitleVariants({ intent })}>
+<div class={cn(alertRootVariants({ intent }), 'not-prose', className)}>
+  <div class="mb-3 flex items-center gap-3">
+    <Icon name={iconName} class={alertIconVariants({ intent })} />
+    <span class={alertTitleVariants({ intent })}>
       {title}
-    </div>
+    </span>
   </div>
   <p>
     <slot />

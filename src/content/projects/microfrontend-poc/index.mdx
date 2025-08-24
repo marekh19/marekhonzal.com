@@ -15,7 +15,10 @@ technologies:
 githubUrl: https://github.com/marekh19/rsbuild-module-federation
 ---
 
-> A proof of concept that demonstrates how to create independent microfrontends that can run solo or together, sharing state across boundaries.
+import Alert from '@/components/Alert/Alert.astro'
+
+A proof of concept that demonstrates how to create independent microfrontends that can
+run solo or together, sharing state across boundaries.
 
 ## What I Built
 
@@ -104,7 +107,11 @@ export const useCounterStore = create<CounterStore>((set) => ({
 }))
 ```
 
-**Why this works well**: We treat the `shared-counter` package as a singleton across all three apps. That means they all point to the same store instance. When one app updates the counter, all others see the change instantly. No complex synchronization or messaging layer needed.
+<Alert intent="tip" title="Why this works well" className="mt-8">
+  We treat the `shared-counter` package as a singleton across all three apps. That means
+  they all point to the same store instance. When one app updates the counter, all others
+  see the change instantly. No complex synchronization or messaging layer needed.
+</Alert>
 
 ### 3. Dynamic Remote Loading
 
