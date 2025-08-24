@@ -33,6 +33,9 @@ jobs:
       - name: 🧹 Lint
         run: pnpm lint:check
 
+      - name: ✂️ Knip
+        run: pnpm knip
+
       - name: 🧪 Typecheck
         run: pnpm typecheck
 
