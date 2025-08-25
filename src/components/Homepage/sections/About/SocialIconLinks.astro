@@ -11,7 +11,7 @@ type Props = {
 const { className } = Astro.props
 ---
 
-<ul class={cn('flex items-center gap-5', className)}>
+<ul aria-label="Social media links" class={cn('flex items-center gap-5', className)}>
   {
     socials.map(({ label, iconName, url }) => (
       <li class="tooltip" data-tip={label}>
