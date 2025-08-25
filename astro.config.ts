@@ -9,6 +9,10 @@ import rehypeMermaid from 'rehype-mermaid'
 // https://astro.build/config
 export default defineConfig({
   site: 'https://marekhonzal.com',
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'hover',
+  },
   vite: {
     plugins: [tailwindcss()],
   },
