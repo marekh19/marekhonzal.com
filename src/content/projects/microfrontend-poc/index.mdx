@@ -1,5 +1,5 @@
 ---
-title: Microfrontend POC with Rsbuild & Turborepo
+title: Microfrontend POC
 description: 'POC microfrontend setup with Rsbuild, Turborepo, and a shared Zustand store across apps.'
 date: 2025-06-30
 isDraft: false
@@ -8,7 +8,7 @@ thumbnail: './thumbnail.jpg'
 technologies:
   - react
   - typescript
-  - vite
+  - rsbuild
   - moduleFederation
   - turboRepo
   - zustand
@@ -26,18 +26,12 @@ This project showcases **Module Federation 2.0** using manifests - the next evol
 
 ### Architecture Overview
 
-```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│    Shell    │    │  Remote 1   │    │  Remote 2   │
-│  (Consumer) │◄──►│ (Provider)  │    │ (Provider)  │
-└─────────────┘    └─────────────┘    └─────────────┘
-       │                   │                   │
-       └───────────────────┼───────────────────┘
-                           │
-                    ┌─────────────┐
-                    │   Shared    │
-                    │  Packages   │
-                    └─────────────┘
+```mermaid
+flowchart TB
+    S["Shell<br/>(Consumer)"] <-- consumes/exposes --> R1["Remote 1<br/>(Provider)"] & R2["Remote 2<br/>(Provider)"]
+    S -. imports .-> Shared["Shared Packages<br/>(state store, UI kit, utils)"]
+    R1 -. imports .-> Shared
+    R2 -. imports .-> Shared
 ```
 
 ## Key Features
