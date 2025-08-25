@@ -17,12 +17,12 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths
 
 const { post } = Astro.props
-const { Content } = await render(post)
+const { Content, headings } = await render(post)
 
 const { data } = post
 ---
 
-<ArticleLayout {...data}>
+<ArticleLayout {...data} headings={headings}>
   <Prose>
     <Content components={mdxComponents} />
   </Prose>

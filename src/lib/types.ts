@@ -1,3 +1,4 @@
+import type { MarkdownHeading } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 
@@ -30,4 +31,12 @@ export type TagMetadata = {
   label: string
   count: number
   slug: string
+}
+
+export type TocHeading = MarkdownHeading & {
+  subheadings: TocHeading[]
+}
+
+export type BuildTocOptions = {
+  rootDepth?: 1 | 2 | 3 | 4 | 5 | 6
 }

@@ -1,0 +1,23 @@
+---
+import type { TocHeading } from '@/lib/types'
+
+type Props = {
+  heading: TocHeading
+}
+
+const { heading } = Astro.props
+const isNested = heading.subheadings.length > 0
+---
+
+<li>
+  <a href={`#${heading.slug}`}>{heading.text}</a>
+  {
+    isNested && (
+      <ul class="flex flex-col gap-3 pt-3 pl-6">
+        {heading.subheadings.map((subheading) => (
+          <Astro.self heading={subheading} />
+        ))}
+      </ul>
+    )
+  }
+</li>

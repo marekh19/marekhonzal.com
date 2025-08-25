@@ -1,0 +1,32 @@
+---
+import type { MarkdownHeading } from 'astro'
+
+import { cn } from '@/lib/utils/cn'
+import { buildToc } from '@/lib/utils/tableOfContents'
+
+import TableOfContentsItem from './TableOfContentsItem.astro'
+
+type Props = {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+const toc = buildToc(headings)
+
+const headingId = 'toc-heading'
+---
+
+<aside
+  class={cn(
+    'fixed top-[calc(var(--header-h)+1.25rem)] hidden w-[var(--toc-w)] rounded-md',
+    'left-[calc(calc(50%+512px+calc(100vw-1024px)/4)-calc(var(--toc-w)/2))]',
+    'min-[1680px]:block',
+  )}
+>
+  <h2 id={headingId} class="sr-only">Table of contents</h2>
+  <nav aria-labelledby={headingId}>
+    <ul class="flex flex-col gap-3">
+      {toc.map((heading) => <TableOfContentsItem heading={heading} />)}
+    </ul>
+  </nav>
+</aside>
