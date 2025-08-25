@@ -2,25 +2,17 @@
 
 ---
 
-<div
-  id="scroll-progress-bar"
-  class="bg-base-content fixed top-0 left-0 z-50 h-[3px]"
-  style="width: 0%"
->
+<div id="scroll-progress-bar" class="fixed top-0 left-0 z-50 h-[3px] w-full">
+  <div
+    id="scroll-progress-fill"
+    class="bg-base-content h-full w-full origin-left"
+    style="transform: scaleX(0); will-change: transform"
+  >
+  </div>
 </div>
 
 <script>
-  const el = document.getElementById('scroll-progress-bar')
-  if (el) {
-    const update = () => {
-      const scrollTop = window.scrollY
-      const docHeight = document.body.scrollHeight - window.innerHeight
-      const progress = (scrollTop / docHeight) * 100
-      el.style.width = `${progress}%`
-    }
+  import { initScrollProgressBar } from '@/lib/scrollProgress.ts'
 
-    window.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('resize', update)
-    update()
-  }
+  initScrollProgressBar()
 </script>
