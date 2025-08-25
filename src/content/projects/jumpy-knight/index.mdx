@@ -139,31 +139,33 @@ def read_highscore():
 
 ## Visual Elements
 
-<Image
-  src={introImg}
-  alt="Game intro screen with title and instructions"
-  width={introImg.width / 2}
-  densities={[2]}
-  class="not-prose rounded-md"
-/>
+<div className="flex flex-col gap-10">
+  <Image
+    src={introImg}
+    alt="Game intro screen with title and instructions"
+    width={960}
+    densities={[2]}
+    class="not-prose rounded-md"
+  />
 
 <Image
   src={playImg}
   alt="Active gameplay showing knight jumping over obstacles"
-  width={playImg.width / 2}
+  width={960}
   densities={[2]}
   class="not-prose rounded-md"
 />
 
-<Image
-  src={gameOverImg}
-  alt="Game over screen with score display"
-  width={gameOverImg.width / 2}
-  densities={[2]}
-  class="not-prose rounded-md"
-/>
+  <Image
+    src={gameOverImg}
+    alt="Game over screen with score display"
+    width={960}
+    densities={[2]}
+    class="not-prose rounded-md"
+  />
+</div>
 
-<div className="mx-auto w-fit">
+<div className="mx-auto mt-10 hidden w-fit lg:block">
   <a
     href={`https://github.com/marekh19/jumpy-knight`}
     className="btn btn-lg btn-primary"
