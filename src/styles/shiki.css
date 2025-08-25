@@ -1,3 +1,7 @@
+.astro-code {
+  padding-block: 1.75em;
+}
+
 @media (prefers-color-scheme: dark) {
   .astro-code,
   .astro-code span {
