@@ -15,6 +15,9 @@
 /_astro/*.webp
   Cache-Control: public, max-age=31536001, immutable
 
+/videos/*.webm
+  Cache-Control: public, max-age=31536001, immutable
+
 /fonts/*.woff2
   Cache-Control: public, max-age=31536001, immutable
 
