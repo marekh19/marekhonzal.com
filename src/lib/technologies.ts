@@ -1,5 +1,5 @@
 import ModuleFederation from '@/assets/logos/module-federation.svg'
-import TurboRepo from '@/assets/logos/turborepo.svg'
+import Rsbuild from '@/assets/logos/rsbuild.svg'
 import Zustand from '@/assets/logos/zustand.svg'
 
 import type { Technology } from './types'
@@ -12,13 +12,14 @@ export const TECHNOLOGIES = {
   vite: { title: 'Vite', iconName: 'logos:vitejs' },
   nextjs: { title: 'Next.js', iconName: 'logos:nextjs-icon' },
   moduleFederation: { title: 'Module federation', Icon: ModuleFederation },
-  turboRepo: { title: 'Turborepo', Icon: TurboRepo },
+  turboRepo: { title: 'Turborepo', iconName: 'logos:turborepo-icon' },
   prisma: { title: 'Prisma', iconName: 'logos:prisma' },
   trpc: { title: 'tRPC', iconName: 'logos:trpc' },
   python: { title: 'Python', iconName: 'logos:python' },
   zustand: { title: 'Zustand', Icon: Zustand },
   mantine: { title: 'Mantine', iconName: 'logos:mantine-icon' },
   pwa: { title: 'Progressive Web App', iconName: 'logos:pwa' },
+  rsbuild: { title: 'Rsbuild', Icon: Rsbuild },
 } as const satisfies Record<string, Technology>
 
 export const TECHNOLOGY_SLUGS = Object.keys(TECHNOLOGIES) as [
