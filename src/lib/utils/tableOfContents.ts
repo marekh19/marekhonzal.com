@@ -31,8 +31,8 @@ export function buildToc(
   return toc
 }
 
-export const linkStarts = new WeakMap()
-export const linkEnds = new WeakMap()
+const linkStarts = new WeakMap()
+const linkEnds = new WeakMap()
 
 export const drawPath = () => {
   const path = document.querySelector<SVGPathElement>('path.toc-marker')
