@@ -24,9 +24,31 @@ const headingId = 'toc-heading'
   )}
 >
   <h2 id={headingId} class="sr-only">Table of contents</h2>
-  <nav aria-labelledby={headingId}>
+  <nav aria-labelledby={headingId} class="toc">
     <ul class="flex flex-col gap-3">
       {toc.map((heading) => <TableOfContentsItem heading={heading} />)}
     </ul>
+    <svg
+      class="toc-progress pointer-events-none absolute inset-0 top-0 h-full w-full noscript:hidden"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        class="toc-marker text-primary stroke-current transition-all duration-300"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-dasharray="1 0 0 1000"
+        stroke-dashoffset="1"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+      </path>
+    </svg>
   </nav>
 </aside>
+<script>
+  import { addIntersectionObserver, drawPath } from '@/lib/utils/tableOfContents'
+
+  drawPath()
+  addIntersectionObserver()
+</script>

@@ -10,7 +10,7 @@ const isNested = heading.subheadings.length > 0
 ---
 
 <li>
-  <a href={`#${heading.slug}`}>{heading.text}</a>
+  <a href={`#${heading.slug}`} class="pl-1">{heading.text}</a>
   {
     isNested && (
       <ul class="flex flex-col gap-3 pt-3 pl-6">
