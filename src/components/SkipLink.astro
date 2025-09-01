@@ -1,0 +1,20 @@
+---
+import { cn } from '@/lib/utils/cn'
+
+type Props = {
+  to?: `#${string}`
+  label?: string
+}
+
+const { to = '#main-content', label = 'Skip to main content' } = Astro.props
+---
+
+<a
+  href={to}
+  class={cn(
+    'btn btn-primary sr-only top-3 left-3 z-[9999]',
+    'focus:not-sr-only focus:fixed focus:h-[var(--size)] focus:px-[var(--btn-p)]',
+  )}
+>
+  {label}
+</a>
