@@ -1,0 +1,30 @@
+---
+import Analytics from '@/components/utility/Analytics.astro'
+import CanonicalLink from '@/components/utility/CanonicalLink.astro'
+import Favicon from '@/components/utility/Favicon.astro'
+import Meta from '@/components/utility/Meta.astro'
+import OpenGraph from '@/components/utility/OpenGraph.astro'
+import PreloadFonts from '@/components/utility/PreloadFonts.astro'
+import Rss from '@/components/utility/Rss.astro'
+import Sitemap from '@/components/utility/Sitemap.astro'
+
+type Props = {
+  title: string
+  description: string
+  ogImagePath: string
+}
+
+const { title, description, ogImagePath } = Astro.props
+---
+
+<title>{title}</title>
+<Meta description={description} />
+<Favicon />
+<CanonicalLink />
+<Rss />
+<Analytics />
+<Sitemap />
+<PreloadFonts type="sans" />
+<OpenGraph title={title} description={description} imagePath={ogImagePath} />
+
+<slot />

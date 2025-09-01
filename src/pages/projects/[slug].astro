@@ -2,9 +2,12 @@
 import type { GetStaticPaths } from 'astro'
 import { getCollection, render } from 'astro:content'
 
-import Prose from '@/components/Prose.astro'
+import ProjectHeader from '@/components/Content/ProjectHeader.astro'
+import TableOfContents from '@/components/Content/TableOfContents/TableOfContents.astro'
+import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
 import { mdxComponents } from '@/components/utility/MDXComponents.astro'
-import ProjectLayout from '@/layouts/ProjectLayout.astro'
+import { defaultSeo } from '@/config/seo'
+import ReadingLayout from '@/layouts/ReadingLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
 
 export const getStaticPaths = (async () => {
@@ -22,8 +25,22 @@ const { Content, headings } = await render(project)
 const { data } = project
 ---
 
-<ProjectLayout {...data} headings={headings}>
-  <Prose>
-    <Content components={mdxComponents} />
-  </Prose>
-</ProjectLayout>
+<ReadingLayout
+  pageTitle={defaultSeo.pageTitle(data.title)}
+  pageDescription={data.description}
+>
+  <Fragment slot="contentHeader">
+    <ProjectHeader {...data} className="mt-5" />
+  </Fragment>
+
+  <Fragment slot="toc">
+    <TableOfContents headings={headings} />
+  </Fragment>
+
+  <Content components={mdxComponents} />
+
+  <Fragment slot="endOfBody">
+    <ScrollProgressBar />
+    <script src="@/scripts/copy-code.ts"></script>
+  </Fragment>
+</ReadingLayout>

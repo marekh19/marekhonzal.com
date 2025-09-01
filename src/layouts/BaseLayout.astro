@@ -1,15 +1,11 @@
 ---
-import Analytics from '@/components/utility/Analytics.astro'
-import CanonicalLink from '@/components/utility/CanonicalLink.astro'
-import Favicon from '@/components/utility/Favicon.astro'
-import Meta from '@/components/utility/Meta.astro'
-import OpenGraph from '@/components/utility/OpenGraph.astro'
-import PreloadFonts from '@/components/utility/PreloadFonts.astro'
-import Rss from '@/components/utility/Rss.astro'
-import Sitemap from '@/components/utility/Sitemap.astro'
-import { defaultSeo, OG_FALLBACK_SLUG } from '@/config/seo'
-
-import LandmarksLayout from './LandmarksLayout.astro'
+import Footer from '@/components/Footer/Footer.astro'
+import Head from '@/components/Head.astro'
+import Header from '@/components/Header.astro'
+import SkipLink from '@/components/SkipLink.astro'
+import { defaultSeo } from '@/config/seo'
+import { cn } from '@/lib/utils/cn'
+import { resolveOgImageUrl } from '@/lib/utils/og'
 
 import '@/styles/global.css'
 
@@ -21,29 +17,49 @@ type Props = {
 const { pageTitle = defaultSeo.baseTitle, pageDescription = defaultSeo.metaDescription } =
   Astro.props
 
-const [maybeSlug] = Object.values(Astro.params)
-const ogImageUrl = `/og/${maybeSlug ?? OG_FALLBACK_SLUG}.png` as const
+const pathname = Astro.url.pathname
+const params = Astro.params
+
+const ogImageUrl = resolveOgImageUrl({ params, pathname })
+
+const hasCustomMain = Astro.slots.has('main')
 ---
 
 <html lang="en">
   <head>
-    <title>{pageTitle}</title>
-    <Meta description={pageDescription} />
-    <Favicon />
-    <CanonicalLink />
-    <Rss />
-    <Analytics />
-    <Sitemap />
-    <PreloadFonts type="sans" />
-    <OpenGraph title={pageTitle} description={pageDescription} imagePath={ogImageUrl} />
-    <slot name="head" />
+    <Head title={pageTitle} description={pageDescription} ogImagePath={ogImageUrl}>
+      <slot name="head" />
+    </Head>
   </head>
+
   <body>
-    <LandmarksLayout>
-      <slot name="beforeContent" />
-      <slot />
-      <slot name="afterContent" />
-    </LandmarksLayout>
+    <SkipLink />
+    <Header />
+
+    {
+      hasCustomMain ? (
+        // Page owns the whole main area (e.g., ReadingLayout with main+aside)
+        <slot name="main" />
+      ) : (
+        // Fallback: wrap default content in a semantic <main>
+        <main
+          id="main-content"
+          tabindex="-1"
+          class={cn(
+            'mx-auto max-w-6xl scroll-mt-[calc(var(--header-h)+1.25rem)] px-5 pb-40',
+            'focus:outline-none',
+            'md:px-8',
+          )}
+        >
+          <slot name="beforeContent" />
+          <slot />
+          <slot name="afterContent" />
+        </main>
+      )
+    }
+
+    <Footer />
+
     <slot name="endOfBody" />
   </body>
 </html>

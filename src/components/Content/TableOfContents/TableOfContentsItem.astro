@@ -1,5 +1,6 @@
 ---
 import type { TocHeading } from '@/lib/types'
+import { cn } from '@/lib/utils/cn'
 
 type Props = {
   heading: TocHeading
@@ -10,7 +11,15 @@ const isNested = heading.subheadings.length > 0
 ---
 
 <li>
-  <a href={`#${heading.slug}`} class="pl-1">{heading.text}</a>
+  <a
+    href={`#${heading.slug}`}
+    class={cn(
+      '[&.active]:text-primary text-base-content inline-block px-2 transition-colors duration-200 ease-in-out',
+      'link-outline link-outline-rounded',
+    )}
+  >
+    {heading.text}
+  </a>
   {
     isNested && (
       <ul class="flex flex-col gap-3 pt-3 pl-6">

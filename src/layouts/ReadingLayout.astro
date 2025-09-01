@@ -1,0 +1,67 @@
+---
+import Giscus from '@/components/Content/Giscus.astro'
+import { tocHeadingId } from '@/components/Content/TableOfContents/TableOfContents.astro'
+import Prose from '@/components/Prose.astro'
+import PreloadFonts from '@/components/utility/PreloadFonts.astro'
+import { cn } from '@/lib/utils/cn'
+
+import BaseLayout from './BaseLayout.astro'
+
+type Props = {
+  pageTitle: string
+  pageDescription: string
+}
+
+const { pageTitle, pageDescription } = Astro.props
+---
+
+<BaseLayout pageTitle={pageTitle} pageDescription={pageDescription}>
+  <Fragment slot="head">
+    <PreloadFonts type="serif" />
+    <slot name="head" />
+  </Fragment>
+
+  <Fragment slot="main">
+    <div class={cn('mx-auto max-w-6xl px-5 pb-40', 'md:px-8')}>
+      <main
+        id="main-content"
+        tabindex="-1"
+        class={cn('scroll-mt-[calc(var(--header-h)+1.25rem)]', 'focus:outline-none')}
+      >
+        <article>
+          <slot name="contentHeader" />
+
+          <div
+            class={cn(
+              'mt-8 grid grid-cols-1 gap-8',
+              'lg:grid-cols-[minmax(0,1fr)_var(--toc-w)]',
+            )}
+          >
+            <!-- ToC column -->
+            <aside
+              aria-labelledby={tocHeadingId}
+              class={cn(
+                'sticky top-8 order-2 hidden w-[var(--toc-w)] self-start',
+                'lg:block',
+              )}
+            >
+              <nav aria-labelledby={tocHeadingId} class="toc">
+                <slot name="toc" />
+              </nav>
+            </aside>
+
+            <!-- Article body column -->
+            <Prose>
+              <slot />
+            </Prose>
+          </div>
+        </article>
+      </main>
+      <Giscus />
+    </div>
+  </Fragment>
+
+  <Fragment slot="endOfBody">
+    <slot name="endOfBody" />
+  </Fragment>
+</BaseLayout>
