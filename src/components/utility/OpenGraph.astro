@@ -7,9 +7,13 @@ type Props = {
 
 const { title, description, imagePath } = Astro.props
 
-// TODO: change back to Astro.site?.origin
-// const origin = Astro.site?.origin ?? Astro.url.origin
-const origin = Astro.url.origin
+const getOrigin = () => {
+  const fallback = Astro.url.origin
+  if (!import.meta.env.PROD) return fallback
+  return Astro.site?.origin ?? fallback
+}
+
+const origin = getOrigin()
 const pageUrl = Astro.url.toString()
 const imageUrl = new URL(imagePath, origin).toString()
 
