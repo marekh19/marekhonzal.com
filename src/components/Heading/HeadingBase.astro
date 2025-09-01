@@ -19,18 +19,21 @@ const shouldRenderAnchor = !!id && level !== 1
 ---
 
 <Tag
-  class={cn({ 'group relative scroll-mt-8': shouldRenderAnchor }, className)}
+  class={cn({ 'relative scroll-mt-8': shouldRenderAnchor }, className)}
   id={id}
   {...rest}
 >
   {!shouldRenderAnchor && <slot />}
   {
     shouldRenderAnchor && (
-      <a href={`#${id}`} class="not-prose">
+      <a href={`#${id}`} class="not-prose group link-outline link-outline-rounded">
         <slot />
         <Icon
           name="lucide:hash"
-          class="text-neutral-content absolute top-1/2 -left-[0.8em] hidden size-[0.66em] -translate-y-1/2 opacity-0 transition-opacity duration-200 xl:inline-block xl:opacity-0 xl:group-hover:opacity-100"
+          class={cn(
+            'text-neutral-content absolute top-1/2 -left-[0.8em] hidden size-[0.66em] -translate-y-1/2 opacity-0 transition-opacity duration-200',
+            'lg:inline-block lg:opacity-0 lg:group-hover:opacity-100 lg:group-focus-visible:opacity-100',
+          )}
           aria-hidden="true"
         />
       </a>

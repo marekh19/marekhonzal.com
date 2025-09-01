@@ -32,7 +32,7 @@ export const TagsNavigation = ({ tags, className }: Props) => {
                 'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-neutral/75',
-                'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
+                'link-outline',
               )}
               href={ROUTES.blog.tag(slug)}
             >
@@ -50,7 +50,7 @@ export const TagsNavigation = ({ tags, className }: Props) => {
                 'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-neutral/75',
-                'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
+                'link-outline',
               )}
               onClick={() => {
                 setShouldShowAll(true)

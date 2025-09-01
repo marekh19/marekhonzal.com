@@ -53,7 +53,10 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
         <dd>
           <a
             href={githubUrl}
-            class="text-base-content inline-flex items-center gap-1 font-medium"
+            class={cn(
+              'text-base-content inline-flex items-center gap-1 font-medium',
+              'link-outline link-outline-rounded',
+            )}
             target="_blank"
             rel="noopener"
           >
@@ -73,7 +76,10 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
         <dd>
           <a
             href={demoUrl}
-            class="text-base-content inline-flex items-center gap-1 font-medium"
+            class={cn(
+              'text-base-content inline-flex items-center gap-1 font-medium',
+              'link-outline link-outline-rounded',
+            )}
             target="_blank"
             rel="noopener"
           >

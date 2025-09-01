@@ -9,14 +9,11 @@ import Navigation from './Navigation.astro'
   <nav
     aria-label="Main navigation"
     class={cn(
-      'mx-auto flex w-full max-w-5xl items-center justify-between px-5',
+      'mx-auto flex w-full max-w-6xl items-center justify-between px-5',
       'md:px-8',
     )}
   >
-    <a
-      href={ROUTES.home}
-      class="focus-visible:outline-primary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2"
-    >
+    <a href={ROUTES.home} class="link-outline link-outline-rounded">
       <span class="text-xl font-semibold tracking-wide">Marek Honzal</span>
     </a>
     <Navigation />

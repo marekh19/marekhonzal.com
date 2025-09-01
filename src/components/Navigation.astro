@@ -13,7 +13,7 @@ const isActive = (targetUrl: string) => pathname.includes(targetUrl)
         <a
           class={cn(
             'text-base-content/75 px-3 py-1.5 font-medium transition-colors duration-200 ease-out',
-            'focus-visible:outline-primary focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2',
+            'link-outline link-outline-rounded',
             'hover:text-base-content',
             {
               'text-base-content': isActive(navLink.href),

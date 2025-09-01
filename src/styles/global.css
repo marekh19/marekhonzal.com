@@ -53,6 +53,18 @@ html {
     );
   }
 
+  .link-outline {
+    @apply focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2;
+
+    &.link-outline-rounded {
+      @apply focus-visible:rounded-sm;
+    }
+  }
+
+  .link-outline-daisy {
+    @apply focus:outline-primary focus:rounded-sm focus:outline-offset-2;
+  }
+
   .mix-1 {
     --mix: 1;
   }

@@ -31,13 +31,16 @@ if (linkType === 'anchor') {
       href={href}
       target="_blank"
       rel="noopener"
-      class={cn('link link-primary link-hover inline-flex items-center gap-1', className)}
+      class={cn(
+        'link link-primary link-hover link-outline-daisy inline-flex items-center gap-1',
+        className,
+      )}
       {...rest}
     >
       <slot />
       {hasIcon && (
         <Icon
-          name="lucide:external-link"
+          name="lucide:arrow-up-right"
           class="inline-block size-4"
           aria-hidden="true"
         />
@@ -48,7 +51,7 @@ if (linkType === 'anchor') {
 
 {
   linkType === 'internal' && (
-    <a href={href} {...rest} class="link link-primary link-hover">
+    <a href={href} {...rest} class="link link-primary link-hover link-outline-daisy">
       <slot />
     </a>
   )

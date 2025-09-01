@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils/cn'
 import { formatDateMachine } from '@/lib/utils/date'
 
 const IMAGE_CONFIG = {
-  width: 304,
+  width: 340,
   densities: [1.5],
 }
 
@@ -27,7 +27,7 @@ const { title, description, targetUrl, date, thumbnail } = Astro.props
   class={cn(
     'border-base-content/20 group overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
     'hover:border-base-content/40',
-    'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
+    'link-outline',
   )}
 >
   <article class={cn('flex h-full flex-col', 'lg:flex-row')}>

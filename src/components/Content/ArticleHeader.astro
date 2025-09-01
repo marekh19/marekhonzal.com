@@ -14,7 +14,7 @@ const { title, date, tags, className } = Astro.props
 const tagsWithSlugs = getTagsWithSlugs(tags)
 ---
 
-<div class={cn('mb-10', className)}>
+<div class={className}>
   <div class="space-y-3">
     <time
       class="text-base-content/75 inline-block font-serif"
@@ -42,7 +42,7 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
                 'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-neutral/75',
-                'focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2',
+                'link-outline',
               )}
             >
               {tag.label}
