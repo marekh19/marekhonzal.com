@@ -1,5 +1,5 @@
 ---
-import Portrait from '@/assets/portrait.svg'
+import Portrait from '@/assets/avatar.svg'
 import { cn } from '@/lib/utils/cn'
 
 type Props = {
@@ -8,16 +8,16 @@ type Props = {
 
 const { className } = Astro.props
 
-const bubble =
-  'motion-safe:animate-slide-in absolute top-0 aspect-square h-full rounded-full'
-const bubbleMix = `bg-primary-mix ${bubble}`
+const bubbleMix =
+  'bg-primary-mix motion-safe:animate-slide-in absolute top-0 aspect-square h-full rounded-full'
 ---
 
 <div class={cn('relative flex h-12 items-center justify-start', 'lg:h-16', className)}>
   <div
     class={cn(
-      bubble,
-      'text-primary left-0 z-70 grid place-content-center bg-white motion-safe:[animation-delay:0ms]',
+      bubbleMix,
+      'mix-1 left-0 z-70 motion-safe:[animation-delay:0ms]',
+      'grid place-content-center overflow-clip p-0.5 text-white',
     )}
   >
     <Portrait class="size-full" />

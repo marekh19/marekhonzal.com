@@ -30,10 +30,10 @@ const tintSvg = (svg: string, color: string) => {
 
 const generateHtml = (data: OGHtmlData): JSX.Element => {
   const rawSvg = fs.readFileSync(
-    path.resolve(process.cwd(), 'src/assets/portrait.svg'),
+    path.resolve(process.cwd(), 'src/assets/avatar.svg'),
     'utf8',
   )
-  const svgDataUrl = tintSvg(rawSvg, '#010204')
+  const svgDataUrl = tintSvg(rawSvg, '#d5d7de')
 
   return h(
     'div',
@@ -49,7 +49,7 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
         h(
           'div',
           {
-            tw: 'flex items-center justify-center bg-[#d5d7de] rounded-full mr-3',
+            tw: 'flex items-center justify-center bg-[#010204] rounded-full mr-3',
           },
           h('img', { src: svgDataUrl, width: 56, height: 56, alt: '' }),
         ),
