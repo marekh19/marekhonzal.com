@@ -15,7 +15,7 @@ import { createSlugifiedString } from '@/lib/utils/string'
 const meta = {
   title: (tag: string) => `${tag} | Blog | ${defaultSeo.baseTitle}` as const,
   description: (tag: string) =>
-    `Articles about ${tag} from Marek Honzal’s blog — frontend insights, architecture tips, and lessons from side projects.`,
+    `Articles about ${tag} from Marek Honzal’s blog - frontend insights, architecture tips, and lessons from side projects.`,
 } as const
 
 export const getStaticPaths = (async () => {
