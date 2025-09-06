@@ -45,7 +45,10 @@ const { pageTitle, pageDescription } = Astro.props
                 'lg:block',
               )}
             >
-              <nav aria-labelledby={tocHeadingId} class="toc">
+              <nav
+                aria-labelledby={tocHeadingId}
+                class="toc max-h-[calc(100svh-4rem)] overflow-y-auto"
+              >
                 <slot name="toc" />
               </nav>
             </aside>
