@@ -2,21 +2,24 @@ import type { Content } from '@/lib/types'
 
 const NUM_FEATURED_ITEMS = 3
 
-export const getFeaturedItems = <T extends Content>(items: T[]): T[] =>
+export const getFeaturedItems = <T extends Content>(items: readonly T[]): readonly T[] =>
   items.filter((item) => item.data.isFeatured)
 
-export const getNonFeaturedItems = <T extends Content>(items: T[]): T[] =>
-  items.filter((item) => !item.data.isFeatured)
+export const getNonFeaturedItems = <T extends Content>(
+  items: readonly T[],
+): readonly T[] => items.filter((item) => !item.data.isFeatured)
 
-const getTopN = <T extends Content>(items: T[], n: number): T[] => items.slice(0, n)
+const getTopN = <T extends Content>(items: readonly T[], n: number): readonly T[] =>
+  items.slice(0, n)
 
-export const getSortedContentByDateDesc = <T extends Content>(items: T[]): T[] =>
-  items.toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())
+export const getSortedContentByDateDesc = <T extends Content>(
+  items: readonly T[],
+): readonly T[] => items.toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
 export const getFeaturedSectionContent = <T extends Content>(
-  items: T[],
+  items: readonly T[],
   numOfItems = NUM_FEATURED_ITEMS,
-): T[] => {
+): readonly T[] => {
   const sortedFeatured = getSortedContentByDateDesc(getFeaturedItems(items))
   const featured = getTopN(sortedFeatured, numOfItems)
 
@@ -29,5 +32,5 @@ export const getFeaturedSectionContent = <T extends Content>(
   return [...featured, ...fallback]
 }
 
-export const shouldIncludeItem = (item: Content): boolean =>
+export const shouldIncludeItem = (item: Readonly<Content>): boolean =>
   import.meta.env.DEV ? true : !item.data.isDraft

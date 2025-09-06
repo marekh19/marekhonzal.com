@@ -11,7 +11,7 @@ const cn = clsx
 const NUM_INITIAL_VISIBLE_TAGS = 5
 
 type Props = {
-  tags: TagMetadata[]
+  tags: readonly TagMetadata[]
   className?: string
 }
 
