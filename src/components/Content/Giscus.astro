@@ -1,8 +1,12 @@
 ---
+type Props = {
+  className?: string
+}
 
+const { className } = Astro.props
 ---
 
-<div class="mt-16">
+<div class={className}>
   <script
     is:inline
     src="https://giscus.app/client.js"
