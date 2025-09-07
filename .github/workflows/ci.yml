@@ -27,9 +27,6 @@ jobs:
       - name: 📥 Install dependencies
         run: pnpm i --frozen-lockfile
 
-      - name: 🎭 Get Playwright for mermaid
-        run: pnpm dlx playwright install --with-deps chromium
-
       - name: 🎨 Check formatting
         run: pnpm format:check
 
@@ -38,6 +35,9 @@ jobs:
 
       - name: ✂️ Knip
         run: pnpm knip
+
+      - name: 🎭 Get Playwright for mermaid
+        run: pnpm dlx playwright install --with-deps chromium
 
       - name: 🧪 Typecheck
         run: pnpm typecheck
