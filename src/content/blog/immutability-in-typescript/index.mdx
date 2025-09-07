@@ -1,7 +1,7 @@
 ---
-title: Immutability in Typescript
-description: What is immutability, why should we care and how to achieve it
-date: 2025-07-15
+title: 'Immutability in TypeScript: Small Defaults That Keep Paying Off'
+description: 'Practical patterns for immutability in TypeScript - from as const to readonly. Safer code, cleaner refactors, zero runtime cost.'
+date: 2025-09-04
 isDraft: false
 isFeatured: true
 tags:
@@ -9,10 +9,208 @@ tags:
 thumbnail: './immutability-in-typescript.png'
 ---
 
-## How to make something immutable
+I didn't "go functional." I just got tired of spooky side-effects and fragile refactors. Immutability wasn't a Big Rewrite - more like **small defaults** that kept paying off. This post is how I use it day-to-day: why it helps, how I think about it, and the exact patterns I paste into real code.
+
+## Why immutability?
+
+Most of our bugs aren't clever; they're incidental. You pass an array into a helper and it quietly `push`es. A config object gets tweaked in place during a refactor. A function signature says `User[]`, but the function mutates the input, so your caller's state changes from the other side of the app.
+
+TypeScript can't prevent every runtime footgun, but it can make a whole class of them impossible to write. In TS, immutability is a **type-level promise**: no runtime cost.
+
+- `const` prevents rebinding.
+- `readonly` prevents writes.
+- `as const` turns literals into _precise_ types.
+
+There's a nice side-effect: once your values are precise, you can do better type narrowing and you can _derive_ unions from data. That makes APIs self-documenting and refactors safer.
+
+For example:
 
 ```ts
-const config = {
-  hello: 'World',
-} as const
+const createBlogUrl = (slug: string) => `/blog/${slug}` as const
+// Return type is `/blog/${string}`, not just `string`.
 ```
+
+That tiny `as const` tells the compiler: "this always starts with `/blog/`." Downstream code can use that to narrow or validate.
+
+So what does this look like in practice?
+
+## How I approach it
+
+My rule of thumb is: **immutable at the edges** and relax only where it buys me something.
+
+- **Public APIs** accept `readonly` inputs and return new values. Internals can still mutate local variables if that's simpler, but the surface area is safe by default.
+- **Values first, types from values.** I define literal tables with `as const`, then derive unions from them. There's a single source of truth.
+- **Use `satisfies` to validate** that a value covers a type - without losing the literal precision I get from `as const`.
+- **Don't be dogmatic.** If a local mutation is clearer and doesn't leak, I'll do it - then return a new value.
+
+Let's walk through the patterns that make this work.
+
+### Value tables → unions you can trust
+
+Instead of scattering string literals across your code, freeze them in one place and let TypeScript do the heavy lifting.
+
+```ts
+const FEATURES = ['posts', 'comments', 'users', 'groups'] as const
+const OPERATIONS = ['create', 'read', 'update', 'delete'] as const
+
+type Feature = (typeof FEATURES)[number]
+type Operation = (typeof OPERATIONS)[number]
+type Permission = `${Feature}:${Operation}`
+
+const buildPermissions = (
+  features: readonly Feature[],
+  operations: readonly Operation[],
+): readonly Permission[] =>
+  features.flatMap((f) => operations.map((o) => `${f}:${o}` as const))
+
+const PERMISSIONS = buildPermissions(FEATURES, OPERATIONS)
+  satisfies readonly Permission[]
+```
+
+Whenever you add a new feature or operation, the compiler updates the entire permission set. No typos, no missed strings. Just one definition, everywhere consistent.
+
+### Template literal types that carry intent
+
+Once you start treating strings as _types_, you can encode intent directly in them.
+
+```ts
+const isBlogUrl = (url: string): url is `/blog/${string}` => url.startsWith('/blog/')
+```
+
+Functions that expect a blog URL can now _say so_ in the signature. That tiny guard helps future maintainers - or future you.
+
+### `as const`, explicit types, and `satisfies` without the traps
+
+Here's the trick: let `as const` infer, and use `satisfies` to validate. That way you get the best of both worlds: precise types and compile-time checks.
+
+```ts
+type Hex = '#ff0000' | '#00ff00' | '#0000ff'
+
+const COLORS = ['#ff0000', '#00ff00', '#0000ff']
+  as const satisfies readonly Hex[]
+
+const COLOR_MAP = {
+  red: '#ff0000',
+  green: '#00ff00',
+  blue: '#0000ff',
+} as const satisfies Record<string, Hex>
+```
+
+This avoids accidental widening and keeps both values and types locked in sync.
+
+### Function signatures that say "I won't mutate your stuff"
+
+Marking inputs `readonly` is a type-level promise: _"This function won't mess with your data."_
+
+```ts
+const sum = (values: readonly number[]): number =>
+  values.reduce((total, v) => total + v, 0)
+```
+
+Same implementation as a mutable version, but infinitely clearer at the call site.
+
+And when you expose collections, return immutable views:
+
+```ts
+const internalCache = new Map<string, number>()
+
+export function getCache(): ReadonlyMap<string, number> {
+  return internalCache
+}
+```
+
+Internally flexible, externally safe.
+
+### Updating state without mutation
+
+The real test of immutability is when you need to _change_ something. The answer isn't "never change" - it's "return a new value instead of mutating the old one."
+
+```ts
+type Todo = { id: string; title: string; isDone: boolean }
+
+const toggleTodo = (todos: readonly Todo[], id: Todo['id']): readonly Todo[] =>
+  todos.map((t) => (t.id === id ? { ...t, isDone: !t.isDone } : t))
+
+const upsertById = <T extends { id: string | number }>(
+  items: readonly T[],
+  item: T,
+): readonly T[] => {
+  const index = items.findIndex((i) => i.id === item.id)
+  return index === -1 ? items.concat(item) : items.with(index, item)
+}
+```
+
+Pure functions. Clean diffs. No spooky side effects.
+
+### Deep immutability (only when you need it)
+
+Most of the time, shallow immutability is enough. But if you need it deep:
+
+```ts
+type DeepReadonly<T> = T extends (...args: unknown[]) => unknown
+  ? T
+  : T extends object
+    ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
+    : T
+```
+
+And if you need a temporary escape hatch, make it explicit with `Mutable<T>`. Readers know exactly what you're doing and why.
+
+### Exhaustive unions that fail loudly
+
+When you pair immutability with discriminated unions, the compiler won't let you forget a case.
+
+```ts
+type Msg =
+  | { kind: 'info'; text: string }
+  | { kind: 'success'; text: string }
+  | { kind: 'warning'; text: string; code: number }
+  | { kind: 'error'; text: string; stack?: string }
+
+const renderMessage = (m: Readonly<Msg>) => {
+  switch (m.kind) {
+    case 'info':
+    case 'success':
+      return m.text
+    case 'warning':
+      return `${m.code}: ${m.text}`
+    case 'error':
+      return m.stack ?? m.text
+    default: {
+      const _exhaustive: never = m
+      return _exhaustive
+    }
+  }
+}
+```
+
+Compile-time guarantees, runtime peace of mind.
+
+### Interop with Validators
+
+Immutable tuples don't just help TypeScript; they also make runtime validation a breeze.
+
+```ts
+import { z } from 'zod'
+
+const STATUSES = ['draft', 'published', 'archived'] as const
+
+export type Status = (typeof STATUSES)[number]
+export const StatusSchema = z.enum(STATUSES)
+```
+
+One definition, two worlds covered: compile-time types and runtime checks. No drifting copies, no sync issues.
+
+## Wrapping up
+
+Immutability in TypeScript isn't dogma. It's just a set of defaults that turn _"hope this doesn't mutate"_ into _"can't mutate even if I try."_
+
+Start with small steps:
+
+- Define literals with `as const`.
+- Accept `readonly` inputs.
+- Derive unions from values.
+
+From there, you'll notice cleaner diffs, safer refactors, and APIs that explain themselves.
+
+And when a local mutation is the clearest option? Do it - but keep the boundary immutable. That's the whole game: predictable code people enjoy maintaining.
