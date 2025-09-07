@@ -27,6 +27,18 @@ jobs:
       - name: 📥 Install dependencies
         run: pnpm i --frozen-lockfile
 
+      # Resolve Playwright version for a stable cache key
+      - name: 🔎 Resolve Playwright version
+        id: pwver
+        run: echo "version=$(pnpm dlx playwright --version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
+
+      # Cache browser binaries (not system deps)
+      - name: 🧱 Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.pwver.outputs.version }}-chromium
+
       - name: 🎭 Get Playwright for mermaid
         run: pnpm dlx playwright install --with-deps chromium
 
