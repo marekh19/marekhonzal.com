@@ -1,0 +1,15 @@
+import { useState } from 'preact/hooks'
+
+export const Counter = () => {
+  const [count, setCount] = useState(0)
+
+  const handleIncrement = () => {
+    setCount((prev) => ++prev)
+  }
+
+  return (
+    <button className="btn btn-primary" onClick={handleIncrement}>
+      <span className="tabular-nums">Count: {count}</span>
+    </button>
+  )
+}
