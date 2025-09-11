@@ -1,31 +1,49 @@
 @plugin "daisyui/theme" {
-  name: 'bobeppuccin-light';
+  name: 'custom-light';
   default: true;
   prefersdark: false;
   color-scheme: 'light';
-  --color-base-100: oklch(98% 0.015 270);
-  --color-base-200: oklch(94% 0.015 270);
-  --color-base-300: oklch(89% 0.015 270);
-  --color-base-content: oklch(15% 0.01 270);
-  --color-primary: oklch(45% 0.12 278);
-  --color-primary-content: oklch(98% 0.01 278);
-  --color-secondary: oklch(50% 0.15 310);
-  --color-secondary-content: oklch(98% 0.01 310);
-  --color-accent: oklch(52% 0.13 200);
-  --color-accent-content: oklch(98% 0.01 200);
-  --color-neutral: oklch(85% 0.02 265);
-  --color-neutral-content: oklch(20% 0.01 265);
-  --color-info: oklch(60% 0.15 240);
-  --color-info-content: oklch(98% 0.01 240);
-  --color-success: oklch(65% 0.14 160);
-  --color-success-content: oklch(98% 0.01 160);
-  --color-warning: oklch(75% 0.16 85);
-  --color-warning-content: oklch(20% 0.015 85);
-  --color-error: oklch(60% 0.22 20);
-  --color-error-content: oklch(98% 0.01 20);
-  --radius-selector: 0.5rem;
-  --radius-field: 0.5rem;
-  --radius-box: 0.5rem;
+
+  /* Light neutrals (page is softer than pure white) */
+  --color-base-100: oklch(0.92 0.008 305);
+  --color-base-200: oklch(0.95 0.008 305);
+  --color-base-300: oklch(0.98 0.008 305);
+  /* Body text: dark, near-achromatic to reduce color cast */
+  --color-base-content: oklch(0.2 0.004 305);
+
+  /* Brand: darkened for strong contrast on light page (use white on-color) */
+  --color-primary: oklch(0.5 0.12 305);
+  --color-primary-content: oklch(0.98 0.004 305);
+
+  /* Secondary: split-complementary teal/cyan, same luminance as primary */
+  --color-secondary: oklch(0.5 0.12 195);
+  --color-secondary-content: oklch(0.98 0.004 195);
+
+  /* Accent: playful lime, slightly brighter but still in the 0.5–0.55 band */
+  --color-accent: oklch(0.52 0.12 92);
+  --color-accent-content: oklch(0.98 0.004 92);
+
+  /* Neutral utility (borders/icons, chips); white on dark neutral */
+  --color-neutral: oklch(0.4 0.01 305);
+  --color-neutral-content: oklch(0.98 0.004 305);
+
+  /* Semantics: clustered chroma, L in 0.54–0.58 so white text is robust */
+  --color-info: oklch(0.56 0.16 233);
+  --color-info-content: oklch(0.98 0.004 233);
+
+  --color-success: oklch(0.56 0.16 152);
+  --color-success-content: oklch(0.98 0.004 152);
+
+  --color-warning: oklch(0.58 0.16 85);
+  --color-warning-content: oklch(0.98 0.004 85);
+
+  --color-error: oklch(0.54 0.18 25);
+  --color-error-content: oklch(0.98 0.004 25);
+
+  /* Radii / sizes  */
+  --radius-selector: 1rem;
+  --radius-field: 1rem;
+  --radius-box: 1rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
