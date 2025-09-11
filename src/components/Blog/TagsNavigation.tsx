@@ -19,7 +19,6 @@ export const TagsNavigation = ({ tags, className }: Props) => {
   const [shouldShowAll, setShouldShowAll] = useState(false)
 
   const visibleTags = shouldShowAll ? tags : tags.slice(0, NUM_INITIAL_VISIBLE_TAGS)
-
   const shouldShowMoreButton = !shouldShowAll && tags.length > NUM_INITIAL_VISIBLE_TAGS
 
   return (
@@ -29,15 +28,16 @@ export const TagsNavigation = ({ tags, className }: Props) => {
           <li>
             <a
               className={cn(
-                'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'badge badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
-                'hover:bg-neutral/75',
-                'link-outline',
+                'hover:bg-accent/20',
+                'focus-visible:bg-accent/20',
+                'link-outline-accent',
               )}
               href={ROUTES.blog.tag(slug)}
             >
               <span>{label}</span>
-              <span className="badge badge-xs badge-primary badge-soft font-bold">
+              <span className="badge badge-xs badge-accent text-accent-content font-bold">
                 {count}
               </span>
             </a>
@@ -47,10 +47,11 @@ export const TagsNavigation = ({ tags, className }: Props) => {
           <li className="tooltip" data-tip="Show all tags">
             <button
               className={cn(
-                'badge badge-neutral badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'badge badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
-                'hover:bg-neutral/75',
-                'link-outline',
+                'hover:bg-accent/20',
+                'focus-visible:bg-accent/20',
+                'link-outline-accent',
               )}
               onClick={() => {
                 setShouldShowAll(true)
