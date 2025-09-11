@@ -1,6 +1,8 @@
 ---
-// NOTE: `Astro.site` appends trailing slash even though it's set to 'never' in astro.config
-// Remove trailing slash from homepage
+/**
+ * 'Astro.site' appends trailing slash even though it's set to 'never' in astro.config
+ * Remove trailing slash from homepage
+ */
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '')
 ---
 
