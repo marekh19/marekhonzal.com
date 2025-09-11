@@ -9,6 +9,7 @@ import sectionize from 'remark-sectionize'
 import { loadEnv } from 'vite'
 
 const { SITE_URL } = loadEnv(process.env.SITE_URL!, process.cwd(), '')
+const { ENV_NAME } = loadEnv(process.env.ENV_NAME!, process.cwd(), '')
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,9 +19,15 @@ export default defineConfig({
     defaultStrategy: 'hover',
   },
   vite: {
+    // @ts-expect-error https://tailwindcss.com/docs/installation/framework-guides/astro
     plugins: [tailwindcss()],
   },
-  integrations: [preact(), mdx(), icon(), sitemap({ lastmod: new Date() })],
+  integrations: [
+    preact(),
+    mdx(),
+    icon(),
+    ENV_NAME === 'production' && sitemap({ lastmod: new Date() }),
+  ],
   trailingSlash: 'never',
   markdown: {
     syntaxHighlight: {

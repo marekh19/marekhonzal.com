@@ -4,6 +4,7 @@ const config = {
   websiteId: import.meta.env.PUBLIC_UMAMI_SITE_ID,
 } as const
 
+/** Don't use ENV_NAME here. We want to test analytics in locally built app */
 const isProd = import.meta.env.PROD
 if (!isProd) return null
 ---
