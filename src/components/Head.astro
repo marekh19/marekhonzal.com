@@ -6,6 +6,7 @@ import Favicon from '@/components/utility/Favicon.astro'
 import Meta from '@/components/utility/Meta.astro'
 import OpenGraph from '@/components/utility/OpenGraph.astro'
 import PreloadFonts from '@/components/utility/PreloadFonts.astro'
+import Robots from '@/components/utility/Robots.astro'
 import Rss from '@/components/utility/Rss.astro'
 import Sitemap from '@/components/utility/Sitemap.astro'
 
@@ -20,6 +21,7 @@ const { title, description, ogImagePath } = Astro.props
 
 <title>{title}</title>
 <Meta description={description} />
+<Robots />
 <ColorScheme />
 <Favicon />
 <CanonicalLink />
