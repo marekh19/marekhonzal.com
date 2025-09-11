@@ -1,9 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
-export const alertRootVariants = cva('bg-base-200 rounded-lg border-l-[6px] p-4', {
+export const alertRootVariants = cva('bg-base-100 rounded-lg border-l-[6px] p-4', {
   variants: {
     intent: {
-      tip: 'border-l-accent',
+      tip: 'border-l-secondary',
       info: 'border-l-info',
       warning: 'border-l-warning',
       error: 'border-l-error',
@@ -18,7 +18,7 @@ export const alertRootVariants = cva('bg-base-200 rounded-lg border-l-[6px] p-4'
 export const alertTitleVariants = cva('text-base font-semibold', {
   variants: {
     intent: {
-      tip: 'text-accent',
+      tip: 'text-secondary',
       info: 'text-info',
       warning: 'text-warning',
       error: 'text-error',
@@ -33,7 +33,7 @@ export const alertTitleVariants = cva('text-base font-semibold', {
 export const alertIconVariants = cva('size-5 shrink-0', {
   variants: {
     intent: {
-      tip: 'text-accent',
+      tip: 'text-secondary',
       info: 'text-info',
       warning: 'text-warning',
       error: 'text-error',
