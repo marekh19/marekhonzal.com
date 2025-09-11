@@ -1,4 +1,6 @@
 ---
+import { raise } from '@/lib/utils/common'
+
 type Props = {
   title: string
   description: string
@@ -7,13 +9,7 @@ type Props = {
 
 const { title, description, imagePath } = Astro.props
 
-const getOrigin = () => {
-  const fallback = Astro.url.origin
-  if (!import.meta.env.PROD) return fallback
-  return Astro.site?.origin ?? fallback
-}
-
-const origin = getOrigin()
+const origin = Astro.site ?? raise('Expected "site" to be defined in astro.config.*')
 const pageUrl = Astro.url.toString()
 const imageUrl = new URL(imagePath, origin).toString()
 
