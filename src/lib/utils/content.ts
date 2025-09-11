@@ -32,5 +32,6 @@ export const getFeaturedSectionContent = <T extends Content>(
   return [...featured, ...fallback]
 }
 
+/** Include draft posts in local dev server only */
 export const shouldIncludeItem = (item: Readonly<Content>): boolean =>
   import.meta.env.DEV ? true : !item.data.isDraft
