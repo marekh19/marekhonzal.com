@@ -5,17 +5,20 @@ import type { Post } from '@/lib/types'
 
 import ContentGrid from './ContentGrid/ContentGrid.astro'
 
+const NUM_PRIORITY_IMAGES = 3
+
 type Props = {
   posts: readonly Post[]
   className?: string
+  isAboveFold?: boolean
 }
 
-const { posts, className } = Astro.props
+const { posts, className, isAboveFold = false } = Astro.props
 ---
 
 <ContentGrid type="article" className={className}>
   {
-    posts.map((post) => (
+    posts.map((post, index) => (
       <ArticleCard
         title={post.data.title}
         description={post.data.description}
@@ -23,6 +26,7 @@ const { posts, className } = Astro.props
         date={post.data.date}
         thumbnail={post.data.thumbnail}
         tags={post.data.tags}
+        isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES - 1}
       />
     ))
   }

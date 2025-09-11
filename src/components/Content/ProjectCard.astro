@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils/cn'
 import { formatDateMachine } from '@/lib/utils/date'
 
 const IMAGE_CONFIG = {
-  width: 340,
-  densities: [1.5],
+  widths: [480, 720, 768, 960, 1024, 1280],
+  sizes: '(max-width: 599px) 545px, (max-width: 1023px) 455px, 360px',
 }
 
 type Props = {
@@ -17,16 +17,24 @@ type Props = {
   targetUrl: string
   date: Date
   thumbnail: ImageMetadata
+  isPriorityImage?: boolean
 }
 
-const { title, description, targetUrl, date, thumbnail } = Astro.props
+const {
+  title,
+  description,
+  targetUrl,
+  date,
+  thumbnail,
+  isPriorityImage = false,
+} = Astro.props
 ---
 
 <a
   href={targetUrl}
   class={cn(
-    'border-base-content/20 group overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
-    'hover:border-base-content/40',
+    'border-base-content/15 group bg-base-100 overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
+    'hover:border-base-content/25',
     'link-outline',
   )}
 >
@@ -35,15 +43,18 @@ const { title, description, targetUrl, date, thumbnail } = Astro.props
       <Image
         src={thumbnail}
         alt={title}
+        priority={isPriorityImage}
         class={cn(
           'size-full object-cover transition-transform duration-300 ease-out',
           'motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105',
+          'lg:max-w-[22.5rem]',
         )}
         {...IMAGE_CONFIG}
       />
       <time
         datetime={formatDateMachine(date)}
-        class="badge badge-sm absolute top-1 left-1 font-bold">{date.getFullYear()}</time
+        class="badge badge-sm absolute top-1 left-1 font-semibold"
+        >{date.getFullYear()}</time
       >
     </div>
     <div class="p-4">
@@ -52,7 +63,7 @@ const { title, description, targetUrl, date, thumbnail } = Astro.props
       <span class="mt-auto inline-flex items-center gap-1"
         >Read more<Icon
           name="lucide:arrow-right"
-          class="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-1 motion-safe:group-focus-visible:translate-x-1"
+          class="ease-springy size-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1.25 motion-safe:group-focus-visible:translate-x-1.25"
         /></span
       >
     </div>

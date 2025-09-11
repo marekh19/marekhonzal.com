@@ -5,23 +5,27 @@ import type { Project } from '@/lib/types'
 import ContentGrid from './ContentGrid/ContentGrid.astro'
 import ProjectCard from './ProjectCard.astro'
 
+const NUM_PRIORITY_IMAGES = 3
+
 type Props = {
   projects: readonly Project[]
   className?: string
+  isAboveFold?: boolean
 }
 
-const { projects, className } = Astro.props
+const { projects, className, isAboveFold = false } = Astro.props
 ---
 
 <ContentGrid type="project" className={className}>
   {
-    projects.map((project) => (
+    projects.map((project, index) => (
       <ProjectCard
         title={project.data.title}
         description={project.data.description}
         targetUrl={ROUTES.projects.detail(project.id)}
         date={project.data.date}
         thumbnail={project.data.thumbnail}
+        isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES - 1}
       />
     ))
   }
