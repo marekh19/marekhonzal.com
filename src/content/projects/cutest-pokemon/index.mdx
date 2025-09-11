@@ -44,8 +44,9 @@ model Vote {
 <Image
   src={voteImg}
   alt="Voting page screenshot"
-  width={voteImg.width / 2}
-  densities={[2]}
+  widths={[360, 480, 720, 768, 960, 1024, 1280]}
+  sizes="(max-width: 1023px) 100vw, 768px"
+  priority
   class="not-prose rounded-md"
 />
 
@@ -128,8 +129,8 @@ export const appRouter = trpc
 <Image
   src={resultsImg}
   alt="Results page screenshot"
-  width={resultsImg.width / 2}
-  densities={[2]}
+  widths={[360, 480, 720, 768, 960, 1024, 1280]}
+  sizes="(max-width: 1023px) 100vw, 768px"
   class="not-prose rounded-md"
 />
 

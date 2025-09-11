@@ -143,14 +143,14 @@ The app is fully installable with:
 
 ## Screenshots
 
-<div className="mt-16 grid grid-cols-1 gap-10 lg:grid-cols-2">
+<div className="mt-16 grid grid-cols-1 gap-10 md:grid-cols-2">
   <div class="mockup-phone max-w-full w-fit border-primary">
     <div class="mockup-phone-display overflow-hidden w-fit h-fit max-w-full">
       <Image
         src={mobileScreenshotImg}
         alt="ZenToDo mobile screenshot"
-        width={mobileScreenshotImg.width / 2}
-        densities={[2]}
+        widths={[360,480,560,768]}
+        sizes='(max-width: 640px) 100vw, (max-width: 1023px) 50vw, 360px'
         class="not-prose"
       />
     </div>
@@ -161,8 +161,8 @@ The app is fully installable with:
       <Image
         src={pwaPromptImg}
         alt="ZenToDo PWA installation prompt"
-        width={pwaPromptImg.width / 2}
-        densities={[2]}
+        widths={[360,480,560,768]}
+        sizes='(max-width: 640px) 100vw, (max-width: 1023px) 50vw, 360px'
         class="not-prose"
       />
     </div>
