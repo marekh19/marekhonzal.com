@@ -1,0 +1,47 @@
+name: Deploy (staging)
+
+on:
+  workflow_run:
+    workflows: ['Validate']
+    types: [completed]
+    branches: [main]
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: ⬇️ Checkout the exact commit that passed CI
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: 🧰 Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22.19.0'
+          cache: 'pnpm'
+
+      - name: 📥 Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: 🎭 Get Playwright for mermaid
+        run: pnpm dlx playwright install --with-deps chromium
+
+      - name: 🏗️ Build (inject build-time vars)
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+          PUBLIC_UMAMI_SITE_ID: ${{ vars.PUBLIC_UMAMI_SITE_ID }}
+          ENV_NAME: staging
+        run: pnpm build
+
+      - name: 🚀 Deploy with Wrangler (staging)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

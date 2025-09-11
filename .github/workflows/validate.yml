@@ -1,4 +1,4 @@
-name: CI
+name: Validate
 
 on:
   push:
@@ -44,7 +44,3 @@ jobs:
 
       - name: 🏗️ Build
         run: pnpm build
-
-      - name: 🚀 Deploy (coming soon)
-        if: ${{ false }}
-        run: echo "Deploy step to be added later"
