@@ -33,23 +33,23 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
     path.resolve(process.cwd(), 'src/assets/avatar.svg'),
     'utf8',
   )
-  const svgDataUrl = tintSvg(rawSvg, '#d5d7de')
+  const svgDataUrl = tintSvg(rawSvg, '#f2f1f4')
 
   return h(
     'div',
-    { tw: 'h-full w-full bg-[#010204] flex items-center justify-start p-40' },
+    { tw: 'h-full w-full bg-[#151219] flex items-center justify-start p-40' },
     h(
       'div',
-      { tw: 'flex flex-col text-[#d5d7de]' },
+      { tw: 'flex flex-col text-[#f2f1f4]' },
       h(
         'div',
         {
-          tw: 'flex items-center self-start rounded-full mb-16 py-1.5 px-5 border-2 border-slate-700',
+          tw: 'flex items-center self-start rounded-full mb-16 py-1.5 px-5 border-2 border-[#3c3941]',
         },
         h(
           'div',
           {
-            tw: 'flex items-center justify-center bg-[#010204] rounded-full mr-3',
+            tw: 'flex items-center justify-center bg-[#151219] rounded-full mr-3',
           },
           h('img', { src: svgDataUrl, width: 56, height: 56, alt: '' }),
         ),
@@ -60,7 +60,7 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
       h(
         'div',
         {
-          tw: 'text-7xl mb-16 font-medium tracking-wide leading-[133%]',
+          tw: 'text-6xl mb-16 font-medium tracking-wide leading-[133%]',
           style: { fontFamily: 'Lora Medium' },
         },
         data.title,
