@@ -16,7 +16,7 @@ export const tocHeadingId = 'toc-heading'
 ---
 
 <h2 id={tocHeadingId} class="sr-only">Table of contents</h2>
-<ul class="flex flex-col gap-3 pl-1">
+<ul class="flex flex-col gap-3 p-1">
   {toc.map((heading) => <TableOfContentsItem heading={heading} />)}
 </ul>
 <svg
@@ -24,7 +24,7 @@ export const tocHeadingId = 'toc-heading'
   xmlns="http://www.w3.org/2000/svg"
 >
   <path
-    class="toc-marker text-primary stroke-current transition-all duration-300"
+    class="toc-marker text-accent stroke-current transition-all duration-300"
     fill="none"
     stroke="currentColor"
     stroke-width="2"
