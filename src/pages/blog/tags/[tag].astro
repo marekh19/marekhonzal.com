@@ -4,10 +4,10 @@ import { getCollection } from 'astro:content'
 import { Icon } from 'astro-icon/components'
 
 import ArticleGrid from '@/components/Content/ArticleGrid.astro'
+import Link from '@/components/Link.astro'
 import { ROUTES } from '@/config/routes'
 import { defaultSeo } from '@/config/seo'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import { cn } from '@/lib/utils/cn'
 import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
 import { getAllTags, getPostsByTag } from '@/lib/utils/posts'
 import { createSlugifiedString } from '@/lib/utils/string'
@@ -32,17 +32,10 @@ const { tag, posts } = Astro.props
 ---
 
 <BaseLayout pageTitle={meta.title(tag)} pageDescription={meta.description(tag)}>
-  <a
-    href={ROUTES.blog._}
-    class={cn(
-      'link link-hover text-base-content/75 mt-5 inline-flex items-center gap-1 font-medium transition-colors duration-200 ease-out',
-      'link-outline-daisy',
-      'hover:text-base-content',
-    )}
-  >
-    <Icon name="lucide:arrow-left" />
-    Back to all articles
-  </a>
+  <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start">
+    <Icon name="lucide:arrow-left" class="size-3.5" />
+    Blog
+  </Link>
   <div class="mt-5 mb-10 space-y-3">
     <h1 class="text-3xl">
       Articles tagged with &ldquo;<strong class="font-bold">{tag}</strong>&rdquo;
@@ -51,5 +44,5 @@ const { tag, posts } = Astro.props
       Browse all posts that are related to {tag}.
     </h2>
   </div>
-  <ArticleGrid posts={posts} />
+  <ArticleGrid posts={posts} isAboveFold />
 </BaseLayout>
