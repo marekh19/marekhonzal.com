@@ -7,7 +7,13 @@ import { defaultSeo } from '@/config/seo'
 import { raise } from '@/lib/utils/common'
 import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
 
-export const GET: APIRoute = async (context) => {
+const IS_PRODUCTION = import.meta.env.ENV_NAME === 'production'
+
+export const GET: APIRoute = async ({ site }) => {
+  if (!IS_PRODUCTION) {
+    return new Response(null, { status: 404, statusText: 'Not found' })
+  }
+
   const posts = await getCollection('blog', shouldIncludeItem)
   const sortedPosts = getSortedContentByDateDesc(posts)
 
@@ -15,7 +21,7 @@ export const GET: APIRoute = async (context) => {
     trailingSlash: false,
     title: defaultSeo.baseTitle,
     description: defaultSeo.metaDescription,
-    site: context.site ?? raise('Expected "site" to be defined in astro.config.*'),
+    site: site ?? raise('Expected "site" to be defined in astro.config.*'),
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,
