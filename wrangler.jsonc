@@ -3,9 +3,20 @@
   "name": "marekhonzal-com",
   // Update to today's date
   "compatibility_date": "2025-09-11",
+  "observability": { "enabled": true },
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",
     "html_handling": "drop-trailing-slash",
+  },
+  "env": {
+    "staging": {
+      "workers_dev": false,
+      "routes": [{ "pattern": "staging.marekhonzal.com", "custom_domain": true }],
+    },
+    "production": {
+      "workers_dev": false,
+      "routes": [{ "pattern": "marekhonzal.com", "custom_domain": true }],
+    },
   },
 }

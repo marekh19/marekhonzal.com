@@ -1,28 +1,27 @@
-name: Deploy (staging)
+name: Deploy (production)
 
 on:
-  workflow_run:
-    workflows: ['Validate'] # must match validate.yml's name
-    types: [completed]
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref (branch, tag, or SHA) to deploy'
+        default: main
 
 concurrency:
-  group: cf-worker-staging
-  cancel-in-progress: true
+  group: cf-worker-production
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     permissions:
       contents: read
       deployments: write
     steps:
-      - name: ⬇️ Checkout the validated commit
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v5
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          ref: ${{ inputs.ref }}
 
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v5
@@ -36,11 +35,11 @@ jobs:
       - name: 🎭 Playwright for mermaid
         run: pnpm dlx playwright install --with-deps chromium
 
-      - name: 🏗️ Build (inject staging vars)
+      - name: 🏗️ Build (inject production vars)
         env:
           SITE_URL: ${{ vars.SITE_URL }}
           PUBLIC_UMAMI_SITE_ID: ${{ vars.PUBLIC_UMAMI_SITE_ID }}
-          PUBLIC_ENV_NAME: staging
+          PUBLIC_ENV_NAME: production
         run: pnpm build
 
       - name: 🚀 Deploy with Wrangler
@@ -48,4 +47,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env staging
+          command: deploy --env production

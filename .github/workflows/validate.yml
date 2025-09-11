@@ -1,33 +1,32 @@
 name: Validate
 
 on:
-  push:
-    branches: [main]
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 jobs:
   ci:
     name: Lint, Format, Typecheck, Build
     runs-on: ubuntu-latest
-
     steps:
-      - name: ⬇️ Checkout repo
+      - name: ⬇️ Checkout
         uses: actions/checkout@v5
 
       - name: 📦 Setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: 🧰 Setup Node.js
+      - name: 🧰 Setup Node
         uses: actions/setup-node@v5
         with:
           node-version: '22.19.0'
-          cache: 'pnpm'
+          cache: pnpm
 
-      - name: 📥 Install dependencies
+      - name: 📥 Install deps
         run: pnpm i --frozen-lockfile
 
-      - name: 🎨 Check formatting
+      - name: 🎨 Format
         run: pnpm format:check
 
       - name: 🧹 Lint
@@ -36,7 +35,7 @@ jobs:
       - name: ✂️ Knip
         run: pnpm knip
 
-      - name: 🎭 Get Playwright for mermaid
+      - name: 🎭 Playwright for mermaid
         run: pnpm dlx playwright install --with-deps chromium
 
       - name: 🧪 Typecheck
