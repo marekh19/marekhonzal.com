@@ -6,10 +6,13 @@ import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
 import rehypeMermaid from 'rehype-mermaid'
 import sectionize from 'remark-sectionize'
+import { loadEnv } from 'vite'
+
+const { SITE_URL } = loadEnv(process.env.SITE_URL!, process.cwd(), '')
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://marekhonzal.com',
+  site: SITE_URL,
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover',
