@@ -15,7 +15,7 @@ export const GET: APIRoute = async (context) => {
     trailingSlash: false,
     title: defaultSeo.baseTitle,
     description: defaultSeo.metaDescription,
-    site: context.site ?? raise('"Astro.site" is not set'),
+    site: context.site ?? raise('Expected "site" to be defined in astro.config.*'),
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,
