@@ -37,5 +37,5 @@ const sortedTagsMetadata = getSortedTagMetadataByCount(tagsMetadata)
   </div>
   <h2 class="mb-5 text-lg font-semibold">Browse by Tags</h2>
   <TagsNavigation client:load tags={sortedTagsMetadata} className="mb-10" />
-  <ArticleGrid posts={sortedPosts} />
+  <ArticleGrid posts={sortedPosts} isAboveFold />
 </BaseLayout>
