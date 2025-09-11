@@ -3,7 +3,7 @@ import preact from '@astrojs/preact'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
-import { defineConfig } from 'astro/config'
+import { defineConfig, envField } from 'astro/config'
 import rehypeMermaid from 'rehype-mermaid'
 import sectionize from 'remark-sectionize'
 import { loadEnv } from 'vite'
@@ -13,7 +13,26 @@ const { ENV_NAME } = loadEnv(process.env.ENV_NAME!, process.cwd(), '')
 
 // https://astro.build/config
 export default defineConfig({
-  site: SITE_URL,
+  env: {
+    schema: {
+      SITE_URL: envField.string({
+        context: 'server',
+        access: 'public',
+        default: 'http://localhost:4321',
+      }),
+      ENV_NAME: envField.string({
+        context: 'server',
+        access: 'public',
+        default: 'staging',
+      }),
+      PUBLIC_UMAMI_SITE_ID: envField.string({
+        context: 'client',
+        access: 'public',
+        default: crypto.randomUUID(),
+      }),
+    },
+  },
+  site: SITE_URL ?? 'http://localhost:4321',
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover',
@@ -26,7 +45,7 @@ export default defineConfig({
     preact(),
     mdx(),
     icon(),
-    ENV_NAME === 'production' && sitemap({ lastmod: new Date() }),
+    (ENV_NAME ?? 'staging') === 'production' && sitemap({ lastmod: new Date() }),
   ],
   trailingSlash: 'never',
   markdown: {

@@ -2,15 +2,14 @@ import type { APIRoute } from 'astro'
 import { getCollection } from 'astro:content'
 import rss from '@astrojs/rss'
 
+import { ENV } from '@/config/env'
 import { ROUTES } from '@/config/routes'
 import { defaultSeo } from '@/config/seo'
 import { raise } from '@/lib/utils/common'
 import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
 
-const IS_PRODUCTION = import.meta.env.ENV_NAME === 'production'
-
 export const GET: APIRoute = async ({ site }) => {
-  if (!IS_PRODUCTION) {
+  if (!ENV.IS_PRODUCTION) {
     return new Response(null, { status: 404, statusText: 'Not found' })
   }
 

@@ -1,12 +1,12 @@
 ---
+import { ENV } from '@/config/env'
+
 const config = {
   url: 'https://cloud.umami.is/script.js',
-  websiteId: import.meta.env.PUBLIC_UMAMI_SITE_ID,
+  websiteId: ENV.PUBLIC_UMAMI_SITE_ID,
 } as const
 
-/** Don't use ENV_NAME here. We want to test analytics in locally built app */
-const isProd = import.meta.env.PROD
-if (!isProd) return null
+if (ENV.IS_LOCAL) return null
 ---
 
 <script is:inline defer src={config.url} data-website-id={config.websiteId}></script>

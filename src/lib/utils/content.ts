@@ -1,3 +1,4 @@
+import { ENV } from '@/config/env'
 import type { Content } from '@/lib/types'
 
 const NUM_FEATURED_ITEMS = 3
@@ -34,4 +35,4 @@ export const getFeaturedSectionContent = <T extends Content>(
 
 /** Include draft posts in local dev server only */
 export const shouldIncludeItem = (item: Readonly<Content>): boolean =>
-  import.meta.env.DEV ? true : !item.data.isDraft
+  ENV.IS_LOCAL ? true : !item.data.isDraft
