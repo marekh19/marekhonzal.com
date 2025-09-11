@@ -32,7 +32,7 @@ if (linkType === 'anchor') {
       target="_blank"
       rel="noopener"
       class={cn(
-        'link link-primary link-hover link-outline-daisy inline-flex items-center gap-1',
+        'link-gradient link-outline link-outline-rounded no-underline',
         className,
       )}
       {...rest}
@@ -51,7 +51,14 @@ if (linkType === 'anchor') {
 
 {
   linkType === 'internal' && (
-    <a href={href} {...rest} class="link link-primary link-hover link-outline-daisy">
+    <a
+      href={href}
+      {...rest}
+      class={cn(
+        'link-gradient link-outline link-outline-rounded no-underline',
+        className,
+      )}
+    >
       <slot />
     </a>
   )
