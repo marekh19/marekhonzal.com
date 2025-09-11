@@ -1,14 +1,1 @@
-**Image Generation Request**
-
-- **Style**: Lo-fi drawn animation with an old-school vibe. Primarily grayscale with subtle pastel accents.
-- **Aspect Ratio**: 2:1
-- **Realism**: None (purely illustrative, not realistic)
-- **Core Concept**:
-  All elements in the image must be represented **abstractly through greyhounds**. For example, if the topic were “Tailwind vs Native CSS,” the image would depict a greyhound vs greyhound concept. This abstraction rule applies to **every image request**.
-  ➤ No text or logos should appear in the image.
-
----
-
-**Prompt for the current image**:
-**"Immutability in TypeScript"**
-→ Please visualize this concept **entirely through greyhounds**, following the rules above.
+Lo-fi old-school hand-drawn animation style, primarily grayscale with very subtle pastel accents. Aspect ratio exactly 1200×630 pixels (1.9:1). Everything in the scene must be represented only through greyhounds, no humans, text, code, or literal objects. Place the main action inside a safe central area, leaving a 10% border on all sides free of important content, while background and decoration extend fully to the edges with no visible frame or border. Scene concept: “Immutability in TypeScript” — visualize greyhounds demonstrating immutability, such as passing along an object that stays unchanged, or one trying to alter something but it remains frozen and unaffected.
