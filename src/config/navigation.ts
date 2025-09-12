@@ -1,3 +1,4 @@
+import { ENV } from './env'
 import { ROUTES } from './routes'
 
 type Navigation = {
@@ -16,7 +17,7 @@ export const createfooterNavigation = (siteUrl: URL) =>
     elsewhere: [
       {
         label: 'Analytics',
-        href: 'https://cloud.umami.is/share/QCsE3MY95M1aH0wE/marekhonzal.com',
+        href: ENV.PUBLIC_UMAMI_SHARE_URL,
       },
       {
         label: 'RSS',

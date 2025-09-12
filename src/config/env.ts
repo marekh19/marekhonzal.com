@@ -1,4 +1,4 @@
-import { PUBLIC_UMAMI_SITE_ID } from 'astro:env/client'
+import { PUBLIC_UMAMI_SHARE_URL, PUBLIC_UMAMI_SITE_ID } from 'astro:env/client'
 import { ENV_NAME, SITE_URL } from 'astro:env/server'
 
 const IS_PRODUCTION = ENV_NAME === 'production'
@@ -10,4 +10,5 @@ export const ENV = {
   SITE_URL,
   ENV_NAME,
   PUBLIC_UMAMI_SITE_ID,
+  PUBLIC_UMAMI_SHARE_URL,
 } as const

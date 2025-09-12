@@ -30,6 +30,11 @@ export default defineConfig({
         access: 'public',
         default: crypto.randomUUID(),
       }),
+      PUBLIC_UMAMI_SHARE_URL: envField.string({
+        context: 'client',
+        access: 'public',
+        default: 'https://cloud.umami.is',
+      }),
     },
   },
   site: SITE_URL ?? 'http://localhost:4321',

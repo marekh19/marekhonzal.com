@@ -39,6 +39,7 @@ jobs:
         env:
           SITE_URL: ${{ vars.SITE_URL }}
           PUBLIC_UMAMI_SITE_ID: ${{ vars.PUBLIC_UMAMI_SITE_ID }}
+          PUBLIC_UMAMI_SHARE_URL: ${{ vars.PUBLIC_UMAMI_SHARE_URL}}
           PUBLIC_ENV_NAME: production
         run: pnpm build
 
