@@ -3,8 +3,6 @@ import type { GetStaticPaths } from 'astro'
 import { getCollection, render } from 'astro:content'
 
 import ArticleHeader from '@/components/Content/ArticleHeader.astro'
-import TableOfContents from '@/components/Content/TableOfContents/TableOfContents.astro'
-import ScrollProgressBar from '@/components/ScrollProgressBar.astro'
 import { mdxComponents } from '@/components/utility/MDXComponents.astro'
 import { defaultSeo } from '@/config/seo'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
@@ -28,19 +26,11 @@ const { data } = post
 <ReadingLayout
   pageTitle={defaultSeo.pageTitle(data.title)}
   pageDescription={data.description}
+  headings={headings}
 >
   <Fragment slot="contentHeader">
     <ArticleHeader {...data} className="mt-5" />
   </Fragment>
 
-  <Fragment slot="toc">
-    <TableOfContents headings={headings} />
-  </Fragment>
-
   <Content components={mdxComponents} />
-
-  <Fragment slot="endOfBody">
-    <ScrollProgressBar />
-    <script src="@/scripts/copy-code.ts"></script>
-  </Fragment>
 </ReadingLayout>

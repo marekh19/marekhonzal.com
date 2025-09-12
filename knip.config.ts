@@ -13,7 +13,7 @@ export default {
     ],
     project: ['src/**/*'],
   },
-  ignore: ['src/scripts/copy-code.ts'],
+  ignore: ['src/lib/copy-code.ts'],
   ignoreDependencies: [
     '@iconify-json/logos',
     '@iconify-json/lucide',
