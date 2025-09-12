@@ -28,7 +28,7 @@ export const TagsNavigation = ({ tags, className }: Props) => {
           <li>
             <a
               className={cn(
-                'badge badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'badge dark:badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-accent/20',
                 'focus-visible:bg-accent/20',
@@ -47,7 +47,7 @@ export const TagsNavigation = ({ tags, className }: Props) => {
           <li className="tooltip" data-tip="Show all tags">
             <button
               className={cn(
-                'badge badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'badge dark:badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-accent/20',
                 'focus-visible:bg-accent/20',
