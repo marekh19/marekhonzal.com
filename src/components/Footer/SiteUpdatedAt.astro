@@ -1,12 +1,7 @@
 ---
-import { getLastCommitDateIntoDefaultBranch } from '@/lib/github'
 import { formatDateHuman } from '@/lib/utils/date'
 
-const lastCommitDate = await getLastCommitDateIntoDefaultBranch(
-  'marekh19/marekhonzal.com',
-)
-
-const formattedLastCommit = formatDateHuman(lastCommitDate ?? new Date(), {
+const formattedLastUpdated = formatDateHuman(new Date(), {
   month: 'long',
   day: 'numeric',
   year: 'numeric',
@@ -18,5 +13,5 @@ const formattedLastCommit = formatDateHuman(lastCommitDate ?? new Date(), {
 ---
 
 <p class="text-base-content/60 text-xs">
-  Last updated by Marek on {formattedLastCommit}
+  Last updated by Marek on {formattedLastUpdated}
 </p>
