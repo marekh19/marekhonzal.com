@@ -14,6 +14,8 @@ jobs:
   deploy:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
+    # Playwright is required for mermaid diagrams support
+    container: mcr.microsoft.com/playwright:v1.55.0-jammy
     environment: staging
     permissions:
       contents: read
@@ -32,9 +34,6 @@ jobs:
 
       - name: 📥 Install deps
         run: pnpm i --frozen-lockfile
-
-      - name: 🎭 Playwright for mermaid
-        run: pnpm dlx playwright install --with-deps chromium
 
       - name: 🏗️ Build (inject staging vars)
         env:
