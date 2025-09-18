@@ -5,6 +5,7 @@ import CanonicalLink from '@/components/Meta/CanonicalLink.astro'
 import ColorScheme from '@/components/Meta/ColorScheme.astro'
 import DisallowRobots from '@/components/Meta/DisallowRobots.astro'
 import Favicon from '@/components/Meta/Favicon.astro'
+import InlineStyles from '@/components/Meta/InlineStyles.astro'
 import Meta from '@/components/Meta/Meta.astro'
 import OpenGraph from '@/components/Meta/OpenGraph.astro'
 import PreloadFonts from '@/components/Meta/PreloadFonts.astro'
@@ -33,4 +34,5 @@ const { title, description, ogImagePath } = Astro.props
 <PreloadFonts type="sans" />
 <OpenGraph title={title} description={description} imagePath={ogImagePath} />
 <AppVersion />
+<InlineStyles />
 <slot />
