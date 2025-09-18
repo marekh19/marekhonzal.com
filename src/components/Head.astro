@@ -1,16 +1,16 @@
 ---
-import Analytics from '@/components/utility/Analytics.astro'
-import AppVersion from '@/components/utility/AppVersion.astro'
-import CanonicalLink from '@/components/utility/CanonicalLink.astro'
-import ColorScheme from '@/components/utility/ColorScheme.astro'
-import Favicon from '@/components/utility/Favicon.astro'
-import Meta from '@/components/utility/Meta.astro'
-import OpenGraph from '@/components/utility/OpenGraph.astro'
-import PreloadFonts from '@/components/utility/PreloadFonts.astro'
-import Robots from '@/components/utility/Robots.astro'
-import Rss from '@/components/utility/Rss.astro'
-import Sitemap from '@/components/utility/Sitemap.astro'
-import ThemeColor from '@/components/utility/ThemeColor.astro'
+import Analytics from '@/components/Meta/Analytics.astro'
+import AppVersion from '@/components/Meta/AppVersion.astro'
+import CanonicalLink from '@/components/Meta/CanonicalLink.astro'
+import ColorScheme from '@/components/Meta/ColorScheme.astro'
+import DisallowRobots from '@/components/Meta/DisallowRobots.astro'
+import Favicon from '@/components/Meta/Favicon.astro'
+import Meta from '@/components/Meta/Meta.astro'
+import OpenGraph from '@/components/Meta/OpenGraph.astro'
+import PreloadFonts from '@/components/Meta/PreloadFonts.astro'
+import Rss from '@/components/Meta/Rss.astro'
+import Sitemap from '@/components/Meta/Sitemap.astro'
+import { ENV } from '@/config/env'
 
 type Props = {
   title: string
@@ -23,16 +23,14 @@ const { title, description, ogImagePath } = Astro.props
 
 <title>{title}</title>
 <Meta description={description} />
-<Robots />
+{!ENV.IS_PRODUCTION && <DisallowRobots />}
 <ColorScheme />
 <Favicon />
 <CanonicalLink />
-<Rss />
-<Analytics />
-<Sitemap />
+{ENV.IS_PRODUCTION && <Rss />}
+{!ENV.IS_LOCAL && <Analytics />}
+{ENV.IS_PRODUCTION && <Sitemap />}
 <PreloadFonts type="sans" />
 <OpenGraph title={title} description={description} imagePath={ogImagePath} />
-<ThemeColor />
 <AppVersion />
-
 <slot />

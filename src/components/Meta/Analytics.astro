@@ -5,8 +5,6 @@ const config = {
   url: 'https://cloud.umami.is/script.js',
   websiteId: ENV.PUBLIC_UMAMI_SITE_ID,
 } as const
-
-if (ENV.IS_LOCAL) return null
 ---
 
 <script is:inline defer src={config.url} data-website-id={config.websiteId}></script>
