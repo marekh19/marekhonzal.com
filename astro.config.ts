@@ -3,40 +3,19 @@ import preact from '@astrojs/preact'
 import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
-import { defineConfig, envField } from 'astro/config'
+import { defineConfig } from 'astro/config'
 import rehypeMermaid from 'rehype-mermaid'
 import sectionize from 'remark-sectionize'
 import { loadEnv } from 'vite'
+
+import { envConfig } from './env.config.ts'
 
 const { SITE_URL } = loadEnv(process.env.SITE_URL!, process.cwd(), '')
 const { ENV_NAME } = loadEnv(process.env.ENV_NAME!, process.cwd(), '')
 
 // https://astro.build/config
 export default defineConfig({
-  env: {
-    schema: {
-      SITE_URL: envField.string({
-        context: 'server',
-        access: 'public',
-        default: 'http://localhost:4321',
-      }),
-      ENV_NAME: envField.string({
-        context: 'server',
-        access: 'public',
-        default: 'staging',
-      }),
-      PUBLIC_UMAMI_SITE_ID: envField.string({
-        context: 'client',
-        access: 'public',
-        default: crypto.randomUUID(),
-      }),
-      PUBLIC_UMAMI_SHARE_URL: envField.string({
-        context: 'client',
-        access: 'public',
-        default: 'https://cloud.umami.is',
-      }),
-    },
-  },
+  env: envConfig,
   site: SITE_URL ?? 'http://localhost:4321',
   prefetch: {
     prefetchAll: true,
