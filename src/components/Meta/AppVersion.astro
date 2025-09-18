@@ -4,5 +4,6 @@ import { getAppVersion } from '@/lib/utils/version'
 const version = getAppVersion()
 ---
 
-<!-- APP VERSION -->
-<meta name="app-version" content={version} />
+<!-- APP DEBUG INFO -->
+<meta name="app:version" content={version} />
+<meta name="app:build-date" content={new Date().toISOString()} />
