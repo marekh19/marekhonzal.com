@@ -32,19 +32,13 @@ if (linkType === 'anchor') {
       target="_blank"
       rel="noopener"
       class={cn(
-        'link-gradient link-outline link-outline-rounded no-underline',
+        'link-gradient link-outline link-outline-rounded inline-flex items-center gap-1 no-underline',
         className,
       )}
       {...rest}
     >
       <slot />
-      {hasIcon && (
-        <Icon
-          name="lucide:arrow-up-right"
-          class="inline-block size-4"
-          aria-hidden="true"
-        />
-      )}
+      {hasIcon && <Icon name="lucide:external-link" class="size-4" aria-hidden="true" />}
     </a>
   )
 }
