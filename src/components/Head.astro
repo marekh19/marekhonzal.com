@@ -1,5 +1,6 @@
 ---
 import Analytics from '@/components/utility/Analytics.astro'
+import AppVersion from '@/components/utility/AppVersion.astro'
 import CanonicalLink from '@/components/utility/CanonicalLink.astro'
 import ColorScheme from '@/components/utility/ColorScheme.astro'
 import Favicon from '@/components/utility/Favicon.astro'
@@ -32,5 +33,6 @@ const { title, description, ogImagePath } = Astro.props
 <PreloadFonts type="sans" />
 <OpenGraph title={title} description={description} imagePath={ogImagePath} />
 <ThemeColor />
+<AppVersion />
 
 <slot />
