@@ -9,7 +9,7 @@ tags:
 thumbnail: './immutability-in-typescript.png'
 ---
 
-I didn't "go functional." I just got tired of spooky side-effects and fragile refactors. Immutability wasn't a Big Rewrite - more like **small defaults** that kept paying off. This post is how I use it day-to-day: why it helps, how I think about it, and the exact patterns I paste into real code.
+I didn't "_go functional_." I just got tired of spooky side-effects and fragile refactors. Immutability wasn't a Big Rewrite - more like **small defaults** that kept paying off. This post is how I use it day-to-day: why it helps, how I think about it, and the exact patterns I paste into real code.
 
 ## Why immutability?
 
@@ -63,15 +63,14 @@ const buildPermissions = (
 ): readonly Permission[] =>
   features.flatMap((f) => operations.map((o) => `${f}:${o}` as const))
 
-const PERMISSIONS = buildPermissions(FEATURES, OPERATIONS)
-  satisfies readonly Permission[]
+const PERMISSIONS = buildPermissions(FEATURES, OPERATIONS) satisfies readonly Permission[]
 ```
 
 Whenever you add a new feature or operation, the compiler updates the entire permission set. No typos, no missed strings. Just one definition, everywhere consistent.
 
 ### Template literal types that carry intent
 
-Once you start treating strings as _types_, you can encode intent directly in them.
+Once you start [treating strings as _types_](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html), you can encode intent directly in them.
 
 ```ts
 const isBlogUrl = (url: string): url is `/blog/${string}` => url.startsWith('/blog/')
@@ -97,6 +96,35 @@ const COLOR_MAP = {
 ```
 
 This avoids accidental widening and keeps both values and types locked in sync.
+
+<Alert title="Gotcha" intent="warning">
+  Be cautious when using the `satisfies` operator with **arrays**.  
+  The [TypeScript
+  documentation](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-9.html#the-satisfies-operator)
+  says:
+
+&ldquo;_The new `satisfies` operator lets us validate that the type of an expression matches some type, **without changing the resulting type of that expression**._&rdquo;
+
+However, this isn’t entirely true. Let’s look at three simple examples:
+
+```ts
+const COLORS = ['#ff0000', '#00ff00', '#0000ff'] as const
+// 1) ?^ const COLORS: readonly ["#ff0000", "#00ff00", "#0000ff"]
+
+const COLORS = ['#ff0000', '#00ff00', '#0000ff'] as const satisfies Hex[]
+// 2) ?^ const COLORS: ["#ff0000", "#00ff00", "#0000ff"]
+
+const COLORS = ['#ff0000', '#00ff00', '#0000ff'] as const satisfies readonly Hex[]
+// 3) ?^ const COLORS: readonly ["#ff0000", "#00ff00", "#0000ff"]
+```
+
+Notice the difference?
+
+As soon as we add `satisfies` after `as const` **without** `readonly` (example 2), the `readonly` qualifier is dropped from the type.
+
+💡 So whenever you use `as const satisfies` with an array, remember to explicitly add `readonly` if you don’t want to lose it in the type signature.
+
+</Alert>
 
 ### Function signatures that say "I won't mutate your stuff"
 
@@ -142,9 +170,34 @@ const upsertById = <T extends { id: string | number }>(
 
 Pure functions. Clean diffs. No spooky side effects.
 
-### Deep immutability (only when you need it)
+### Deep immutability (only when you really need it)
 
-Most of the time, shallow immutability is enough. But if you need it deep:
+When you use `as const`, the entire value becomes deeply immutable—no matter how many levels of nesting there are.
+
+In contrast, `Readonly<T>` only makes the **top-level properties** immutable. Nested objects remain mutable unless you explicitly wrap them in `Readonly<...>` as well.
+
+```ts
+// `Readonly<T>` is shallow: only top-level properties are readonly.
+const user: Readonly<{
+  name: string
+  profile: { greeting: string } // <- nested object is NOT readonly
+}> = {
+  name: 'Alice',
+  profile: { greeting: 'Hello' },
+}
+
+user.name = 'Bob'
+// ^ Error: `user.name` is readonly (top-level)
+
+user.profile = { greeting: 'Hi' }
+// ^ Error: `user.profile` is readonly as a top-level property (can’t reassign the object)
+
+user.profile.greeting = 'Hola'
+// ^ OK: `profile` itself is readonly, but its inner fields are still mutable
+```
+
+In practice, shallow immutability is usually enough.
+But if you need **deep immutability**, you can define a utility type instead of wrapping each level in `Readonly<T>` manually:
 
 ```ts
 type DeepReadonly<T> = T extends (...args: unknown[]) => unknown
@@ -153,8 +206,6 @@ type DeepReadonly<T> = T extends (...args: unknown[]) => unknown
     ? { readonly [K in keyof T]: DeepReadonly<T[K]> }
     : T
 ```
-
-And if you need a temporary escape hatch, make it explicit with `Mutable<T>`. Readers know exactly what you're doing and why.
 
 ### Exhaustive unions that fail loudly
 
