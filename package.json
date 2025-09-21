@@ -40,7 +40,7 @@
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.13",
-    "@types/node": "^24.3.3",
+    "@types/node": "^24.5.2",
     "@vercel/og": "^0.8.5",
     "astro-icon": "^1.1.5",
     "daisyui": "^5.1.10",
