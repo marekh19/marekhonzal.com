@@ -23,5 +23,6 @@ export default {
     'tailwindcss',
     'wrangler',
     'daisyui',
+    'astro:env',
   ],
 } satisfies KnipConfig
