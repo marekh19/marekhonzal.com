@@ -1,12 +1,13 @@
 ---
-title: 'Immutability in TypeScript'
-description: 'Practical patterns for immutability in TypeScript - from as const to readonly. Safer code, cleaner refactors, zero runtime cost.'
+title: 'Immutable by Default: Practical TypeScript Patterns'
+description: 'Learn how to apply immutability as a default in TypeScript. From as const to value tables, these practical patterns give you safer code, cleaner APIs, and refactors you can trust.'
 date: 2025-09-04
 isDraft: false
 isFeatured: true
 tags:
   - 'TypeScript'
-thumbnail: './immutability-in-typescript.png'
+  - 'Patterns'
+thumbnail: './immutable-by-default-typescript.png'
 ---
 
 I didn't "_go functional_." I just got tired of spooky side-effects and fragile refactors. Immutability wasn't a Big Rewrite - more like **small defaults** that kept paying off. This post is how I use it day-to-day: why it helps, how I think about it, and the exact patterns I paste into real code.
@@ -67,6 +68,47 @@ const PERMISSIONS = buildPermissions(FEATURES, OPERATIONS) satisfies readonly Pe
 ```
 
 Whenever you add a new feature or operation, the compiler updates the entire permission set. No typos, no missed strings. Just one definition, everywhere consistent.
+
+This pattern scales beyond static permissions.
+Here’s a real-world example from a Todo app: the **filter state** that powers both our business logic and the UI tabs.
+
+```ts
+export const FILTER_STATE = {
+  all: 'all',
+  done: 'done',
+  notDone: 'not-done',
+} as const
+
+export type TodoFilter = (typeof FILTER_STATE)[keyof typeof FILTER_STATE]
+
+const filterFunctions = {
+  [FILTER_STATE.all]: (todos: Todo[]) => todos,
+  [FILTER_STATE.done]: (todos: Todo[]) => todos.filter((t) => t.isDone),
+  [FILTER_STATE.notDone]: (todos: Todo[]) => todos.filter((t) => !t.isDone),
+} as const satisfies Record<TodoFilter, (todos: Todo[]) => Todo[]>
+```
+
+And then in the UI:
+
+```tsx
+<Tabs.Root value={filter} onValueChange={(d) => onFilterChange(d.value as TodoFilter)}>
+  <Tabs.List>
+    <Tabs.Trigger value={FILTER_STATE.all}>All</Tabs.Trigger>
+    <Tabs.Trigger value={FILTER_STATE.notDone}>Not Done</Tabs.Trigger>
+    <Tabs.Trigger value={FILTER_STATE.done}>Done</Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value={filter}>{children}</Tabs.Content>
+</Tabs.Root>
+```
+
+👉 Why this works so well:
+
+- **Single source of truth.** The filter values (`'all' | 'done' | 'not-done'`) live in one place. Add a new filter and the compiler forces you to update the functions and tabs.
+- **Types from values.** `TodoFilter` is derived from `FILTER_STATE`. You can’t pass an invalid string anywhere—TypeScript will catch it.
+- **Immutable guarantees.** Because the table is `as const`, the keys and values are frozen. No widening to plain `string`, no typos slipping through.
+- **End-to-end consistency.** The same literal drives your state, your filter functions, and your UI. There’s zero chance of your logic and UI drifting apart.
+
+It’s not just about immutability—it’s about **locking values, types, and logic together**. That’s what makes this pattern so powerful.
 
 ### Template literal types that carry intent
 
@@ -136,6 +178,19 @@ const sum = (values: readonly number[]): number =>
 ```
 
 Same implementation as a mutable version, but infinitely clearer at the call site.
+
+What’s more, `readonly` **removes mutating methods** from the type. You won’t even see `push`, `sort`, or `splice` in autocomplete, because those would break the promise. This forces you to:
+
+- **Copy first** if you really need to mutate (`const copy = [...values]`).
+- Or better: reach for the **immutable ES2023 array methods** like `toSorted`, `toSpliced`, or `toReversed`.
+
+```ts
+const sorted = values.toSorted() // immutable alternative to sort()
+const withoutFirst = values.toSpliced(0, 1) // immutable splice
+const reversed = values.toReversed() // immutable reverse
+```
+
+That’s the real win: the type system nudges you into writing pure functions and makes mutation an explicit choice, not an accident.
 
 And when you expose collections, return immutable views:
 

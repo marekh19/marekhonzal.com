@@ -6,7 +6,7 @@
 @import './animation.css';
 
 @plugin 'daisyui' {
-  themes:;
+  themes: false;
   logs: false;
 }
 
