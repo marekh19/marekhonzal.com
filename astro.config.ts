@@ -4,7 +4,6 @@ import sitemap from '@astrojs/sitemap'
 import tailwindcss from '@tailwindcss/vite'
 import icon from 'astro-icon'
 import { defineConfig } from 'astro/config'
-import rehypeMermaid from 'rehype-mermaid'
 import sectionize from 'remark-sectionize'
 import { loadEnv } from 'vite'
 
@@ -35,7 +34,6 @@ export default defineConfig({
   markdown: {
     syntaxHighlight: {
       type: 'shiki',
-      excludeLangs: ['mermaid'],
     },
     shikiConfig: {
       themes: {
@@ -43,7 +41,6 @@ export default defineConfig({
         dark: 'catppuccin-mocha',
       },
     },
-    rehypePlugins: [[rehypeMermaid, { strategy: 'img-svg', dark: true }]],
     remarkPlugins: [sectionize],
   },
 })

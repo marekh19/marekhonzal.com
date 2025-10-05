@@ -17,6 +17,8 @@ githubUrl: https://github.com/marekh19/rsbuild-module-federation
 
 import Alert from '@/components/Alert/Alert.astro'
 
+import Diagram from './diagram.svg'
+
 A proof of concept that demonstrates how to create independent microfrontends that can
 run solo or together, sharing state across boundaries.
 
@@ -26,13 +28,7 @@ This project showcases **Module Federation 2.0** using manifests - the next evol
 
 ### Architecture Overview
 
-```mermaid
-flowchart TB
-    S["Shell<br/>(Consumer)"] <-- consumes/exposes --> R1["Remote 1<br/>(Provider)"] & R2["Remote 2<br/>(Provider)"]
-    S -. imports .-> Shared["Shared Packages<br/>(state store, UI kit, utils)"]
-    R1 -. imports .-> Shared
-    R2 -. imports .-> Shared
-```
+<Diagram className="mx-auto size-full max-w-lg" />
 
 ## Key Features
 

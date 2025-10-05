@@ -14,8 +14,6 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Playwright is required for mermaid diagrams support
-    container: mcr.microsoft.com/playwright:v1.55.1-jammy
     environment: production
     permissions:
       contents: read

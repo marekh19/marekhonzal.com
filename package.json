@@ -1,7 +1,7 @@
 {
   "name": "marekhonzal-com",
   "type": "module",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
@@ -49,11 +49,9 @@
     "husky": "^9.1.7",
     "knip": "^5.64.1",
     "lint-staged": "^16.2.3",
-    "playwright": "^1.55.1",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "rehype-mermaid": "^3.0.0",
     "remark-sectionize": "^2.1.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3",
