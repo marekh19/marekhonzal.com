@@ -10,6 +10,7 @@ import Meta from '@/components/Meta/Meta.astro'
 import OpenGraph from '@/components/Meta/OpenGraph.astro'
 import PreloadFonts from '@/components/Meta/PreloadFonts.astro'
 import Rss from '@/components/Meta/Rss.astro'
+import CommonSchemaOrg from '@/components/Meta/SchemaOrg/Common.astro'
 import Sitemap from '@/components/Meta/Sitemap.astro'
 import { ENV } from '@/config/env'
 
@@ -33,6 +34,7 @@ const { title, description, ogImagePath } = Astro.props
 {ENV.IS_PRODUCTION && <Sitemap />}
 <PreloadFonts type="sans" />
 <OpenGraph title={title} description={description} imagePath={ogImagePath} />
+<CommonSchemaOrg />
 <AppVersion />
 <InlineStyles />
 <slot />

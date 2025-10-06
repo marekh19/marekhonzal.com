@@ -44,4 +44,5 @@ export type BuildTocOptions = {
 export type ReadingTime = {
   text: string
   minutes: number
+  words: number
 }

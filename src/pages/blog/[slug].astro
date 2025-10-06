@@ -4,8 +4,11 @@ import { getCollection, render } from 'astro:content'
 
 import ArticleHeader from '@/components/Content/ArticleHeader.astro'
 import { mdxComponents } from '@/components/MDX/MDXComponents.astro'
+import StructuredData from '@/components/Meta/SchemaOrg/Base.astro'
+import { createBlogPostSchema } from '@/config/schemaJson'
 import { defaultSeo } from '@/config/seo'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
+import { raise } from '@/lib/utils/common'
 import { shouldIncludeItem } from '@/lib/utils/content'
 
 export const getStaticPaths = (async () => {
@@ -22,6 +25,9 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
 
 const { data } = post
 const { readingTime } = remarkPluginFrontmatter
+
+const siteUrl = Astro.site ?? raise('Expected "site" to be defined in astro.config.*')
+const structuredData = createBlogPostSchema(siteUrl, post, readingTime.words)
 ---
 
 <ReadingLayout
@@ -29,6 +35,9 @@ const { readingTime } = remarkPluginFrontmatter
   pageDescription={data.description}
   headings={headings}
 >
+  <Fragment slot="head">
+    <StructuredData schema={structuredData} />
+  </Fragment>
   <Fragment slot="contentHeader">
     <ArticleHeader className="mt-5" readingTime={readingTime} {...data} />
   </Fragment>
