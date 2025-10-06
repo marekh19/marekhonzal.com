@@ -1,6 +1,12 @@
 {
   "name": "Marek Honzal",
   "short_name": "Marek Honzal",
+  "start_url": "/",
+  "scope": "/",
+  "theme_color": "#151219",
+  "background_color": "#151219",
+  "display": "standalone",
+
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",
@@ -15,9 +21,7 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#151219",
-  "background_color": "#151219",
-  "display": "standalone",
+
   "shortcuts": [
     {
       "name": "Blog",
@@ -45,4 +49,3 @@
     }
   ]
 }
-
