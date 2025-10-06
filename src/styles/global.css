@@ -1,9 +1,8 @@
 @import 'tailwindcss';
 @import './themes/theme-light.css';
 @import './themes/theme-dark.css';
-@import './fonts.css';
-@import './shiki.css';
 @import './animation.css';
+@import './shiki.css';
 
 @plugin 'daisyui' {
   themes: false;
