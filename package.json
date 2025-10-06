@@ -1,7 +1,7 @@
 {
   "name": "marekhonzal-com",
   "type": "module",
-  "version": "0.1.11",
+  "version": "0.1.10",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
@@ -22,7 +22,6 @@
     "@iconify-json/logos": "^1.2.9",
     "@iconify-json/lucide": "^1.2.68",
     "@iconify-json/ph": "^1.2.2",
-    "@playform/inline": "^0.1.2",
     "astro": "^5.14.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
