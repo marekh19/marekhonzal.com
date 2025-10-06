@@ -1,0 +1,16 @@
+---
+import type { ReadingTime } from '@/lib/types'
+import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
+
+type Props = {
+  readingTime: ReadingTime
+  date: Date
+}
+
+const { date, readingTime } = Astro.props
+---
+
+<span class="text-base-content/75 inline-block font-serif">
+  <time datetime={formatDateMachine(date)}>{formatDateHuman(date)}</time>
+  {readingTime.minutes > 0 ? ` ● ${readingTime.text}` : null}
+</span>

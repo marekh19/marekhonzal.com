@@ -3,16 +3,18 @@ import { Icon } from 'astro-icon/components'
 
 import Link from '@/components/ui/Link.astro'
 import { ROUTES } from '@/config/routes'
-import type { PostData } from '@/lib/types'
+import type { PostData, ReadingTime } from '@/lib/types'
 import { cn } from '@/lib/utils/cn'
-import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
 import { getTagsWithSlugs } from '@/lib/utils/posts'
 
+import ContentMetadata from './ContentMetadata.astro'
+
 type Props = PostData & {
+  readingTime: ReadingTime
   className?: string
 }
 
-const { title, date, tags, className } = Astro.props
+const { title, date, tags, className, readingTime } = Astro.props
 
 const tagsWithSlugs = getTagsWithSlugs(tags)
 ---
@@ -22,12 +24,7 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
     <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start"
       ><Icon name="lucide:arrow-left" class="size-3.5" />Blog</Link
     >
-    <time
-      class="text-base-content/75 inline-block font-serif"
-      datetime={formatDateMachine(date)}
-    >
-      {formatDateHuman(date)}
-    </time>
+    <ContentMetadata date={date} readingTime={readingTime} />
     <h1
       class:list={[
         'text-primary font-serif text-4xl leading-tight text-balance',

@@ -18,9 +18,10 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths
 
 const { post } = Astro.props
-const { Content, headings } = await render(post)
+const { Content, headings, remarkPluginFrontmatter } = await render(post)
 
 const { data } = post
+const { readingTime } = remarkPluginFrontmatter
 ---
 
 <ReadingLayout
@@ -29,7 +30,7 @@ const { data } = post
   headings={headings}
 >
   <Fragment slot="contentHeader">
-    <ArticleHeader {...data} className="mt-5" />
+    <ArticleHeader className="mt-5" readingTime={readingTime} {...data} />
   </Fragment>
 
   <Content components={mdxComponents} />

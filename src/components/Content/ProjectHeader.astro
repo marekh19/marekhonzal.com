@@ -3,20 +3,21 @@ import { Icon } from 'astro-icon/components'
 
 import Link from '@/components/ui/Link.astro'
 import { ROUTES } from '@/config/routes'
-import type { ProjectData } from '@/lib/types'
-import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
+import type { ProjectData, ReadingTime } from '@/lib/types'
 import { getTechnologiesByProject } from '@/lib/utils/projects'
 
+import ContentMetadata from './ContentMetadata.astro'
 import ProjectHeaderDetails from './ProjectHeaderDetails.astro'
 
 type Props = ProjectData & {
+  readingTime: ReadingTime
   className?: string
 }
 
-const { title, date, demoUrl, githubUrl, className } = Astro.props
+const { title, date, demoUrl, githubUrl, className, readingTime } = Astro.props
 
-const technologiesWithIcons = getTechnologiesByProject(Astro.props)
-const details = { demoUrl, githubUrl, technologies: technologiesWithIcons }
+const technologies = getTechnologiesByProject(Astro.props)
+const details = { demoUrl, githubUrl, technologies }
 ---
 
 <div class={className}>
@@ -24,12 +25,8 @@ const details = { demoUrl, githubUrl, technologies: technologiesWithIcons }
     <Link href={ROUTES.projects._} class="inline-flex items-center gap-1 self-start"
       ><Icon name="lucide:arrow-left" class="size-3.5" />Projects</Link
     >
-    <time
-      class="text-base-content/75 inline-block font-serif"
-      datetime={formatDateMachine(date)}
-    >
-      {formatDateHuman(date)}
-    </time>
+    <ContentMetadata date={date} readingTime={readingTime} />
+
     <h1
       class:list={[
         'text-primary font-serif text-4xl leading-tight text-balance',

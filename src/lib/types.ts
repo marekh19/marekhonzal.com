@@ -40,3 +40,8 @@ export type TocHeading = MarkdownHeading & {
 export type BuildTocOptions = {
   rootDepth?: 1 | 2 | 3 | 4 | 5 | 6
 }
+
+export type ReadingTime = {
+  text: string
+  minutes: number
+}

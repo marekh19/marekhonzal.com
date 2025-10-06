@@ -8,6 +8,7 @@ import sectionize from 'remark-sectionize'
 import { loadEnv } from 'vite'
 
 import { envConfig } from './env.config.ts'
+import { remarkReadingTime } from './plugins/remark-reading-time'
 
 const { SITE_URL } = loadEnv(process.env.SITE_URL!, process.cwd(), '')
 const { ENV_NAME } = loadEnv(process.env.ENV_NAME!, process.cwd(), '')
@@ -41,6 +42,6 @@ export default defineConfig({
         dark: 'catppuccin-mocha',
       },
     },
-    remarkPlugins: [sectionize],
+    remarkPlugins: [sectionize, remarkReadingTime],
   },
 })
