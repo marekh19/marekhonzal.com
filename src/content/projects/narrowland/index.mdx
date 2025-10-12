@@ -1,0 +1,100 @@
+---
+title: Narrowland
+description: 'A lightweight TypeScript library providing type-safe assertions, type guards, and error handling utilities.'
+date: 2025-10-12
+isDraft: false
+isFeatured: true
+thumbnail: './thumbnail.png'
+technologies:
+  - typescript
+  - rslib
+  - vitest
+githubUrl: https://github.com/marekh19/narrowland
+---
+
+_How a simple team discussion led to a 600-byte solution that solved our TypeScript type narrowing problem_
+
+## When a Simple Question Sparked a Big Discussion
+
+One Friday afternoon in our frontend team chat, our tech lead dropped a seemingly innocent question:
+
+> "What's the best way to narrow down a `User | undefined` to just `User`?"
+
+What followed was a surprisingly big discussion. Some developers suggested the non-null assertion operator (`user!`), others preferred explicit error handling with `if (!user) throw new Error()`, and a few suggested creating helper functions like type guards or assertion utilities.
+
+As the discussion unfolded, I noticed something interesting: **most agreed that utility functions were the best solution**. The problem wasn't _what_ to do, but rather _how_ to do it consistently.
+
+## The Copy-Paste Problem We Never Talked About
+
+Here's the thing about those utility functions we all love to write: they're not actually that simple. Every new project meant recreating the same type guards, assertion functions, and error handling utilities. We'd copy-paste them from previous projects, often forget to test them, and occasionally end up with slightly different implementations across our codebase.
+
+I started noticing patterns:
+
+- `isDefined()` functions scattered across different files and named differently even though they were doing the same thing.
+- `raiseError()` utilities that sometimes threw different error types
+- Type guards that weren't properly tested.
+
+We were solving the same problem over and over again, and we weren't even doing it consistently.
+
+## The Lightbulb Moment: What If We Solved This Once?
+
+That team discussion was the catalyst I needed. What if we had a tiny, focused library that covered 95% of our type narrowing needs? Something that was:
+
+- **Consistent** — Same API patterns across all functions
+- **Tested** — 100% test coverage so we never have to worry about bugs
+- **Tiny** — Small enough that bundle size isn't a concern
+- **Tree-shakeable** — Only import what you need
+
+The idea was simple: create a palette of solutions for the most common type narrowing scenarios. Instead of writing `isTruthy()` for the hundredth time, we'd have a library that just works.
+
+## From Idea to 602 Bytes: Building the Perfect Type Narrowing Toolkit
+
+I spent two evenings on a weekend building what would become Narrowland. The core insight was that we needed three types of utilities:
+
+**Type Guards** (`is.*`) — Return boolean, don't throw
+
+```typescript
+if (isDefined(maybeUser)) {
+  // maybeUser is now User
+}
+```
+
+**Assertions** (`assert.*`) — Throw if condition not met
+
+```typescript
+assertString(input) // throws if not string
+// input is now string
+```
+
+**Error Utilities** — Handle edge cases gracefully
+
+```typescript
+const name = ensure(user.name, 'Name required') // throws if null/undefined
+```
+
+The key was consistency. Every type guard had a corresponding assertion function. The API was predictable, and everything was designed to work together seamlessly.
+
+## The Real Test: Will It Actually Stick?
+
+Only time will tell whether it was worth it and whether it will stick as our go-to solution. The library is just **602 bytes** minified and brotli-compressed, but it covers virtually every type narrowing scenario we encounter:
+
+- Existence checks (`isDefined`, `assertDefined`)
+- Primitive checks (`isString`, `assertNumber`)
+- Collection checks (`isArray`, `assertNonEmptyArray`)
+- Error handling with invariants (`ensure`, `invariant`, `raiseError`)
+
+The best part? It's completely tree-shakeable. If you only need `isDefined`, that's all you get in your bundle.
+
+## Why This Tiny Library Matters
+
+Narrowland isn't revolutionary — it's evolutionary. It's the result of recognizing that we were solving the same problem repeatedly and deciding to solve it once, properly.
+
+Now when someone asks "how do I narrow this type?" in our team chat, the answer is simple: "Use Narrowland." We have a consistent approach, we know it's tested, and we know it's lightweight.
+
+## The Deeper Lesson: Sometimes Simple Is Revolutionary
+
+This experience taught me something important about developer productivity. Sometimes the best solutions aren't the most complex ones — they're the ones that eliminate the need to make the same decisions repeatedly.
+
+Narrowland isn't trying to be a validation library or a complex type system. It's just a focused tool that does one thing well: **type narrowing**. And sometimes, that's exactly what you need.
+
+_Narrowland is ready for use in your next project. Check it out on [npm](https://www.npmjs.com/package/narrowland) for more details and examples._

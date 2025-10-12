@@ -1,5 +1,6 @@
 import ModuleFederation from '@/assets/logos/module-federation.svg'
 import Rsbuild from '@/assets/logos/rsbuild.svg'
+import Rslib from '@/assets/logos/rslib.svg'
 import Zustand from '@/assets/logos/zustand.svg'
 
 import type { Technology } from './types'
@@ -20,6 +21,8 @@ export const TECHNOLOGIES = {
   mantine: { title: 'Mantine', iconName: 'logos:mantine-icon' },
   pwa: { title: 'Progressive Web App', iconName: 'logos:pwa' },
   rsbuild: { title: 'Rsbuild', Icon: Rsbuild },
+  vitest: { title: 'Vitest', iconName: 'logos:vitest' },
+  rslib: { title: 'Rslib', Icon: Rslib },
 } as const satisfies Record<string, Technology>
 
 export const TECHNOLOGY_SLUGS = Object.keys(TECHNOLOGIES) as [
