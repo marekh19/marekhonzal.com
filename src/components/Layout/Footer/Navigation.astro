@@ -3,11 +3,9 @@ import { Icon } from 'astro-icon/components'
 
 import { createfooterNavigation } from '@/config/navigation'
 import { cn } from '@/lib/utils/cn'
-import { raise } from '@/lib/utils/common'
+import { ensureAstroSite } from '@/lib/utils/guards'
 
-const { explore, elsewhere } = createfooterNavigation(
-  Astro.site ?? raise('Expected "site" to be defined in astro.config.*'),
-)
+const { explore, elsewhere } = createfooterNavigation(ensureAstroSite(Astro.site))
 ---
 
 <nav aria-label="Footer navigation" class="grid grid-cols-2 gap-24">

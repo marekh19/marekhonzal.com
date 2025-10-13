@@ -1,10 +1,10 @@
 ---
 import { createPersonSchema, createWebsiteSchema } from '@/config/schemaJson'
-import { raise } from '@/lib/utils/common'
+import { ensureAstroSite } from '@/lib/utils/guards'
 
 import BaseStructuredData from './Base.astro'
 
-const siteUrl = Astro.site ?? raise('Expected "site" to be defined in astro.config.*')
+const siteUrl = ensureAstroSite(Astro.site)
 ---
 
 <!-- SCHEMA.ORG STRUCTURED DATA -->

@@ -5,8 +5,8 @@ import rss from '@astrojs/rss'
 import { ENV } from '@/config/env'
 import { ROUTES } from '@/config/routes'
 import { defaultSeo } from '@/config/seo'
-import { raise } from '@/lib/utils/common'
 import { getSortedContentByDateDesc, shouldIncludeItem } from '@/lib/utils/content'
+import { ensureAstroSite } from '@/lib/utils/guards'
 
 export const GET: APIRoute = async ({ site }) => {
   if (!ENV.IS_PRODUCTION) {
@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ site }) => {
     trailingSlash: false,
     title: defaultSeo.baseTitle,
     description: defaultSeo.metaDescription,
-    site: site ?? raise('Expected "site" to be defined in astro.config.*'),
+    site: ensureAstroSite(site),
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.date,

@@ -38,6 +38,9 @@ importers:
       lucide-preact:
         specifier: ^0.545.0
         version: 0.545.0(preact@10.27.2)
+      narrowland:
+        specifier: ^1.0.1
+        version: 1.0.1
       preact:
         specifier: ^10.27.2
         version: 10.27.2
@@ -3229,6 +3232,9 @@ packages:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  narrowland@1.0.1:
+    resolution: {integrity: sha512-EmDlsSH/4ozTT/KDi3rDWgVd89N3e7IVNwrdwhTY3z8/zzj2sT5kDb1UoPS4R0k7Ji0R191HDX9SPdUODoK/Ag==}
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -7981,6 +7987,8 @@ snapshots:
   nano-spawn@2.0.0: {}
 
   nanoid@3.3.11: {}
+
+  narrowland@1.0.1: {}
 
   natural-compare@1.4.0: {}
 

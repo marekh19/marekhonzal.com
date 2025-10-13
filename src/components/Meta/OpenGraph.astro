@@ -1,5 +1,5 @@
 ---
-import { raise } from '@/lib/utils/common'
+import { ensureAstroSite } from '@/lib/utils/guards'
 
 type Props = {
   title: string
@@ -8,8 +8,7 @@ type Props = {
 }
 
 const { title, description, imagePath } = Astro.props
-
-const origin = Astro.site ?? raise('Expected "site" to be defined in astro.config.*')
+const origin = ensureAstroSite(Astro.site)
 const pageUrl = Astro.url.toString()
 const imageUrl = new URL(imagePath, origin).toString()
 
