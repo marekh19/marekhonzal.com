@@ -8,8 +8,8 @@ import StructuredData from '@/components/Meta/SchemaOrg/Base.astro'
 import { createBlogPostSchema } from '@/config/schemaJson'
 import { defaultSeo } from '@/config/seo'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
-import { raise } from '@/lib/utils/common'
 import { shouldIncludeItem } from '@/lib/utils/content'
+import { ensureAstroSite } from '@/lib/utils/guards'
 
 export const getStaticPaths = (async () => {
   const posts = await getCollection('blog', shouldIncludeItem)
@@ -26,7 +26,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(post)
 const { data } = post
 const { readingTime } = remarkPluginFrontmatter
 
-const siteUrl = Astro.site ?? raise('Expected "site" to be defined in astro.config.*')
+const siteUrl = ensureAstroSite(Astro.site)
 const structuredData = createBlogPostSchema(siteUrl, post, readingTime.words)
 ---
 

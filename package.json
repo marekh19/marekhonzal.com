@@ -1,7 +1,7 @@
 {
   "name": "marekhonzal-com",
   "type": "module",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-preact": "^0.545.0",
+    "narrowland": "^1.0.1",
     "preact": "^10.27.2",
     "sharp": "^0.34.4",
     "tailwind-merge": "^3.3.1"
