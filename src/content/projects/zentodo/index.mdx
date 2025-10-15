@@ -1,6 +1,8 @@
 ---
 title: ZenToDo
-description: 'Infamous Todo List App with a Twist: A Progressive Web App (PWA) that functions seamlessly offline, boasting persistent storage.'
+description:
+  'Infamous Todo List App with a Twist: A Progressive Web App (PWA) that functions
+  seamlessly offline, boasting persistent storage.'
 date: 2023-11-13
 isDraft: false
 isFeatured: true
@@ -24,13 +26,15 @@ import pwaPromptImg from './pwa-prompt.png'
 
 ## What's Special About This Todo App?
 
-Most todo apps are just "Hello World" examples. This one has a few interesting technical features that make it worth looking at.
+Most todo apps are just "Hello World" examples. This one has a few interesting technical
+features that make it worth looking at.
 
 ## The Cool Parts
 
 ### 1. Custom Zustand Persistence Driver
 
-Instead of the usual `localStorage`, this app uses IndexedDB through a custom storage driver:
+Instead of the usual `localStorage`, this app uses IndexedDB through a custom storage
+driver:
 
 ```typescript
 export const storage: StateStorage = {
@@ -171,4 +175,5 @@ The app is fully installable with:
 
 ## Conclusion
 
-This isn't just another todo app tutorial. It's a PWA with some thoughtful technical implementations, particularly the custom IndexedDB persistence layer for offline storage.
+This isn't just another todo app tutorial. It's a PWA with some thoughtful technical
+implementations, particularly the custom IndexedDB persistence layer for offline storage.

@@ -1,6 +1,8 @@
 ---
 title: Microfrontend POC
-description: 'POC microfrontend setup with Rsbuild, Turborepo, and a shared Zustand store across apps.'
+description:
+  'POC microfrontend setup with Rsbuild, Turborepo, and a shared Zustand store across
+  apps.'
 date: 2025-06-30
 isDraft: false
 isFeatured: true
@@ -17,12 +19,15 @@ githubUrl: https://github.com/marekh19/rsbuild-module-federation
 
 import Diagram from './diagram.svg'
 
-A proof of concept that demonstrates how to create independent microfrontends that can
-run solo or together, sharing state across boundaries.
+A proof of concept that demonstrates how to create independent microfrontends that can run
+solo or together, sharing state across boundaries.
 
 ## What I Built
 
-This project showcases **Module Federation 2.0** using manifests - the next evolution of microfrontend architecture. We've created a system where three applications can operate independently or as a unified experience, all while sharing state and dependencies intelligently.
+This project showcases **Module Federation 2.0** using manifests - the next evolution of
+microfrontend architecture. We've created a system where three applications can operate
+independently or as a unified experience, all while sharing state and dependencies
+intelligently.
 
 ### Architecture Overview
 
@@ -189,7 +194,8 @@ catalog:
 }
 ```
 
-This ensures that all apps use the exact same versions of shared dependencies, making the singleton pattern work reliably across the federation.
+This ensures that all apps use the exact same versions of shared dependencies, making the
+singleton pattern work reliably across the federation.
 
 ## Running the Demo
 
@@ -217,8 +223,14 @@ pnpm build && pnpm preview
 
 ## The Takeaway
 
-About a year ago, I tried building microfrontend apps with **Webpack and Module Federation 1.0**, and the developer experience wasn’t great - lots of boilerplate and tricky configuration.
+About a year ago, I tried building microfrontend apps with **Webpack and Module Federation
+1.0**, and the developer experience wasn’t great - lots of boilerplate and tricky
+configuration.
 
-With **Rsbuild** and its **Module Federation plugin**, things feel a lot smoother. Setting up manifests and sharing dependencies is straightforward, and having everything inside a **monorepo** makes the developer experience even better. It also makes global state sharing (like our counter) almost effortless.
+With **Rsbuild** and its **Module Federation plugin**, things feel a lot smoother. Setting
+up manifests and sharing dependencies is straightforward, and having everything inside a
+**monorepo** makes the developer experience even better. It also makes global state
+sharing (like our counter) almost effortless.
 
-👉 Don’t take my word for it - clone the repo, run the apps, and see how it works for yourself!
+👉 Don’t take my word for it - clone the repo, run the apps, and see how it works for
+yourself!
