@@ -2,11 +2,10 @@
 import { Image } from 'astro:assets'
 
 import marekImg from '@/assets/images/marek.jpg'
-import Link from '@/components/ui/Link.astro'
 import { cn } from '@/lib/utils/cn'
 
+import AboutText from './AboutText.mdx'
 import SocialIconLinks from './SocialIconLinks.astro'
-import TextBlock from './TextBlock.astro'
 
 type Props = {
   className?: string
@@ -26,40 +25,14 @@ const sectionId = 'about'
   </h2>
   <div class={cn('grid grid-cols-1 gap-10', 'lg:grid-cols-[1fr_14rem] lg:gap-16')}>
     <div>
-      <TextBlock>
-        I believe the web should be not only <strong class="font-bold">usable</strong>,
-        but <strong class="font-bold">maintainable</strong> - for the teams who build it.
-      </TextBlock>
-      <TextBlock>
-        That’s why I focus on <strong class="font-bold"
-          >frontend architecture, state management</strong
-        >, and <strong class="font-bold">developer experience</strong> - the parts of engineering
-        that help codebases grow without growing painful.
-      </TextBlock>
-
-      <TextBlock>
-        I didn’t start my career in tech - I spent <strong class="font-bold"
-          >7 years in sales and marketing</strong
-        >
-        before taking a hard turn into software development. That pivot led me through an intensive
-        bootcamp and into building everything from <strong>greenfield MVPs</strong> to <strong
-          class="font-bold">design systems</strong
-        > and <strong class="font-bold">internal platforms</strong> used by global teams.
-      </TextBlock>
-
-      <TextBlock>
-        Today, I work as a <strong class="font-bold">Senior Frontend Developer</strong> at
-        <Link href="https://applifting.io" hasIcon={false}>Applifting</Link>, based in
-        Prague, Czechia, where I balance hands-on engineering with supporting the
-        leadership of our <strong class="font-bold">20+ person frontend team</strong> - mentoring
-        developers and shaping our tooling and practices.
-      </TextBlock>
-
-      <TextBlock>
-        I created this site to <strong class="font-bold">share what I’ve learned</strong> -
-        and what I’m still learning - about building better frontends, growing as a developer,
-        and tinkering on side projects that challenge how we think about code.
-      </TextBlock>
+      <div
+        class={cn(
+          '[&_strong]:font-bold [&>p]:leading-relaxed [&>p]:not-first-of-type:mt-5',
+          'lg:[&>p]:text-lg',
+        )}
+      >
+        <AboutText />
+      </div>
 
       <SocialIconLinks className="mt-10" />
     </div>
