@@ -7,8 +7,12 @@ import { cn } from '@/lib/utils/cn'
 import { formatDateMachine } from '@/lib/utils/date'
 
 const IMAGE_CONFIG = {
-  widths: [480, 720, 768, 960, 1024, 1280],
-  sizes: '(max-width: 599px) 545px, (max-width: 1023px) 455px, 360px',
+  widths: [340, 480, 656, 720, 768, 960, 1024, 1280],
+  sizes: `
+    (max-width: 599px) calc(100vw - 2.5rem),
+    (max-width: 1023px) calc(50vw - 6rem),
+    340px
+  `,
 }
 
 type Props = {
