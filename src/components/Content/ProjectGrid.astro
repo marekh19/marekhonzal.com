@@ -5,7 +5,7 @@ import type { Project } from '@/lib/types'
 import ContentGrid from './ContentGrid/ContentGrid.astro'
 import ProjectCard from './ProjectCard.astro'
 
-const NUM_PRIORITY_IMAGES = 3
+const NUM_PRIORITY_IMAGES = 2
 
 type Props = {
   projects: readonly Project[]
@@ -25,7 +25,7 @@ const { projects, className, isAboveFold = false } = Astro.props
         targetUrl={ROUTES.projects.detail(project.id)}
         date={project.data.date}
         thumbnail={project.data.thumbnail}
-        isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES - 1}
+        isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES}
       />
     ))
   }

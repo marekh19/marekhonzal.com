@@ -5,7 +5,7 @@ import type { Post } from '@/lib/types'
 
 import ContentGrid from './ContentGrid/ContentGrid.astro'
 
-const NUM_PRIORITY_IMAGES = 3
+const NUM_PRIORITY_IMAGES = 2
 
 type Props = {
   posts: readonly Post[]
@@ -26,7 +26,7 @@ const { posts, className, isAboveFold = false } = Astro.props
         date={post.data.date}
         thumbnail={post.data.thumbnail}
         tags={post.data.tags}
-        isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES - 1}
+        isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES}
       />
     ))
   }
