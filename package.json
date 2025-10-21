@@ -1,7 +1,7 @@
 {
   "name": "marekhonzal-com",
   "type": "module",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
