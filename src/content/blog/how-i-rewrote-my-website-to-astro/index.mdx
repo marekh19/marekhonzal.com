@@ -52,8 +52,8 @@ I was happy.
 But cracks started to show. The project was born at a time when Next.js was evolving
 rapidly, and upgrades were painful. Defaults around caching flipped back and forth, and
 every major release felt like relearning the framework. Meanwhile, Sanity - while
-technically solid-added friction. Editing content through a CMS UI just didn’t motivate me
-to write. I’m a developer; I prefer treating content as source code. I realized that
+technically solid - added friction. Editing content through a CMS UI just didn’t motivate
+me to write. I’m a developer; I prefer treating content as source code. I realized that
 despite building all the infrastructure, I never wrote a single blog post.
 
 Performance also took a hit. I couldn’t resist adding a Three.js model of a mechanical
@@ -80,8 +80,12 @@ me?_ The answer was clear: not much. The CMS didn’t encourage me to write. The
 bloated with features I didn’t use. And the complexity of keeping up with Next.js updates
 drained motivation rather than sparked it.
 
-When I finally decided to rewrite, I had two guiding principles: focus on the content, and
-keep everything as simple as possible. That made Astro the obvious choice.
+When I finally decided to rewrite, I had two guiding principles:
+
+- focus on the content
+- keep everything as simple as possible
+
+That made Astro the obvious choice.
 
 ## The Astro Era
 
@@ -94,20 +98,20 @@ HTML, perfect for CDN caching.
 
 Here’s how the two versions of my site compare at a glance:
 
-| Category               | Old Website           | New Website               |
-| ---------------------- | --------------------- | ------------------------- |
-| **Framework**          | Next.js               | Astro                     |
-| **Hosting**            | Vercel                | Cloudflare Pages          |
-| **Styling**            | Tailwind CSS          | Tailwind CSS              |
-| **UI Kit**             | Custom components     | DaisyUI                   |
-| **Content**            | Sanity CMS            | MDX & Content Collections |
-| **Rendering strategy** | ISR with revalidation | Pure Static Generation    |
-| **Interactivity**      | React                 | Preact islands            |
+| Category               | Old Website           | New Website                 |
+| ---------------------- | --------------------- | --------------------------- |
+| **Framework**          | Next.js               | Astro                       |
+| **Hosting**            | Vercel                | Cloudflare Workers          |
+| **Styling**            | Tailwind CSS          | Tailwind CSS                |
+| **UI Kit**             | Custom components     | DaisyUI                     |
+| **Content**            | Sanity CMS            | MDX & Content Collections   |
+| **Rendering strategy** | ISR with revalidation | Pure Static Generation      |
+| **Interactivity**      | React                 | Preact throuh Astro islands |
 
 Astro fit perfectly. It let me drop the CMS and just write MDX in my editor. It gave me
 static HTML by default, with Preact islands where I needed a bit of client-side behavior.
 And it shipped with thoughtful defaults: a sitemap, RSS feed, syntax highlighting with
-Shiki, image optimization-all without extra setup. Deployment on Cloudflare Pages was
+Shiki, image optimization-all without extra setup. Deployment on Cloudflare Workers was
 trivial.
 
 ---
