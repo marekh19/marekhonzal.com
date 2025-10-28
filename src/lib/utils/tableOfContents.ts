@@ -4,12 +4,21 @@ import type { BuildTocOptions, TocHeading } from '@/lib/types'
 
 export function buildToc(
   headings: readonly MarkdownHeading[],
-  { rootDepth = 2 }: BuildTocOptions = {},
+  { rootDepth = 2, maxDepth = 3 }: BuildTocOptions = {},
 ): TocHeading[] {
+  // Filter headings based on depth constraints
+  const filteredHeadings = headings.filter((heading) => {
+    // Include headings at or above the rootDepth
+    if (heading.depth < rootDepth) return false
+    // Include headings at or below maxDepth (if specified)
+    if (maxDepth !== undefined && heading.depth > maxDepth) return false
+    return true
+  })
+
   const toc: TocHeading[] = []
   const parents = new Map<number, TocHeading>()
 
-  headings.forEach((raw) => {
+  filteredHeadings.forEach((raw) => {
     const heading = { ...raw, subheadings: [] }
     parents.set(heading.depth, heading)
 
