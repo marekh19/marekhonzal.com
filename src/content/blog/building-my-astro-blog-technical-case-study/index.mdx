@@ -44,7 +44,7 @@ Content Collections), and UI kit (custom components ? DaisyUI).
 ### Sitemap
 
 Astro provides an official sitemap integration that is super simple to setup. I've enabled
-it in production environment only. The whole solutions looks like this:
+it in production environment only. The whole solution looks like this:
 
 ```ts
 // astro.config.ts
@@ -115,9 +115,9 @@ export const GET: APIRoute = ({ site }) => {
 }
 ```
 
-In the code snippet above you can see we treat `robots.txt` as an API endpoint. It checks
-whether the environment name is production and decides whether to return the robots.txt
-file that allows or disallows crawling.
+In the code snippet above, I treat `robots.txt` as an API endpoint. It checks whether the
+environment name is production and decides whether to return the robots.txt file that
+allows or disallows crawling.
 
 The site url is not hardcoded but it's injected in a place of a placeholder.
 
@@ -160,27 +160,24 @@ previous domain didn't perform well in search results.
 ## Caching
 
 Beyond SEO, performance was crucial. Since the old site struggled with Core Web Vitals, I
-wanted a caching strategy that balances speed with freshness. I leveraged a decent
-**caching** strategy.
-
-I leveraged a decent **caching** strategy. I host this website on Cloudflare Workers so I
-use the `_headers` file to define response headers for any request.
+wanted a caching strategy that balances speed with freshness. I host this website on
+Cloudflare Workers so I use the `_headers` file to define response headers for any
+request.
 
 I've split caching it into 4 categories:
 
-- **Immutable assets**: Files we can cache basically indefinitely like `.js` and `.css`
+- **Immutable assets**: Files I can cache basically indefinitely like `.js` and `.css`
   files since these are always fingerprinted. Same for fonts. These are okay to be cached
-  in the browser as well. So in Astro website, it's anything at `/_astro/*`.
+  in the browser as well. In Astro, this is anything at `/_astro/*`.
 - **Rarely changing assets**: All videos I embed in articles (cached for a week) and
   favicon + og images (cached for 24 hours)
-- **Often changing pages**: Homepage, blog page, projects page - all these pages include
-  lists of projects and posts. That means if a new post comes out, I don't want to show a
-  page without links to newly posted content. Therefore I cache these pages on CDN level
-  only for 10 minutes and allow up to 24 hours of stale content while revalidating in
-  background:
+- **Often changing pages**: Homepage, blog page, projects page — all these pages include
+  lists of projects and posts. If a new post comes out, I don't want to show a page
+  without links to newly posted content. So I cache these pages on CDN level only for 10
+  minutes and allow up to 24 hours of stale content while revalidating in the background.
 - **Not so often changing pages**: All article and project detail pages. When these
-  change, it's usually some kind of small update. Allow them to be cached on CDN for an
-  hour while serving stale again for 24 hours with background revalidation.
+  change, it's usually a small update. I cache them on CDN for an hour while serving stale
+  content for up to 24 hours with background revalidation.
 
 The headers look like this:
 
@@ -191,10 +188,10 @@ The headers look like this:
 # Rarely changing assets
   Cache-Control: public, max-age=86400
 
-# Homepage & list pages ? short CDN TTL
+# Homepage & list pages — short CDN TTL
   Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
 
-# Detail pages ? longer CDN TTL
+# Detail pages — longer CDN TTL
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 ```
 
@@ -203,11 +200,10 @@ This allows for a good balance between aggressive caching and not serving stale 
 ## OG Images generation
 
 For social sharing, I wanted programmatic OG images so I wouldn't have to manually create
-them for every post or project. Meaning I don't have to create them manually in an image
-editor or something like that. When searching for a simple solution I stumbled upon
+them for every post or project. When searching for a simple solution I stumbled upon
 [@vercel/og](https://www.npmjs.com/package/@vercel/og) library. It offers `ImageResponse`
-constructor to create your OG Image with html and css. I decided to render it with
-_preact_ and _tailwind_ using the `h` function from preact. It uses
+constructor to create OG images with HTML and CSS. I decided to render it with _preact_
+and _tailwind_ using the `h` function from preact. It uses
 [Satori](https://github.com/vercel/satori#documentation) under the hood. Not all CSS
 properties are supported but for something simple as OG image, it gets the job done.
 
@@ -336,7 +332,7 @@ export const GET: APIRoute = async ({ site }) => {
 }
 ```
 
-We just load the content collection we want, filter and sort it and pass desired values
+I load the content collection I want, filter and sort it, then pass the desired values
 into the `rss` function from `@astrojs/rss`.
 
 ## Analytics
@@ -359,22 +355,21 @@ doesn't use cookies.
 
 Astro's islands architecture is great, but I didn't want to overuse it. I developed a
 simple philosophy for interactivity. When I thought something should be interactive (think
-of animation or some kind of state), I've used kind of mental checklist:
+of animation or some kind of state), I use a mental checklist:
 
 1. Could it be done with CSS only? _if not then_
 2. Could it be done with simple vanilla JS only? (Well, anything can be, but whether it
    makes sense is another question.) _if not then_
 3. Use a preact as last resort
 
-Currently the only thing that is done with preact is the list of available tags on the
-[blog](/blog) page. It renders up to 5 tags and if there's more, they are hidden by
-default and you have to toggle a button to see them, just to not clutter the UI visually.
-This would also work without preact, I decided to use it just for the convenience of
-`useState`.
+Currently the only thing I built with Preact is the list of available tags on the
+[blog](/blog) page. It renders up to 5 tags, and if there are more, they're hidden by
+default with a button to reveal them — just to avoid cluttering the UI visually. This
+would work without Preact, but I decided to use it for the convenience of `useState`.
 
-Remember you might not need something like `motion` library. CSS keyframes will get you
-pretty far. Need some super simple interactive element? Just use JavaScript - like I used
-on any article or project detail pages for the scroll progress bar or table of contents.
+I find you rarely need something like a `motion` library. CSS keyframes will get you
+pretty far. For super simple interactive elements, I just use vanilla JavaScript — like
+the scroll progress bar or table of contents I used on article and project detail pages.
 
 But I also did not want to limit myself. So whenever I want to sprinkle a bit of (p)react
 I can. Like here below, I can just smash a bit of preact inside this article because it
@@ -406,12 +401,12 @@ to aim for at least basic accessibility. Some rules of thumb from my experience.
 
 ## Markdown as a component
 
-One of Astro's strengths is its flexibility with content formats. I love the wide support
-for markdown and MDX anywhere in astro. You can even use MDX components inside astro
-components. Let's have a look at the [about](/#about) section of the homepage. The
-homepage is composed of Astro components. But this one section is very "prose" heavy. It
-would be painful to write and maintain this block of text as html elements. So I just
-wrote it as MDX component and imported into Astro component.
+One of Astro's strengths is its flexibility with content formats. I love that I can use
+markdown and MDX anywhere in Astro. I can even use MDX components inside Astro components.
+I used this for the [about](/#about) section of the homepage. The homepage is composed of
+Astro components. But this one section is very "prose" heavy. It would be painful to write
+and maintain this block of text as html elements. So I just wrote it as MDX component and
+imported into Astro component.
 
 ```astro
 ---
@@ -432,11 +427,12 @@ This way whenever I want to update the text, I don't have to worry about manuall
 
 ## Astro components with `cva`
 
-I love using the [class-variance-authority](https://cva.style/) library. Whenever doing
-any component that has more kinds or variants, it's just great experience. It's not
-possible to use it directly inside `.astro` file. But you can split the variants into a
-separate `.ts` file and just import it into `.astro` component. Works like a charm. See
-super simple example below.
+For component styling variants, I wanted type safety without overcomplicating things. I
+love using the [class-variance-authority](https://cva.style/) library. Whenever I need a
+component with multiple variants, it provides a great developer experience. It's not
+possible to use it directly inside `.astro` files, so I split the variants into a separate
+`.ts` file and import it into the `.astro` component. Works like a charm. Here's a simple
+example below.
 
 ```ts
 // contentGridVariants.ts
