@@ -1,0 +1,150 @@
+---
+title: 'Rebuilding My Website with Astro: Why I Started Fresh and What Changed'
+description:
+  "After 3 years with Next.js, I completely rebuilt my personal website from scratch with
+  Astro. Here's why I ditched the old project, what surprised me, and the actual
+  performance improvements I achieved."
+date: 2025-11-03
+isDraft: false
+isFeatured: true
+tags:
+  - 'Astro'
+  - 'Performance'
+  - 'Case Study'
+thumbnail: './how-i-rewrote-my-website-to-astro.png'
+---
+
+import { Image } from 'astro:assets'
+
+import Diagram from './diagram.svg'
+import oldWebPerformanceImg from './old-web-performance.png'
+
+## Introduction
+
+This is a personal case study of how I rebuilt my own website - what I kept, what I threw
+away, and why the new version feels so much better.
+
+[The old site](https://old.marek.work) was built with Next.js, Sanity CMS, and the full
+[Jamstack](https://jamstack.org) playbook. It looked solid on paper, but over time I
+realized it didn't actually work for me. Short of three years later, I decided to start
+fresh. This time the focus was on **simplicity, performance, and content**. The result is
+a lean Astro-based site that does less but works better.
+
+This isn't a migration - I ditched the old project entirely and built something new. Even
+the content is different. For technical implementation details, see
+[Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study).
+
+## The Next.js Era
+
+When I built the first version of my website, Next.js 13 had just launched. React Server
+Components were the new hot thing, and I wanted to try them out on a real project. Using a
+headless CMS felt like the natural complement: it was decoupled, flexible, and made the
+site feel professional. So I paired Next.js with Sanity CMS, added a webhook for on-demand
+revalidation, and deployed to Vercel. Classic Jamstack.
+
+[Incremental Static Regeneration](https://nextjs.org/docs/app/guides/incremental-static-regeneration#on-demand-revalidation-with-revalidatetag)
+worked flawlessly. Sanity gave me a polished interface for managing content. For a while,
+I was happy.
+
+<Figure
+  caption="The flow of on-demand ISR with Next.js and Sanity CMS"
+  className="mx-auto max-w-md"
+>
+  <Diagram />
+</Figure>
+
+But cracks started to show. The project was born at a time when Next.js was evolving
+rapidly, and upgrades were painful. Defaults around caching flipped back and forth, and
+every major release felt like relearning the framework. Meanwhile, Sanity - while
+technically solid - added friction. Editing content through a CMS UI just didn't motivate
+me to write. I'm a developer; I prefer treating content as source code. I realized that
+despite building all the infrastructure, I never wrote a single blog post.
+
+Performance also took a hit. I couldn't resist adding a Three.js model of a mechanical
+keyboard to the homepage-because why not show off my keyboard obsession? It looked cool
+but tanked Core Web Vitals. And even with canonical tags in place, SEO was disappointing:
+Google often indexed my Vercel preview URLs instead of the live site. Whether it was
+domain authority, performance issues, or just Google's black box, the end result was that
+my content barely surfaced in search.
+
+<Figure caption="Terrible Core Web Vitals of the old web. Note that SEO score is lower because at the time of measurement the web already prevented indexing.">
+  <Image
+    src={oldWebPerformanceImg}
+    alt="Old web core web vitals measurement result"
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+  />
+</Figure>
+
+## The Turning Point
+
+After a couple of years, I looked at my site and asked: _what is this actually doing for
+me?_ The answer was clear: not much. The CMS didn't encourage me to write. The site was
+bloated with features I didn't use. And the complexity of keeping up with Next.js updates
+drained motivation rather than sparked it.
+
+When I finally decided to rewrite, I had two guiding principles:
+
+- focus on the content
+- keep everything as simple as possible
+
+Astro was the obvious choice.
+
+## The Astro Era
+
+Astro approaches websites differently. It's static-first and ships zero JavaScript by
+default, which means you start from a position of performance. When you need
+interactivity, you add it explicitly through
+[islands](https://docs.astro.build/en/concepts/islands/). Content lives in Markdown or
+MDX, typed and validated through Astro's content collections. The build output is static
+HTML, perfect for CDN caching.
+
+Here's how the two versions of my site compare at a glance:
+
+| Category               | Old Website           | New Website                  |
+| ---------------------- | --------------------- | ---------------------------- |
+| **Framework**          | Next.js               | Astro                        |
+| **Hosting**            | Vercel                | Cloudflare Workers           |
+| **Styling**            | Tailwind CSS          | Tailwind CSS                 |
+| **UI Kit**             | Custom components     | DaisyUI                      |
+| **Content**            | Sanity CMS            | MDX & Content Collections    |
+| **Rendering strategy** | ISR with revalidation | Pure Static Generation       |
+| **Interactivity**      | React                 | Preact through Astro islands |
+
+Astro fit perfectly. It let me drop the CMS and just write MDX in my editor. It gave me
+static HTML by default, with Preact islands where I needed a bit of client-side behavior.
+And it shipped with thoughtful defaults: a sitemap, RSS feed, syntax highlighting with
+Shiki, image optimization - all without extra setup. Deployment on Cloudflare Workers was
+trivial.
+
+## What Changed
+
+The rebuild was surprisingly surgical. This is a completely new site, not a migration - I
+started fresh with different content and structure. I kept TypeScript and Tailwind, but
+dropped everything else: Sanity CMS, ISR complexity, and that performance-killing 3D
+keyboard. The result? A sub-300 kB homepage with perfect Lighthouse scores and proper
+Google indexing. More importantly, I finally feel motivated to write.
+
+## The Results
+
+Results will be added after site launch with actual metrics including Lighthouse scores,
+bundle size comparisons, and Core Web Vitals.
+
+## Conclusion
+
+I hope this insight gave you at least a bit of valuable information I learnt while
+experimenting with Astro. I must say I really enjoy working with it and it's now my
+default choice for any static (or mostly static) site.
+
+Astro isn't the right tool for every project-I wouldn't use it for a highly interactive
+dashboard, for example. But for content-heavy, static-first websites, it's an absolute
+joy. And if I were starting a new project today that combined a marketing site with an
+internal app, I'd seriously consider a hybrid approach: Astro for the landing pages, a
+React SPA for the app, and a shared component library in a monorepo.
+
+The best part is that I finally feel motivated to publish. And at the end of the day,
+that's the whole point.
+
+Curious about how I built it? Check out
+[Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study).
