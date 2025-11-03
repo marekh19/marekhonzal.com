@@ -14,6 +14,10 @@ thumbnail: './how-i-rewrote-my-website-to-astro.png'
 
 import { Image } from 'astro:assets'
 
+import Link from '@/components/ui/Link.astro'
+import { ENV } from '@/config/env'
+
+import { CounterDemo } from './counter-demo'
 import Diagram from './diagram.svg'
 import oldWebPerformanceImg from './old-web-performance.png'
 
@@ -240,56 +244,347 @@ because _johndoe.com_ directly matches search intent and signals personal authen
 
 ### Caching
 
-- snippets from `_headers file`
-- explain immutable vs mutable
+It's a good idea to leverage some decent **caching** strategy. I host this website on
+Cloudflare Workers so I use the `_headers` file to define response headers for any
+request.
+
+I've split caching it into 4 categories:
+
+- **Immutable assets**: Files we can cache basically indefinitely like `.js` and `.css`
+  files since these are always fingerprinted. Same for fonts. These are okay to be cached
+  in the browser as well. So in Astro website, it's anything at `/_astro/*`.
+- **Rarely chaning assets**: All videos I embed in articles (cached for a week) and
+  favicon + og images (cached for 24 hours)
+- **Often changing pages**: Homepage, blog page, projects page - all these pages include
+  lists of projects and posts. That means if a new post comes out, I don't want to show a
+  page without links to newly posted content. Therefore I cache these pages on CDN level
+  only for 10 minutes and allow up to 24 hours of stale content while revalidating in
+  background:
+- **Not so often changing pages**: All article and project detail pages. When these
+  change, it's usually some kind of small update. Allow them to be cached on CDN for an
+  hour while serving stale again for 24 hours with background revalidation.
+
+The headers look like this:
+
+```txt
+# Immutable assets
+  Cache-Control: public, max-age=63072000, immutable
+
+# Rarely chaning assets
+  Cache-Control: public, max-age=86400
+
+# Homepage & list pages — short CDN TTL
+  Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
+
+# Detail pages — longer CDN TTL
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+```
+
+This allows for a good balance between aggressive caching and not serving stale content.
 
 ### OG Images generation
 
-- show snippet how I did it - link to the file on github
-- suggest `@vercel/og`
+I wanted to aproach OG Images programmatically. Meaning I don't have to create them
+manually in an image editor or something like that. When searching for a simple solution I
+stumbled upon [@vercel/og](https://www.npmjs.com/package/@vercel/og) library. It offers
+`ImageResponse` constructor to create your OG Image with html and css. I decided to render
+it with _preact_ and _tailwind_ using the `h` function from preact. It uses
+[Satori](https://github.com/vercel/satori#documentation) under the hood. Not all CSS
+properties are supported but for something simple as OG image, it gets the job done.
+
+I use 2 types of og images
+
+- The generic base one with site name and description (homepage, blog, projects)
+- Specific image with content injected from the resource (project detail, article
+  detail) - has the name and description of the content
+
+The implementation looks like this:
+
+```ts
+// src/pages/og/[slug].png.ts
+type CollectionEntryItem = CollectionEntry<'blog' | 'projects'>
+
+type OGAPIRoute = APIRoute<
+  InferGetStaticPropsType<typeof getStaticPaths>,
+  InferGetStaticParamsType<typeof getStaticPaths>
+>
+
+type OGHtmlData = Pick<CollectionEntryItem['data'], 'title' | 'description'>
+
+const tintSvg = (svg: string, color: string) => {
+  const tinted = svg.replace(/fill="currentColor"/gi, `fill="${color}"`)
+
+  return `data:image/svg+xml;base64,${Buffer.from(tinted).toString('base64')}`
+}
+
+const generateHtml = (data: OGHtmlData): JSX.Element => {
+  // Load avatar svg, tint it and inline it
+  const rawSvg = fs.readFileSync(
+    path.resolve(process.cwd(), 'src/assets/avatar.svg'),
+    'utf8',
+  )
+  const svgDataUrl = tintSvg(rawSvg, '#f2f1f4')
+
+  // All the html elements with `tw` prop to style them
+  return h('div', {
+    tw: 'h-full w-full bg-[#151219] flex items-center justify-start p-40',
+    // ... the rest
+    // NOTE: Can't use any css variables or tokens from the project, this is isolated context
+  })
+}
+
+export const GET: OGAPIRoute = async ({ props }) => {
+  const {
+    item: { data },
+  } = props
+
+  // Load font files to be used in the OG image
+  const loraRegular = fs.readFileSync(
+    path.resolve(process.cwd(), 'public/fonts/lora-v36-latin-500.woff'),
+  )
+
+  const openSansRegular = fs.readFileSync(
+    path.resolve(process.cwd(), 'public/fonts/open-sans-v43-latin-600.woff'),
+  )
+
+  const html = generateHtml(data)
+
+  return new ImageResponse(html, {
+    width: 1200,
+    height: 630,
+    fonts: [
+      {
+        name: 'Open Sans Semibold',
+        data: openSansRegular.buffer,
+        style: 'normal',
+      },
+      {
+        name: 'Lora Medium',
+        data: loraRegular.buffer,
+        style: 'normal',
+      },
+    ],
+  })
+}
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog', shouldIncludeItem)
+  const projects = await getCollection('projects', shouldIncludeItem)
+
+  // Generate all og images in build time - `staticPageOgFallback` is the generic one.
+  return [...posts, ...projects, staticPageOgFallback].map((item) => ({
+    params: {
+      slug: item.id,
+    },
+    props: { item },
+  }))
+}) satisfies GetStaticPaths
+```
 
 ### RSS feed
 
-- code snippet implementation
-- prod only, articles only
+Since this site is mostly about the blog, I thought adding an rss feed makes sense. I
+decided to fill the feed with blog posts only. Astro has a nice `@astrojs/rss` package
+that helps with the feed generation. Similar as the og image, it works as an API route
+with static response that is pre-generated in build time.
+
+Thanks to astro's handy library, it's very simple.
+
+```ts
+// src/pages/rss.xml.ts
+export const GET: APIRoute = async ({ site }) => {
+  // I don't care about the rss feed in any other environment than production
+  if (!ENV.IS_PRODUCTION) {
+    return new Response(null, { status: 404, statusText: 'Not found' })
+  }
+
+  const posts = await getCollection('blog', shouldIncludeItem)
+  const sortedPosts = getSortedContentByDateDesc(posts)
+
+  return rss({
+    trailingSlash: false,
+    title: defaultSeo.baseTitle,
+    description: defaultSeo.metaDescription,
+    site: ensureAstroSite(site),
+    items: sortedPosts.map((post) => ({
+      title: post.data.title,
+      pubDate: post.data.date,
+      description: post.data.description,
+      link: ROUTES.blog.post(post.id),
+    })),
+  })
+}
+```
+
+We just load the content collection we want, filter and sort it and pass desired values
+into the `rss` function from `@astrojs/rss`.
 
 ### Analytics
 
-- Umami - simple, lightweight, good ux
-- no need for cookie consent
-- does everything I need
+When you publish a website it's natural you want to know wheter at least someone ever
+visits it. I wanted to try some more lightweight platform than Google Analytics. It would
+not only be an overkill to use such a monstrous tool for a simple website, I also didn't
+want to hassle with cookie consents and wanted something a bit more privacy oriented.
 
-### Interactivity (preact example)
+I've decided to try [Umami](https://umami.is/) which seems like the perfect choise. It
+does everything I want. You can check the public
+{<Link href={ENV.PUBLIC_UMAMI_SHARE_URL}>Analytics dashboard</Link>} of this site.
 
-- tags navigation snippet
-- full preact + this solution is about 12kb of js
+In my opinion it has very nicely organized UI, the script is tiny (a little over 2kB) and
+doesn't use cookies.
+
+### Interactivity - keep it simple
+
+When I thought something should be interactive (think of animation or some kind of state).
+I've used kind of mental checklist:
+
+1. Could it be done with CSS only? _if not then_
+2. Could it be done with simple vanilla JS only? (Well, anything can be, but whether it
+   makes sense is another question.) _if not then_
+3. Use a preact as last resort
+
+Currently the only thing that is done with preact is the list of available tags on the
+[blog](/blog) page. It renders up to 5 tags and if there's more, they are hidden by
+default and you have to toggle a button to see them, just to not clutter the UI visually.
+This would also work without preact, I decided to use it just for the convenience of
+`useState`.
+
+Remember you might not need something like `motion` library. CSS keyframes will get you
+pretty far. Need some super simple interactive element? Just use JavaScript - like I used
+on any article or project detail pages for the scroll progress bar or table of contents.
+
+But I also did not want to limit myself. So whenever I want to sprinkle a bit of (p)react
+I can. Like here below, I can just smash a bit of preact inside this article because it
+uses MDX.
+
+<center>
+  <CounterDemo client:visible />
+</center>
 
 ### A11y
 
-- skip link
-- respect reduced motion
-- add focus outlines to all interactive elements
-- check focus order and screen reader with Silktide or similar tool
+I always try to aim for at least basic accessibility. Some rules of thumb from my
+experience.
 
-### Visual stuff
-
-- animations with CSS only (keyframes)
-- tiny bits of vanilla js - scroll progress & table of contents
+- use semantic html elements like `<header>`, `<footer>`, `<main>`, `<time>`, `<figure>`
+  and `<figcaption>`, `<article>`, `<aside>`, etc.
+- check for contrast ratios (dev tools is your friend)
+- Any interactive element without visible label must have either `aria-label` or something
+  like `<span class="sr-only">label</span>`. Think any icon button.
+- Respect reduced motion preference. There's a media query for that. If using Tailwind you
+  can just prefix your transition classes with `motion-safe:`
+- Ensure all interactive elements are accessible for keyboard navigation (with tab). And
+  they have visible outline.
+- Add "Skip links" - a button that is the very first tabable element on the page that if
+  you press, the focus is moved into the main part of the page (skip navigation links in
+  the header etc.)
+- Validate focus order and screen reader behavior with tool like
+  [Silktide](https://silktide.com/) browser extension.
 
 ### Markdown as a component
 
-- example of mdx used as astro component
-- easier maintanance of prose text instead of html tags
-- all of the bold text would have been wrapped in `<strong>` and maintanance is annoying
+I love the wide support for markdown and MDX anywhere in astro. You can even use MDX
+components inside astro components. Let's have a look at the [about](/#about) section of
+the homepage. The homepage is composed of Astro components. But this one section is very
+"prose" heavy. It would be painful to write and maintain this block of text as html
+elements. So I just wrote it as MDX component and imported into Astro component.
+
+```astro
+---
+// AboutSection.astro
+// MDX component imported into Astro component
+import AboutText from './AboutText.mdx'
+---
+
+<section aria-labelledby={sectionId} class={className}>
+  <h2 id={sectionId}>A Bit About Me</h2>
+  <AboutText />
+  {/* The rest of the section... */}
+</section>
+```
+
+This way whenever I want to update the text, I don't have to worry about manually adding
+`<strong>` tags and passing classes to style them.
 
 ### Astro components with `cva`
 
-- separate ts file that describes variants of the component and consume it in Astro file
+I love using the [class-variance-authority](https://cva.style/) library. Whenever doing
+any component that has more kinds or variants, it's just great experience. It's not
+possible to use it directly inside `.astro` file. But you can split the variants into a
+separate `.ts` file and just import it into `.astro` component. Works like a charm. See
+super simple example below.
+
+```ts
+// contentGridVariants.ts
+import { cva, type VariantProps } from 'class-variance-authority'
+
+export const contentGridVariants = cva(
+  ['grid grid-cols-1 min-[600px]:grid-cols-2 gap-x-8 gap-y-12'],
+  {
+    variants: {
+      type: {
+        article: ['lg:grid-cols-3'],
+        project: ['lg:grid-cols-1', 'lg:gap-y-8'],
+      },
+    },
+    defaultVariants: { type: 'article' },
+  },
+)
+
+export type ContentGridVariant = VariantProps<typeof contentGridVariants>
+```
+
+```astro
+---
+import { cn } from '@/lib/utils/cn'
+
+import { contentGridVariants, type ContentGridVariant } from './contentGridVariants'
+
+type Props = ContentGridVariant & {
+  className?: string
+}
+
+const { type, className } = Astro.props
+---
+
+<div class={cn(contentGridVariants({ type }), className)}>
+  <slot />
+</div>
+```
 
 ### Security headers
 
-- gotcha with CSP and astro islands
-- validate against [Security Headers](https://securityheaders.com/)
+Before launching any web app / website I like to validate security headers. There's a nice
+tool by snyk aptly named [Security Headers](https://securityheaders.com/). You can scan
+any website and it will give you a rank between **A** and **F**.
+
+I always add _at least_ these.
+
+| Header                       | Value                                                       |
+| ---------------------------- | ----------------------------------------------------------- |
+| `Referrer-Policy`            | `strict-origin-when-cross-origin`                           |
+| `Strict-Transport-Security`  | `nosniff`                                                   |
+| `Content-Security-Policy`    | _As strict as possible, based on usage. But see note below_ |
+| `Permissions-Policy`         | _Only those you need, forbid the rest_                      |
+| `Cross-Origin-Opener-Policy` | `same-origin`                                               |
+| `X-Frame-Options`            | `DENY`                                                      |
+| `X-Content-Type-Options`     | `nosniff`                                                   |
+
+<Alert title="Astro Islands and CSP">
+  When using [Islands architecture](https://docs.astro.build/en/concepts/islands/) with
+  Astro. You must add `script-src: unsafe-inline` to your **Content-Security-Policy**.
+  Otherwise it won't work.
+
+There's currently an
+[experimental option](https://docs.astro.build/en/reference/experimental-flags/csp/) in
+Astro config to enable hashes to avoid the `unsafe-inline` but I wasn't able to make it
+work with my Cloudflare Workers deplyment while not losing the option to set it globally
+for everything else.
+
+</Alert>
+
+<>
+{/*
 
 ## The result
 
@@ -297,12 +592,15 @@ because _johndoe.com_ directly matches search intent and signals personal authen
 - page speed insights screenshot of the website
 - total size from cloudflare radar (uncompressed)
 
+\*/}
+
+</>
+
 ## Conclusion
 
-Rebuilding my site with Astro wasn't just a framework swap. It was a reminder of why I
-build personal websites in the first place: to write, to share, and to experiment. The old
-Next.js + CMS stack gave me features I didn't need and friction I didn't want. Astro gave
-me simplicity, speed, and a content-first workflow that matches how I actually work.
+I hope this insight gave you at least a bit of valuable information I learnt while
+experimenting with Astro. I must say I really enjoy working with it and it's now my
+default choice for any static (or mostly static) site.
 
 Astro isn't the right tool for every project-I wouldn't use it for a highly interactive
 dashboard, for example. But for content-heavy, static-first websites, it's an absolute
