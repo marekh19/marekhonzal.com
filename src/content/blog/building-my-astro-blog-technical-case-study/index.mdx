@@ -151,11 +151,17 @@ function.
 
 ### Domain choice
 
-Using your full name helps your site rank first when people search for you, strengthening
-your personal brand and credibility. It's more effective than domains like _john.dev_
-because _johndoe.com_ directly matches search intent and signals personal authenticity.
+I chose to use my full name for the domain. Using your full name helps your site rank
+first when people search for you, strengthening your personal brand and credibility. It's
+more effective than domains like _john.dev_ because _johndoe.com_ directly matches search
+intent and signals personal authenticity. This was particularly important after my
+previous domain didn't perform well in search results.
 
 ## Caching
+
+Beyond SEO, performance was crucial. Since the old site struggled with Core Web Vitals, I
+wanted a caching strategy that balances speed with freshness. I leveraged a decent
+**caching** strategy.
 
 I leveraged a decent **caching** strategy. I host this website on Cloudflare Workers so I
 use the `_headers` file to define response headers for any request.
@@ -196,11 +202,12 @@ This allows for a good balance between aggressive caching and not serving stale 
 
 ## OG Images generation
 
-I wanted to approach OG Images programmatically. Meaning I don't have to create them
-manually in an image editor or something like that. When searching for a simple solution I
-stumbled upon [@vercel/og](https://www.npmjs.com/package/@vercel/og) library. It offers
-`ImageResponse` constructor to create your OG Image with html and css. I decided to render
-it with _preact_ and _tailwind_ using the `h` function from preact. It uses
+For social sharing, I wanted programmatic OG images so I wouldn't have to manually create
+them for every post or project. Meaning I don't have to create them manually in an image
+editor or something like that. When searching for a simple solution I stumbled upon
+[@vercel/og](https://www.npmjs.com/package/@vercel/og) library. It offers `ImageResponse`
+constructor to create your OG Image with html and css. I decided to render it with
+_preact_ and _tailwind_ using the `h` function from preact. It uses
 [Satori](https://github.com/vercel/satori#documentation) under the hood. Not all CSS
 properties are supported but for something simple as OG image, it gets the job done.
 
@@ -295,10 +302,11 @@ export const getStaticPaths = (async () => {
 
 ## RSS feed
 
-Since this site is mostly about the blog, I thought adding an rss feed makes sense. I
-decided to fill the feed with blog posts only. Astro has a nice `@astrojs/rss` package
-that helps with the feed generation. Similar as the og image, it works as an API route
-with static response that is pre-generated in build time.
+To help readers discover new content, I added an RSS feed. Since this site is mostly about
+the blog, I thought adding an rss feed makes sense. I decided to fill the feed with blog
+posts only. Astro has a nice `@astrojs/rss` package that helps with the feed generation.
+Similar as the og image, it works as an API route with static response that is
+pre-generated in build time.
 
 Thanks to astro's handy library, it's very simple.
 
@@ -333,10 +341,12 @@ into the `rss` function from `@astrojs/rss`.
 
 ## Analytics
 
-When you publish a website it's natural you want to know whether at least someone ever
-visits it. I wanted to try some more lightweight platform than Google Analytics. It would
-not only be an overkill to use such a monstrous tool for a simple website, I also didn't
-want to hassle with cookie consents and wanted something a bit more privacy oriented.
+I wanted lightweight analytics without the complexity and privacy concerns of traditional
+tools. When you publish a website it's natural you want to know whether at least someone
+ever visits it. I wanted to try some more lightweight platform than Google Analytics. It
+would not only be an overkill to use such a monstrous tool for a simple website, I also
+didn't want to hassle with cookie consents and wanted something a bit more privacy
+oriented.
 
 I've decided to try [Umami](https://umami.is/) which seems like the perfect choice. It
 does everything I want. You can check the public
@@ -347,8 +357,9 @@ doesn't use cookies.
 
 ## Interactivity - keep it simple
 
-When I thought something should be interactive (think of animation or some kind of state).
-I've used kind of mental checklist:
+Astro's islands architecture is great, but I didn't want to overuse it. I developed a
+simple philosophy for interactivity. When I thought something should be interactive (think
+of animation or some kind of state), I've used kind of mental checklist:
 
 1. Could it be done with CSS only? _if not then_
 2. Could it be done with simple vanilla JS only? (Well, anything can be, but whether it
@@ -375,8 +386,8 @@ uses MDX.
 
 ## A11y
 
-I always try to aim for at least basic accessibility. Some rules of thumb from my
-experience.
+Accessibility is important to me - I want the site to be usable for everyone. I always try
+to aim for at least basic accessibility. Some rules of thumb from my experience.
 
 - use semantic html elements like `<header>`, `<footer>`, `<main>`, `<time>`, `<figure>`
   and `<figcaption>`, `<article>`, `<aside>`, etc.
@@ -395,11 +406,12 @@ experience.
 
 ## Markdown as a component
 
-I love the wide support for markdown and MDX anywhere in astro. You can even use MDX
-components inside astro components. Let's have a look at the [about](/#about) section of
-the homepage. The homepage is composed of Astro components. But this one section is very
-"prose" heavy. It would be painful to write and maintain this block of text as html
-elements. So I just wrote it as MDX component and imported into Astro component.
+One of Astro's strengths is its flexibility with content formats. I love the wide support
+for markdown and MDX anywhere in astro. You can even use MDX components inside astro
+components. Let's have a look at the [about](/#about) section of the homepage. The
+homepage is composed of Astro components. But this one section is very "prose" heavy. It
+would be painful to write and maintain this block of text as html elements. So I just
+wrote it as MDX component and imported into Astro component.
 
 ```astro
 ---
@@ -466,9 +478,10 @@ const { type, className } = Astro.props
 
 ## Security headers
 
-Before launching any web app / website I like to validate security headers. There's a nice
-tool by snyk aptly named [Security Headers](https://securityheaders.com/). You can scan
-any website and it will give you a rank between **A** and **F**.
+Finally, before launching, I wanted to ensure proper security headers. Before launching
+any web app / website I like to validate security headers. There's a nice tool by snyk
+aptly named [Security Headers](https://securityheaders.com/). You can scan any website and
+it will give you a rank between **A** and **F**.
 
 I always add _at least_ these.
 
@@ -498,8 +511,20 @@ for everything else.
 ## Conclusion
 
 These are the technical choices I made for my blog and how I implemented them. I'm sharing
-what worked for me - your needs might be different, and that's okay. Astro gave me the
-flexibility to build exactly what I needed without unnecessary complexity.
+what worked for me - your needs might be different, and that's okay.
+
+What worked particularly well? Astro's content collections made MDX feel like a
+first-class citizen, which was exactly what I wanted. The caching strategy on Cloudflare
+Workers has been straightforward and effective. And programmatic OG images eliminated a
+tedious manual step.
+
+What surprised me? How little JavaScript I actually needed - most interactivity works fine
+with CSS and vanilla JS. I also didn't expect structured data to be as simple as it was,
+though I'm still not sure how much value it actually provides.
+
+If I were doing it again, I might experiment with Astro's experimental CSP hashes feature
+more, but the current setup works well. Overall, Astro gave me the flexibility to build
+exactly what I needed without unnecessary complexity.
 
 For the full story and results, see
 [Part 1: Why I Started Fresh](/blog/rebuilding-my-website-with-astro-why-and-results).

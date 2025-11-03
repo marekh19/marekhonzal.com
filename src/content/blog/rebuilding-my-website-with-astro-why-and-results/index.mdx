@@ -121,10 +121,20 @@ trivial.
 ## What Changed
 
 The rebuild was surprisingly surgical. This is a completely new site, not a migration - I
-started fresh with different content and structure. I kept TypeScript and Tailwind, but
-dropped everything else: Sanity CMS, ISR complexity, and that performance-killing 3D
-keyboard. The result? A sub-300 kB homepage with perfect Lighthouse scores and proper
-Google indexing. More importantly, I finally feel motivated to write.
+started fresh with different content and structure. What made it feel surgical was how
+much I could keep: TypeScript and Tailwind stayed, which meant I didn't need to relearn
+syntax or rebuild my design system.
+
+Everything else changed. The framework switch from Next.js to Astro meant dropping React
+Server Components and ISR complexity. Moving from Sanity CMS to MDX meant content now
+lives in my codebase, version-controlled and editable in my editor. The hosting shift from
+Vercel to Cloudflare Workers was straightforward since Astro's static output works
+anywhere. And I replaced custom components with DaisyUI to move faster.
+
+Most importantly, I ditched that performance-killing Three.js keyboard model. The result?
+A sub-300 kB homepage with perfect Lighthouse scores and proper Google indexing. But more
+than the metrics, the real win is that I finally feel motivated to write. Writing MDX
+files feels natural, like writing code - which is exactly what I wanted.
 
 ## The Results
 
@@ -143,8 +153,12 @@ joy. And if I were starting a new project today that combined a marketing site w
 internal app, I'd seriously consider a hybrid approach: Astro for the landing pages, a
 React SPA for the app, and a shared component library in a monorepo.
 
-The best part is that I finally feel motivated to publish. And at the end of the day,
-that's the whole point.
+The best part is that I finally feel motivated to publish. Writing MDX files feels like
+working with source code - I get syntax highlighting, version control, and the same editor
+I use for everything else. No CMS UI to context-switch into, no webhook delays, no
+wondering if my changes saved. It removes friction in a way that Sanity never did, despite
+being technically excellent. And at the end of the day, that's the whole point - removing
+the barriers between having an idea and publishing it.
 
 Curious about how I built it? Check out
 [Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study).
