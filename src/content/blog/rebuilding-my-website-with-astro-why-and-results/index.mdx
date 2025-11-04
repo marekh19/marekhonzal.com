@@ -26,7 +26,7 @@ away, and why the new version feels so much better.
 
 [The old site](https://old.marek.work) was built with Next.js, Sanity CMS, and the full
 [Jamstack](https://jamstack.org) playbook. It looked solid on paper, but over time I
-realized it didn't actually work for me. Short of three years later, I decided to start
+realized it didn't actually work for me. Nearly three years later, I decided to start
 fresh. This time the focus was on **simplicity, performance, and content**. The result is
 a lean Astro-based site that does less but works better.
 
@@ -61,7 +61,7 @@ me to write. I'm a developer; I prefer treating content as source code. I realiz
 despite building all the infrastructure, I never wrote a single blog post.
 
 Performance also took a hit. I couldn't resist adding a Three.js model of a mechanical
-keyboard to the homepage ? because why not show off my keyboard obsession? It looked cool
+keyboard to the homepage — because why not show off my keyboard obsession? It looked cool
 but tanked Core Web Vitals. And even with canonical tags in place, SEO was disappointing:
 Google often indexed my Vercel preview URLs instead of the live site. Whether it was
 domain authority, performance issues, or just Google's black box, the end result was that
@@ -120,10 +120,9 @@ trivial.
 
 ## What Changed
 
-The rebuild was surprisingly surgical. This is a completely new site, not a migration - I
-started fresh with different content and structure. What made it feel surgical was how
-much I could keep: TypeScript and Tailwind stayed, which meant I didn't need to relearn
-syntax or rebuild my design system.
+This is a completely new site, not a migration - I started fresh with different content
+and structure. Only 2 pieces of technology stayed: **TypeScript** and **Tailwind**. No
+matter what project I do, these are always present.
 
 Everything else changed. The framework switch from Next.js to Astro meant dropping React
 Server Components and ISR complexity. Moving from Sanity CMS to MDX meant content now
@@ -132,9 +131,10 @@ Vercel to Cloudflare Workers was straightforward since Astro's static output wor
 anywhere. And I replaced custom components with DaisyUI to move faster.
 
 Most importantly, I ditched that performance-killing Three.js keyboard model. The result?
-A sub-300 kB homepage with perfect Lighthouse scores and proper Google indexing. But more
-than the metrics, the real win is that I finally feel motivated to write. Writing MDX
-files feels natural, like writing code - which is exactly what I wanted.
+A sub-300 kB (uncompressed) homepage with perfect Lighthouse scores and proper Google
+indexing. But more than the metrics, the real win is that I finally feel motivated to
+write. Writing MDX files feels natural, like writing code - which is exactly what I
+wanted.
 
 ## The Results
 
@@ -144,11 +144,11 @@ performance data.
 
 ## Conclusion
 
-I hope this insight gave you at least a bit of valuable information I learnt while
+I hope this insight gave you at least a bit of valuable information I learned while
 experimenting with Astro. I must say I really enjoy working with it and it's now my
 default choice for any static (or mostly static) site.
 
-Astro isn't the right tool for every project-I wouldn't use it for a highly interactive
+Astro isn't the right tool for every project — I wouldn't use it for a highly interactive
 dashboard, for example. But for content-heavy, static-first websites, it's an absolute
 joy. And if I were starting a new project today that combined a marketing site with an
 internal app, I'd seriously consider a hybrid approach: Astro for the landing pages, a
@@ -162,6 +162,4 @@ being technically excellent. And at the end of the day, that's the whole point -
 the barriers between having an idea and publishing it.
 
 Curious about how I built it? Check out
-[Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study). ow I
-built it? Check out
 [Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study).
