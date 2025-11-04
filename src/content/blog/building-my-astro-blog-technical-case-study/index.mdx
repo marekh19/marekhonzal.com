@@ -3,15 +3,15 @@ title: 'Building My Astro Blog: Technical Implementation Case Study'
 description:
   'A technical case study of how I built my Astro blog. See how I implemented SEO,
   caching, OG images, RSS feeds, and more with detailed code examples from my actual site.'
-date: 2025-11-04
+date: 2025-11-05
 isDraft: false
 isFeatured: true
 tags:
   - 'Astro'
+  - 'Case Study'
   - 'SEO'
   - 'Performance'
-  - 'Case Study'
-thumbnail: './how-i-rewrote-my-website-to-astro.png'
+thumbnail: './thumbnail.png'
 ---
 
 import Link from '@/components/ui/Link.astro'
@@ -35,16 +35,16 @@ more. All with detailed code examples from my actual site.
 ## Site Overview
 
 This is a completely new site, not a migration. I started fresh and made different
-choices. I kept TypeScript and Tailwind, but everything else changed: framework (Next.js ?
-Astro), hosting (Vercel ? Cloudflare Workers), content approach (Sanity CMS ? MDX &
-Content Collections), and UI kit (custom components ? DaisyUI).
+choices. I kept TypeScript and Tailwind, but everything else changed: framework (Next.js →
+Astro), hosting (Vercel → Cloudflare Workers), content approach (Sanity CMS → MDX &
+Content Collections), and UI kit (custom components → DaisyUI).
 
 ## SEO
 
 ### Sitemap
 
-Astro provides an official sitemap integration that is super simple to setup. I've enabled
-it in production environment only. The whole solution looks like this:
+Astro provides an official sitemap integration that is super simple to set up. I've
+enabled it in production environment only. The whole solution looks like this:
 
 ```ts
 // astro.config.ts
@@ -70,8 +70,8 @@ export default defineConfig({
 
 ### Self-referencing canonical tag
 
-Super simple - just reads the `Astro.site` from `astro.config.*` file and used in the
-shared layout in `<head>`.
+Super simple — it just reads `Astro.site` from `astro.config.*` and is used in the shared
+layout `<head>`.
 
 ```astro
 ---
@@ -84,7 +84,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
 
 ### robots.txt
 
-I made sure to disallow crawling my website / app in all environments except production.
+I made sure to disallow crawling my website or app in all environments except production.
 
 ```ts
 // pages/robots.txt.ts
@@ -143,8 +143,8 @@ I decided to try [schema.org](https://schema.org/) structured data for the first
 sure yet how much value it brings but the implementation was quite simple. I decided to
 set it up just for articles since that is the main purpose of this website.
 
-So I use 3 schema models - `WebSite`, `Person` and `BlogPosting`. You can see the full
-defition
+So I use three schema models — `WebSite`, `Person` and `BlogPosting`. You can see the full
+definition
 [here](https://github.com/marekh19/marekhonzal.com/blob/main/src/config/schemaJson.ts). It
 allows me to pass all the dynamic parts from the articles into the `createBlogPostSchema`
 function.
@@ -164,13 +164,13 @@ wanted a caching strategy that balances speed with freshness. I host this websit
 Cloudflare Workers so I use the `_headers` file to define response headers for any
 request.
 
-I've split caching it into 4 categories:
+I've split caching into four categories:
 
 - **Immutable assets**: Files I can cache basically indefinitely like `.js` and `.css`
   files since these are always fingerprinted. Same for fonts. These are okay to be cached
   in the browser as well. In Astro, this is anything at `/_astro/*`.
 - **Rarely changing assets**: All videos I embed in articles (cached for a week) and
-  favicon + og images (cached for 24 hours)
+  favicon + OG images (cached for 24 hours)
 - **Often changing pages**: Homepage, blog page, projects page — all these pages include
   lists of projects and posts. If a new post comes out, I don't want to show a page
   without links to newly posted content. So I cache these pages on CDN level only for 10
@@ -200,14 +200,14 @@ This allows for a good balance between aggressive caching and not serving stale 
 ## OG Images generation
 
 For social sharing, I wanted programmatic OG images so I wouldn't have to manually create
-them for every post or project. When searching for a simple solution I stumbled upon
+them for every post or project. When searching for a simple solution, I stumbled upon
 [@vercel/og](https://www.npmjs.com/package/@vercel/og) library. It offers `ImageResponse`
 constructor to create OG images with HTML and CSS. I decided to render it with _preact_
 and _tailwind_ using the `h` function from preact. It uses
 [Satori](https://github.com/vercel/satori#documentation) under the hood. Not all CSS
-properties are supported but for something simple as OG image, it gets the job done.
+properties are supported, but for something simple like an OG image, it gets the job done.
 
-I use 2 types of og images
+I use two types of OG images:
 
 - The generic base one with site name and description (homepage, blog, projects)
 - Specific image with content injected from the resource (project detail, article
@@ -286,7 +286,7 @@ export const getStaticPaths = (async () => {
   const posts = await getCollection('blog', shouldIncludeItem)
   const projects = await getCollection('projects', shouldIncludeItem)
 
-  // Generate all og images in build time - `staticPageOgFallback` is the generic one.
+  // Generate all OG images at build time — `staticPageOgFallback` is the generic one.
   return [...posts, ...projects, staticPageOgFallback].map((item) => ({
     params: {
       slug: item.id,
@@ -299,17 +299,17 @@ export const getStaticPaths = (async () => {
 ## RSS feed
 
 To help readers discover new content, I added an RSS feed. Since this site is mostly about
-the blog, I thought adding an rss feed makes sense. I decided to fill the feed with blog
+the blog, I thought adding an RSS feed made sense. I decided to fill the feed with blog
 posts only. Astro has a nice `@astrojs/rss` package that helps with the feed generation.
-Similar as the og image, it works as an API route with static response that is
-pre-generated in build time.
+Similar to the OG image, it works as an API route with a static response that is
+pre-generated at build time.
 
-Thanks to astro's handy library, it's very simple.
+Thanks to Astro's handy library, it's very simple.
 
 ```ts
 // src/pages/rss.xml.ts
 export const GET: APIRoute = async ({ site }) => {
-  // I don't care about the rss feed in any other environment than production
+  // I don't care about the RSS feed in any other environment than production
   if (!ENV.IS_PRODUCTION) {
     return new Response(null, { status: 404, statusText: 'Not found' })
   }
@@ -338,29 +338,26 @@ into the `rss` function from `@astrojs/rss`.
 ## Analytics
 
 I wanted lightweight analytics without the complexity and privacy concerns of traditional
-tools. When you publish a website it's natural you want to know whether at least someone
-ever visits it. I wanted to try some more lightweight platform than Google Analytics. It
-would not only be an overkill to use such a monstrous tool for a simple website, I also
-didn't want to hassle with cookie consents and wanted something a bit more privacy
-oriented.
+tools. It would be overkill to use something like Google Analytics for a simple website,
+and I didn't want to deal with cookie consents. I wanted something more privacy-oriented.
 
 I've decided to try [Umami](https://umami.is/) which seems like the perfect choice. It
 does everything I want. You can check the public
 {<Link href={ENV.PUBLIC_UMAMI_SHARE_URL}>Analytics dashboard</Link>} of this site.
 
-In my opinion it has very nicely organized UI, the script is tiny (a little over 2kB) and
-doesn't use cookies.
+It has a nicely organized UI, the script is tiny (a little over 2kB), and it doesn't use
+cookies.
 
 ## Interactivity - keep it simple
 
 Astro's islands architecture is great, but I didn't want to overuse it. I developed a
-simple philosophy for interactivity. When I thought something should be interactive (think
-of animation or some kind of state), I use a mental checklist:
+simple philosophy for interactivity. When I think something should be interactive (like
+animation or some kind of state), I use a mental checklist:
 
 1. Could it be done with CSS only? _if not then_
 2. Could it be done with simple vanilla JS only? (Well, anything can be, but whether it
    makes sense is another question.) _if not then_
-3. Use a preact as last resort
+3. Use Preact as a last resort
 
 Currently the only thing I built with Preact is the list of available tags on the
 [blog](/blog) page. It renders up to 5 tags, and if there are more, they're hidden by
@@ -393,7 +390,7 @@ to aim for at least basic accessibility. Some rules of thumb from my experience.
   can just prefix your transition classes with `motion-safe:`
 - Ensure all interactive elements are accessible for keyboard navigation (with tab). And
   they have visible outline.
-- Add "Skip links" - a button that is the very first tabable element on the page that if
+- Add "Skip links" — a button that is the very first tabbable element on the page that if
   you press, the focus is moved into the main part of the page (skip navigation links in
   the header etc.)
 - Validate focus order and screen reader behavior with tool like
@@ -475,7 +472,7 @@ const { type, className } = Astro.props
 ## Security headers
 
 Finally, before launching, I wanted to ensure proper security headers. Before launching
-any web app / website I like to validate security headers. There's a nice tool by snyk
+any web app or website, I like to validate security headers. There's a nice tool by Snyk
 aptly named [Security Headers](https://securityheaders.com/). You can scan any website and
 it will give you a rank between **A** and **F**.
 
@@ -484,7 +481,7 @@ I always add _at least_ these.
 | Header                       | Value                                                       |
 | ---------------------------- | ----------------------------------------------------------- |
 | `Referrer-Policy`            | `strict-origin-when-cross-origin`                           |
-| `Strict-Transport-Security`  | `nosniff`                                                   |
+| `Strict-Transport-Security`  | `max-age=31536000; includeSubDomains`                       |
 | `Content-Security-Policy`    | _As strict as possible, based on usage. But see note below_ |
 | `Permissions-Policy`         | _Only those you need, forbid the rest_                      |
 | `Cross-Origin-Opener-Policy` | `same-origin`                                               |
