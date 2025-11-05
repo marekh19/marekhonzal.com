@@ -26,5 +26,3 @@ pnpm-debug.log*
 # Cloudflare
 .wrangler
 
-# Temp notes
-docs/*.mdx
