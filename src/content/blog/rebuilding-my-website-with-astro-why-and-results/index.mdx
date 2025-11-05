@@ -19,6 +19,10 @@ import { Image } from 'astro:assets'
 
 import Diagram from './diagram.svg'
 import oldWebPerformanceImg from './old-web-performance.png'
+import newWebPsi from './psi-new.png'
+import oldWebPsi from './psi-old.png'
+import newPageSize from './size-new.png'
+import oldPageSize from './size-old.png'
 
 ## TL;DR: From Overengineered Next.js to Effortless Astro
 
@@ -152,12 +156,66 @@ code - exactly what I wanted.
 
 ## The Results (So Far)
 
-At the time of writing, the site isn’t live yet.  
-Once published, I’ll update this section with concrete data:
+_Measured on 2025-11-05_
 
-- Lighthouse and Core Web Vitals (before / after)
-- Bundle size comparisons
-- SEO indexing results
+### PageSpeed Insights Comparison
+
+_Source: PageSpeed Insights (pagespeed.web.dev)_
+
+<div className="flex flex-col gap-8 lg:flex-row">
+  <Figure caption="Before: PageSpeed Insights for the old website." className="not-prose">
+    <Image
+      src={oldWebPsi}
+      alt="PageSpeed Insights report for the old website."
+      widths={[360, 480, 720, 768, 960, 1024, 1280]}
+      sizes="(max-width: 1023px) 100vw, 768px"
+      class="not-prose rounded-md"
+    />
+  </Figure>
+  <Figure
+    caption="After: PageSpeed Insights for the new website — 100s across the board."
+    className="not-prose"
+  >
+    <Image
+      src={newWebPsi}
+      alt="PageSpeed Insights report for the new website showing perfect scores."
+      widths={[360, 480, 720, 768, 960, 1024, 1280]}
+      sizes="(max-width: 1023px) 100vw, 768px"
+      class="not-prose rounded-md"
+    />
+  </Figure>
+</div>
+
+### Homepage Weight Comparison
+
+_Source: Cloudflare Radar (radar.cloudflare.com)_
+
+<div className="flex flex-col gap-8">
+  <Figure caption="Before: The old homepage was over 10× heavier." className="not-prose">
+    <Image
+      src={oldPageSize}
+      alt="Old homepage transfer size chart from Cloudflare Radar."
+      widths={[360, 480, 720, 768, 960, 1024, 1280]}
+      sizes="(max-width: 1023px) 100vw, 768px"
+      class="not-prose rounded-md"
+    />
+  </Figure>
+  <Figure
+    caption="After: The new homepage is just under 270 kB (uncompressed)."
+    className="not-prose"
+  >
+    <Image
+      src={newPageSize}
+      alt="New homepage transfer size chart from Cloudflare Radar."
+      widths={[360, 480, 720, 768, 960, 1024, 1280]}
+      sizes="(max-width: 1023px) 100vw, 768px"
+      class="not-prose rounded-md"
+    />
+  </Figure>
+</div>
+
+> At the time of writing, the site isn’t indexed on Google yet. I’ll update the article
+> once it is.
 
 ## Conclusion: Simplicity Is a Feature
 
