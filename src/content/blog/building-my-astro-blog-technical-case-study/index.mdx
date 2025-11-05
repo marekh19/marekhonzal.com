@@ -26,40 +26,39 @@ import umamiScreenshot from './umami-screenshot.png'
 
 ## TL;DR
 
-- **Static-first** + **typed content** made SEO and caching _deterministic_.
+- **Static-first** + **typed content** made SEO and caching predictable and reliable.
 - **Programmatic OG images** removed design bottlenecks for sharing.
 - **Four cache policies** balance freshness for lists and stability for details.
 - **Cookie-free analytics** (Umami) is enough for a personal site.
 - **Interactivity ladder:** CSS → JS → Preact (last).
-- **Security & A11y**: ship sane defaults, verify, iterate.
+- **Security & A11y:** ship sane defaults, verify, iterate.
 
-## Introduction - Field Notes, Not a Tutorial
+## Introduction – Field Notes, Not a Tutorial
 
 In
 [Part 1: From Next.js Complexity to Static Simplicity](/blog/rebuilding-my-website-with-astro-why-and-results),
 I explained _why_ I rebuilt my site and the results.  
-This is the _how_: pragmatic decisions, with code I actually run in production.
+This is the _how_: pragmatic decisions with code I actually run in production.
 
 **Constraints** I set for myself:
 
-- Static-first pages with zero-JS by default
+- Static-first pages with zero JS by default
 - Content as code (MDX + types), no CMS
 - Fast publishing: no manual thumbnails, minimal ceremony
 - Cloudflare-first caching
 - Security and A11y good enough to ship, then harden
 
-Each section follows a consistent pattern: **Context → Decision → Implementation → Gotchas
-→ Verification → Takeaway**.
+Each section follows a consistent pattern so you can quickly scan for what’s relevant:  
+**Context → Decision → Implementation → Gotchas → Verification → Takeaway.**
 
 ## Foundation: Content as Code (MDX + Content Collections)
 
-**Context.** I wanted a writing flow that feels like coding: types, version control,
-local-first.  
+**Context.** I wanted a writing flow that feels like coding: types, version control, and
+local-first editing.  
 **Decision.** Use Astro _content collections_ with typed frontmatter, and centralize SEO
-defaults.
-
-**Implementation.** Below is a definition of **Blog** content collection. Yes, Astro uses
-`zod` to define the schema so it's very familiar.
+defaults.  
+**Implementation.** Below is the definition of the **blog** content collection. Astro uses
+`zod` to define the schema, so it feels very familiar.
 
 ```ts
 // src/content/config.ts
@@ -79,12 +78,15 @@ const blogCollection = defineCollection({
 })
 ```
 
-**Gotchas.** Make sure your layout or component is in sync with the collection schema to
-not have mismatch between what is required to build and what to render. Use
-`CollectionEntry<'collectionName'>` generic type. **Verification.** Type errors break the
-build before publishing.  
-**Takeaway.** **Treat content like code** - types guard publishing and ensure props for
-your content components.
+**Gotchas.** Make sure your layout or component stays in sync with the collection schema
+to avoid mismatches between what’s required at build time and what’s rendered. Use the
+`CollectionEntry<'collectionName'>` generic type to derive props directly from the
+schema.  
+**Verification.** Type errors break the build before publishing.  
+**Takeaway.** **Treat content like code** – types guard publishing and ensure your
+components always match your schema.
+
+> With metadata and discoverability sorted out, performance was the next challenge.
 
 ## SEO That Ships: Sitemap, Canonical, Robots, Schema
 
@@ -107,14 +109,14 @@ export default defineConfig({
   integrations: [
     (ENV_NAME ?? 'staging') === 'production' && sitemap({ lastmod: new Date() }),
   ],
-  // ... the rest of the astro.config
+  // ...rest of astro.config
 })
 ```
 
-**Gotchas.** Reading env in astro config requires
-[Astro’s documented pattern](https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file).  
-**Verification.**
-Build logs show integration enabled/disabled; `/sitemap-index.xml` exists in prod.
+**Gotchas.** Reading env in the Astro config requires
+[Astro’s documented pattern](https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file).
+**Verification.** Build logs show whether the integration is enabled or disabled;
+`/sitemap-index.xml` exists in production.
 
 ```txt
 11:13:42 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
@@ -125,7 +127,7 @@ Build logs show integration enabled/disabled; `/sitemap-index.xml` exists in pro
 ### Self-Referencing Canonical
 
 **Context.** Avoid duplicate content and preview URL indexing.  
-**Decision.** Build canonical from `Astro.site` + `Astro.url.pathname`.
+**Decision.** Build the canonical from `Astro.site` + `Astro.url.pathname`.
 
 **Implementation:**
 
@@ -146,7 +148,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
 
 **Context.** Crawl only in production; stage everywhere else.  
 **Decision.** Serve `robots.txt` as an API route that injects a dynamic sitemap URL in
-prod.
+production.
 
 **Implementation:**
 
@@ -189,20 +191,19 @@ User-agent: *
 Disallow: /
 ```
 
-**Gotchas.** When storing in `.txt` file, use `?raw` import; beware accidental caching.  
-**Verification.** `curl /robots.txt` returns “Disallow: /” in non-prod and a concrete
-sitemap URL in prod.  
+**Gotchas.** When storing in a `.txt` file, use `?raw` import; beware accidental caching.
+**Verification.** `curl /robots.txt` returns “Disallow: /” in non-production and a
+concrete sitemap URL in production.  
 **Takeaway.** **Block early, unblock deliberately.**
 
 ### Structured Data (WebSite, Person, BlogPosting)
 
-**Context.** Low-effort structured data for articles.  
-**Decision.** Generate JSON-LD for `WebSite`, `Person`, and `BlogPosting` using typed
-content.
+**Context.** Low-effort structured data for articles. **Decision.** Generate JSON-LD for
+`WebSite`, `Person`, and `BlogPosting` using typed content.
 
 **Implementation.** Full definition lives
 [here](https://github.com/marekh19/marekhonzal.com/blob/main/src/config/schemaJson.ts).
-Below is an example of just the `PersonSchema`
+Below is an example of just the `PersonSchema`:
 
 ```ts
 export const createPersonSchema = (siteUrl: URL) =>
@@ -236,19 +237,19 @@ Which then produces this:
 ```
 
 **Gotchas.** Don’t over-promise fields you don’t have (e.g., `image` if none).  
-**Verification.** Rich Results Test passes; Search Console shows no SD errors.  
+**Verification.** Rich Results Test passes; Search Console shows no structured data
+errors.  
 **Takeaway.** **Describe what’s there, not what might be.**
 
-> With discoverability handled, the next bottleneck is _freshness_-making sure new posts
-> appear quickly without trashing cache hit rates.
+> With metadata handled, performance and caching were next.
 
 ## Fast by Default: 4 Cache Policies and When They Apply
 
-**Context.** Old site struggled with Core Web Vitals; I want predictable freshness.  
+**Context.** The old site struggled with Core Web Vitals; I wanted predictable freshness.
 **Decision.** Four buckets: **immutable**, **rarely changing**, **often changing
-(lists)**, **less often changing (details)** - applied via `_headers` file on Cloudflare.
+(lists)**, **less often changing (details)** – applied via `_headers` file on Cloudflare.
 
-**Policy summary:**
+**Implementation - Policy summary:**
 
 ```txt
 # Immutable assets
@@ -257,10 +258,10 @@ Which then produces this:
 # Rarely changing assets
   Cache-Control: public, max-age=86400
 
-# Homepage & list pages - short CDN TTL
+# Homepage & list pages – short CDN TTL
   Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
 
-# Detail pages - longer CDN TTL
+# Detail pages – longer CDN TTL
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 ```
 
@@ -268,35 +269,30 @@ Which then produces this:
 **Verification.** `curl -I` shows expected headers by route; list pages refresh within ~10
 minutes.
 
-| Requested resource             | Expected Cache-Control response header                                       |
-| ------------------------------ | ---------------------------------------------------------------------------- |
-| /blog                          | Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400 |
-| /projects/narrowland           | Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=8640 |
-| /\_astro/\_slug\_.AoLrhcsV.css | Cache-Control: public, max-age=63072000, immutable                           |
-| /favicon/favicon.ico           | Cache-Control: public, max-age=86400                                         |
+| Requested resource           | Expected Cache-Control response header                                        |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| /blog                        | Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400  |
+| /projects/narrowland         | Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400 |
+| /_astro/\_slug_.AoLrhcsV.css | Cache-Control: public, max-age=63072000, immutable                            |
+| /favicon/favicon.ico         | Cache-Control: public, max-age=86400                                          |
 
 **Takeaway.** **Serve hard; revalidate softly.** Lists get fast freshness; details get
 stability.
 
-> Once pages load fast, shares should look great. I didn’t want manual thumbnails to slow
-> publishing.
+> Once the site was fast, it needed to look great when shared.
 
 ## Never Design a Thumbnail Again: Programmatic OG Images
 
 **Context.** No manual image work; consistent brand; good link unfurls.  
-**Decision.** Use `@vercel/og` with Preact/`h`, Tailwind-like tokens, custom fonts, and an
-inline-tinted SVG.
+**Decision.** Use `@vercel/og` with Preact’s `h`, Tailwind-like tokens, custom fonts, and
+an inline-tinted SVG.
 
 **Implementation:**
 
 ```ts
 // src/pages/og/[slug].png.ts
+// simplified for clarity
 type CollectionEntryItem = CollectionEntry<'blog' | 'projects'>
-
-type OGAPIRoute = APIRoute<
-  InferGetStaticPropsType<typeof getStaticPaths>,
-  InferGetStaticParamsType<typeof getStaticPaths>
->
 
 type OGHtmlData = Pick<CollectionEntryItem['data'], 'title' | 'description'>
 
@@ -306,56 +302,20 @@ const tintSvg = (svg: string, color: string) => {
 }
 
 const generateHtml = (data: OGHtmlData): JSX.Element => {
-  const rawSvg = fs.readFileSync(
-    path.resolve(process.cwd(), 'src/assets/avatar.svg'),
-    'utf8',
-  )
+  const rawSvg = fs.readFileSync('src/assets/avatar.svg', 'utf8')
   const svgDataUrl = tintSvg(rawSvg, '#f2f1f4')
 
   return h('div', {
     tw: 'h-full w-full bg-[#151219] flex items-center justify-start p-40',
-    // ... elements using `tw` props
+    // ...elements using tw props
   })
 }
-
-export const GET: OGAPIRoute = async ({ props }) => {
-  const {
-    item: { data },
-  } = props
-
-  const loraRegular = fs.readFileSync(
-    path.resolve(process.cwd(), 'public/fonts/lora-v36-latin-500.woff'),
-  )
-  const openSansRegular = fs.readFileSync(
-    path.resolve(process.cwd(), 'public/fonts/open-sans-v43-latin-600.woff'),
-  )
-
-  const html = generateHtml(data)
-
-  return new ImageResponse(html, {
-    width: 1200,
-    height: 630,
-    fonts: [
-      { name: 'Open Sans Semibold', data: openSansRegular.buffer, style: 'normal' },
-      { name: 'Lora Medium', data: loraRegular.buffer, style: 'normal' },
-    ],
-  })
-}
-
-export const getStaticPaths = (async () => {
-  const posts = await getCollection('blog', shouldIncludeItem)
-  const projects = await getCollection('projects', shouldIncludeItem)
-
-  return [...posts, ...projects, staticPageOgFallback].map((item) => ({
-    params: { slug: item.id },
-    props: { item },
-  }))
-}) satisfies GetStaticPaths
 ```
 
-**Gotchas.** Satori CSS support is limited; no project CSS vars in this isolated context.
-**Verification.** Paste OG URLs in Slack/Twitter/X - unfurls show correct
-image/title/desc.
+**Gotchas.** Satori CSS support is limited; no project CSS vars in this isolated
+context.  
+**Verification.** Paste OG URLs in Slack, LinkedIn, and X — unfurls show the correct
+image, title, and description.
 
 <Figure
   caption="OG image displayed when sharing the URL via Slack"
@@ -374,10 +334,10 @@ image/title/desc.
 
 > Social is bursty; RSS is steady. A simple feed gives loyal readers a quiet path.
 
-## Distribution, Not Afterthought: RSS in ~30 Lines
+## Distribution, Not an Afterthought: RSS in ~30 Lines
 
-**Context.** Some readers prefer feeds; easy win for discovery and habit.  
-**Decision.** `@astrojs/rss` with a prod-only route.
+**Context.** Some readers prefer feeds – an easy win for discovery and habit.  
+**Decision.** Use `@astrojs/rss` with a production-only route.
 
 **Implementation:**
 
@@ -406,21 +366,19 @@ export const GET: APIRoute = async ({ site }) => {
 }
 ```
 
-**Gotchas.** Guard non-prod; keep dates ISO.  
+**Gotchas.** Guard non-production environments; keep dates ISO.  
 **Verification.** Validates with a [feed validator](https://www.feedvalidator.org/); feed
-readers pull latest within minutes.
-
+readers pull the latest within minutes.  
 **Takeaway.** **Low effort, high goodwill.**
 
-> With the site discoverable and shareable, the last mile is understanding _what works_ -
-> without chasing vanity metrics.
+> With distribution covered, it was time to measure what actually mattered.
 
 ## See What Matters: Lightweight, Cookie-Free Analytics
 
-**Context.** I don’t want cookies or heavy scripts; I want enough to spot real issues.  
-**Decision.** Use [**Umami**](https://umami.is/) with a public share URL.
+**Context.** I don’t want cookies or heavy scripts; I just want enough data to spot real
+issues. **Decision.** Use [**Umami**](https://umami.is/) with a public share URL.
 
-**Implementation.** Script injected in production only;
+**Implementation.** The script loads in production only:
 
 ```astro
 ---
@@ -435,14 +393,14 @@ const config = {
 <script is:inline defer src={config.url} data-website-id={config.websiteId}></script>
 ```
 
-**Gotchas.** Check how heavy the analytics script is to not slow your website too much.
-Umami script is below ~3kB.  
-**Verification.** Confirm pageviews fire, outbound link tracking works.
+**Gotchas.** Check how heavy your analytics script is to avoid slowing your site. The
+Umami script adds only ~3 kB.  
+**Verification.** Confirm pageviews fire and outbound link tracking works.
 
-<Figure caption="Screenshot from Umami analytics dashboard from staging environment.">
+<Figure caption="Screenshot from Umami analytics dashboard (staging environment).">
   <Image
     src={umamiScreenshot}
-    alt="Screenshot from Umami analytics dashboard from staging environment."
+    alt="Screenshot from Umami analytics dashboard (staging environment)."
     widths={[360, 480, 720, 768, 960, 1024, 1280]}
     sizes="(max-width: 1023px) 100vw, 768px"
     class="not-prose rounded-md"
@@ -451,17 +409,18 @@ Umami script is below ~3kB.
 
 **Takeaway.** **Measure less, learn more.**
 
-> With the basics solid, I allowed myself small bits of delight-but only when the zero-JS
-> default wasn’t enough.
+> With the basics solid, I allowed myself small bits of delight – but only when the
+> zero-JS default wasn’t enough.
 
 ## Sprinkle, Don’t Pour: A Ladder for Interactivity
 
-**Context.** Islands are powerful, but I want restraint. **Decision.** Ladder: **CSS first
-→ vanilla JS → Preact last**.
+**Context.** Islands are powerful, but I wanted restraint.  
+**Decision.** Ladder: **CSS first → vanilla JS → Preact last.**
 
 **Implementation.**
 
-- Tags toggle on `/blog` uses a tiny Preact island for convenience (`useState`).
+- Tags toggle on [Blog page](/blog) uses a tiny Preact island (`useState`) for
+  convenience.
 - Many “animations” are just CSS keyframes.
 - Simple behaviors (scroll progress, ToC) use vanilla JS.
 
@@ -471,8 +430,8 @@ Umami script is below ~3kB.
   <CounterDemo client:visible />
 </center>
 
-**Gotchas.** Hydration cost creeps in if islands multiply.  
-**Verification.** Lighthouse shows zero-JS on most pages; islands only where needed.  
+**Gotchas.** Hydration cost can creep in if islands multiply.  
+**Verification.** Lighthouse shows zero JS on most pages; islands only where needed.  
 **Takeaway.** **Make the quiet path the default.**
 
 > Hygiene rounds out the release: ship with guardrails, keep it usable by default.
@@ -480,7 +439,7 @@ Umami script is below ~3kB.
 ## A11y in Passing: The 20% That Solves 80%
 
 **Context.** I want the site usable for everyone, without ceremony.  
-**Decision.** Semantic HTML, contrast checks, focus-visible, skip links, and respect
+**Decision.** Semantic HTML, contrast checks, focus-visible, skip links, and respect for
 `prefers-reduced-motion`.
 
 **Implementation.**
@@ -488,10 +447,10 @@ Umami script is below ~3kB.
 - Use `<header>`, `<main>`, `<article>`, `<time>`, `<figure>` + `<figcaption>`, `<aside>`,
   etc.
 - Any icon-only button gets an `aria-label` or `<span class="sr-only">...</span>`.
-- Tailwind: prefix motion with `motion-safe:`.
+- Tailwind: prefix motion utilities with `motion-safe:`.
 - Tabbable skip link is the first focusable element.
 
-_Focus outline + screen reader label_
+_Focus outline + screen reader label:_
 
 ```astro
 ---
@@ -507,7 +466,7 @@ import { socials } from '@/config/socials'
         <a
           href={url}
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
           class="link-outline block rounded-sm"
         >
           <Icon class="size-5" name={iconName} />
@@ -519,15 +478,16 @@ import { socials } from '@/config/socials'
 </ul>
 ```
 
-**Gotchas.** Validate focus order with a screen reader; test keyboard-only flows.  
-**Verification.** Quick pass with [Silktide](https://silktide.com/)/axe + manual
+**Gotchas.** Validate focus order with a screen reader and test keyboard-only flows.  
+**Verification.** Quick pass with [Silktide](https://silktide.com/) or axe, plus manual
 tab-through.  
 **Takeaway.** **Ship empathy by default.**
 
 ## Ship with Guardrails: Security Headers That Matter
 
 **Context.** Get to “A” quickly, then refine.  
-**Decision.** Set a small set of strong headers; iterate on CSP with islands constraint.
+**Decision.** Set a minimal set of strong headers; iterate on CSP with the islands
+constraint.
 
 **Headers I set:**
 
@@ -542,8 +502,9 @@ tab-through.
 | `X-Content-Type-Options`     | `nosniff`                                   |
 
 <Alert title="Astro Islands and CSP">
-  [Islands architecture](https://docs.astro.build/en/concepts/islands/) with
-  Astro, you must add `script-src 'unsafe-inline'` to your **Content-Security-Policy**, or islands won’t hydrate.
+  When using [Islands architecture](https://docs.astro.build/en/concepts/islands/) with
+  Astro, you must add `script-src 'unsafe-inline'` to your **Content-Security-Policy**, or
+  islands won’t hydrate.
 
 Astro has an
 [experimental CSP hashes flag](https://docs.astro.build/en/reference/experimental-flags/csp/),
@@ -552,7 +513,7 @@ but I couldn’t make it work with Cloudflare Workers and a global policy yet.
 </Alert>
 
 **Gotchas.** CSP + islands require a tradeoff unless you adopt hashing.  
-**Verification.** SecurityHeaders grade: **A**; note any intentional relaxations.
+**Verification.** SecurityHeaders grade: **A**, with intentional relaxations noted below.
 
 <Figure
   caption="Screenshot from securityheaders.com. A grade."
