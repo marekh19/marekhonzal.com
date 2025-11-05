@@ -1,0 +1,17 @@
+---
+type Props = {
+  caption: string
+  className?: string
+}
+
+const { caption, className } = Astro.props
+---
+
+<figure class={className}>
+  <slot />
+  <figcaption
+    class:list={['not-prose text-base-content/75 mt-2 text-sm italic', 'lg:text-base']}
+  >
+    {caption}
+  </figcaption>
+</figure>

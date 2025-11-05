@@ -1,0 +1,187 @@
+---
+title: 'Rebuilding My Website with Astro: From Next.js Complexity to Static Simplicity'
+description:
+  'After three years running my site on Next.js and Sanity CMS, I rebuilt it from scratch
+  with Astro. This case study explains why I switched, how it simplified my workflow, and
+  the real performance gains.'
+date: 2025-11-04
+isDraft: false
+isFeatured: true
+tags:
+  - 'Astro'
+  - 'Case Study'
+  - 'Performance'
+  - 'Next.js'
+thumbnail: './thumbnail.png'
+---
+
+import { Image } from 'astro:assets'
+
+import Diagram from './diagram.svg'
+import oldWebPerformanceImg from './old-web-performance.png'
+
+## TL;DR: From Overengineered Next.js to Effortless Astro
+
+My old **Next.js + Sanity CMS** setup looked great on paper but made publishing a chore.  
+I rebuilt everything with **Astro**, and now it’s simpler, faster, and genuinely enjoyable
+to write for.
+
+## Introduction: Why I Rebuilt Instead of Migrating
+
+This is a personal case study of how I rebuilt my website - what I kept, what I threw
+away, and why the new version feels so much better.
+
+Three years after launching my Next.js site, I realized I’d written _zero_ blog posts.  
+I’d built the perfect publishing stack - and somehow, it stopped me from publishing.
+
+[The old site](https://old.marek.work) ran on **Next.js**, **Sanity CMS**, and the full
+[Jamstack](https://jamstack.org) playbook. It was decoupled, modern, and professional. But
+over time, it stopped working for me. The complexity didn’t bring value - it brought
+friction. So I started fresh, focusing on **simplicity, performance, and content**.
+
+This wasn’t a migration - I threw the old project away. Even the content changed.  
+For implementation details, see
+[Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study).
+
+## The Next.js Era: Great Tech, Wrong Fit
+
+When I built the first version of my site, **Next.js 13** had just launched. React Server
+Components were the new hot thing, and I wanted to try them on a real project. Using a
+headless CMS felt like the natural complement: decoupled, flexible, and professional. So I
+paired **Next.js with Sanity CMS**, added a webhook for on-demand revalidation, and
+deployed to **Vercel**. Classic Jamstack.
+
+[Incremental Static Regeneration (ISR)](https://nextjs.org/docs/app/guides/incremental-static-regeneration#on-demand-revalidation-with-revalidatetag)
+worked flawlessly. Sanity gave me a polished content interface. For a while, I was happy.
+
+<Figure
+  caption="The flow of on-demand ISR with Next.js and Sanity CMS"
+  className="mx-auto max-w-md"
+>
+  <Diagram />
+</Figure>
+
+Then the pain started.  
+Next.js evolved fast, and every upgrade felt like a mini-migration. Caching defaults
+flipped between releases. Each new version meant relearning the framework. Meanwhile,
+Sanity - though technically excellent - added friction.
+
+Editing content through a CMS UI didn’t motivate me to write. I’m a developer; I prefer
+treating content as source code. Despite all that infrastructure, I never published a
+single post.
+
+Performance suffered too. I couldn’t resist adding a **Three.js keyboard model** to the
+homepage - because why not show off my keyboard obsession? It looked cool but tanked Core
+Web Vitals. Even with canonical tags, SEO was disappointing: Google often indexed Vercel
+preview URLs instead of the live site. Whether it was performance, caching, or Google’s
+black box, the outcome was clear - my site barely surfaced in search.
+
+<Figure caption="Terrible Core Web Vitals of the old web. SEO score was lower because, at the time of measurement, the site already prevented indexing.">
+  <Image
+    src={oldWebPerformanceImg}
+    alt="Old web core web vitals measurement result"
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+  />
+</Figure>
+
+## The Turning Point: Asking “What Is This Doing for Me?”
+
+After a couple of years, I looked at my site and asked: _what is this actually doing for
+me?_  
+The answer was obvious: not much.  
+The CMS didn’t encourage me to write. The site was bloated with features I didn’t use. And
+keeping up with Next.js drained motivation instead of sparking it.
+
+When I decided to rebuild, I had two guiding principles:
+
+- **Focus on content**
+- **Keep everything as simple as possible**
+
+Astro was the clear answer.
+
+## The Astro Era: Static by Default, Simple by Design
+
+Astro approaches websites differently. It’s **static-first** and ships **zero JavaScript
+by default**, so you start from a position of performance.  
+When you need interactivity, you add it explicitly through
+[Astro islands](https://docs.astro.build/en/concepts/islands/).  
+Content lives in Markdown or MDX, typed and validated through Astro’s content collections.
+The build output is pure HTML - ideal for CDN caching and Cloudflare Workers.
+
+Here’s a quick side-by-side comparison:
+
+| Category               | Old Website           | New Website               |
+| ---------------------- | --------------------- | ------------------------- |
+| **Framework**          | Next.js               | Astro                     |
+| **Hosting**            | Vercel                | Cloudflare Workers        |
+| **Styling**            | Tailwind CSS          | Tailwind CSS              |
+| **UI Kit**             | Custom components     | DaisyUI                   |
+| **Content**            | Sanity CMS            | MDX & Content Collections |
+| **Rendering strategy** | ISR with revalidation | Pure Static Generation    |
+| **Interactivity**      | React                 | Preact via Astro islands  |
+
+Astro fit perfectly. It let me drop the CMS and write MDX directly in my editor.  
+It gave me static HTML by default, with Preact islands for small bits of interactivity.
+And it shipped with thoughtful defaults: sitemap, RSS, Shiki syntax highlighting, image
+optimization - all out of the box.  
+Deployment to **Cloudflare Workers** took minutes.
+
+## What Changed: Everything Except TypeScript and Tailwind
+
+This was a complete rebuild - not a migration. Only two technologies survived:
+**TypeScript** and **Tailwind CSS**. They’re my constants in any project.
+
+Everything else changed. The switch from Next.js to Astro dropped React Server Components
+and ISR complexity. Moving from Sanity CMS to MDX brought content into my repo, versioned
+and editable in my IDE.
+
+Hosting on Cloudflare Workers was effortless thanks to Astro’s static output. And I
+replaced custom UI components with **DaisyUI** for faster prototyping.
+
+Most importantly, I ditched the **Three.js keyboard** that murdered performance. Now, the
+homepage weighs under **300 kB uncompressed**, scores perfectly in Lighthouse, and finally
+gets indexed correctly by Google.
+
+But the real win isn’t metrics - it’s motivation. Writing MDX feels natural, like writing
+code - exactly what I wanted.
+
+> **Before:** heavy CMS, ISR debugging, and a bloated homepage.  
+> **After:** static HTML, MDX content, and instant deploys.
+
+## The Results (So Far)
+
+At the time of writing, the site isn’t live yet.  
+Once published, I’ll update this section with concrete data:
+
+- Lighthouse and Core Web Vitals (before / after)
+- Bundle size comparisons
+- SEO indexing results
+
+## Conclusion: Simplicity Is a Feature
+
+I hope this gave you some insight into what I learned while rebuilding my website with
+Astro. I genuinely enjoy working with it - it’s now my default choice for any static (or
+mostly static) site.
+
+Astro isn’t right for every project - I wouldn’t use it for a highly interactive
+dashboard, for example. But for content-heavy, static-first websites, it’s a joy.
+
+If I were starting a new project today that combined a marketing site with an internal
+app, I’d consider a hybrid setup: Astro for landing pages, React SPA for the app, and a
+shared component library in a monorepo.
+
+The best part? I finally feel motivated to publish again.
+
+Writing MDX feels like working with source code - I get syntax highlighting, version
+control, and my favorite editor. No CMS UI to context-switch into, no webhook delays, no
+“did it revalidate?” anxiety. It removes friction in a way Sanity never did - despite
+being technically excellent.
+
+> Sometimes you outgrow your own stack.  
+> **Simplicity is a feature.**  
+> Tools should encourage your habits, not fight them.
+
+Curious about how it’s built?  
+👉 Read [Part 2: Technical Case Study](/blog/building-my-astro-blog-technical-case-study).

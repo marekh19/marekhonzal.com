@@ -12,8 +12,8 @@ export const initScrollProgressBar = ({
   if (!barEl || !fillEl) return () => {}
 
   const ROOT = (document.scrollingElement ?? document.documentElement) as HTMLElement
-  const SCROLL_OPTS: AddEventListenerOptions = { passive: true }
-  const CAPTURE = false // only matters for removeEventListener
+  const abortController = new AbortController()
+  const { signal } = abortController
 
   let isFrameScheduled = false
   let scrollRangePx = 1
@@ -50,21 +50,18 @@ export const initScrollProgressBar = ({
     ro = new ResizeObserver(recalcAndUpdate)
     ro.observe(document.documentElement)
   } else {
-    window.addEventListener('load', recalcAndUpdate, { once: true })
+    window.addEventListener('load', recalcAndUpdate, { once: true, signal })
   }
 
-  window.addEventListener('scroll', scheduleUpdate, SCROLL_OPTS)
-  window.addEventListener('resize', recalcAndUpdate, { capture: CAPTURE })
-  window.addEventListener('orientationchange', recalcAndUpdate, { capture: CAPTURE })
+  window.addEventListener('scroll', scheduleUpdate, { passive: true, signal })
+  window.addEventListener('resize', recalcAndUpdate, { signal })
+  window.addEventListener('orientationchange', recalcAndUpdate, { signal })
 
   recalcAndUpdate()
 
   // Cleanup
   return () => {
     ro?.disconnect()
-    window.removeEventListener('scroll', scheduleUpdate, CAPTURE)
-    window.removeEventListener('resize', recalcAndUpdate, CAPTURE)
-    window.removeEventListener('orientationchange', recalcAndUpdate, CAPTURE)
-    window.removeEventListener('load', recalcAndUpdate, CAPTURE)
+    abortController.abort()
   }
 }

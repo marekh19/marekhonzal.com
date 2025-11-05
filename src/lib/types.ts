@@ -38,7 +38,8 @@ export type TocHeading = MarkdownHeading & {
 }
 
 export type BuildTocOptions = {
-  rootDepth?: 1 | 2 | 3 | 4 | 5 | 6
+  rootDepth?: HeadingLevel
+  maxDepth?: HeadingLevel
 }
 
 export type ReadingTime = {
@@ -46,3 +47,5 @@ export type ReadingTime = {
   minutes: number
   words: number
 }
+
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6
