@@ -1,4 +1,5 @@
 ---
+import { ENV } from '@/config/env'
 import { getAppVersion } from '@/lib/utils/version'
 
 const version = getAppVersion()
@@ -7,3 +8,4 @@ const version = getAppVersion()
 <!-- APP DEBUG INFO -->
 <meta name="app:version" content={version} />
 <meta name="app:build-date" content={new Date().toISOString()} />
+<meta name="app:environment" content={ENV.ENV_NAME} />

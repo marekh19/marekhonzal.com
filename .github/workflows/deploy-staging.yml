@@ -36,9 +36,9 @@ jobs:
       - name: 🏗️ Build (inject staging vars)
         env:
           SITE_URL: ${{ vars.SITE_URL }}
+          ENV_NAME: staging
           PUBLIC_UMAMI_SITE_ID: ${{ vars.PUBLIC_UMAMI_SITE_ID }}
           PUBLIC_UMAMI_SHARE_URL: ${{ vars.PUBLIC_UMAMI_SHARE_URL}}
-          PUBLIC_ENV_NAME: staging
         run: pnpm build
 
       - name: 🚀 Deploy with Wrangler
