@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks'
 
-export const getClickMessage = (count: number): string => {
+const getClickMessage = (count: number): string => {
   const messages = [
     [0, '🫣 Click me… if you dare!'],
     [1, '😏 Oh wow, you actually clicked.'],

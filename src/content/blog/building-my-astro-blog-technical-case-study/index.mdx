@@ -14,37 +14,86 @@ tags:
 thumbnail: './thumbnail.png'
 ---
 
+import { Image } from 'astro:assets'
+
 import Link from '@/components/ui/Link.astro'
 import { ENV } from '@/config/env'
 
 import { CounterDemo } from './counter-demo'
+import ogExampleImg from './og-example.png'
+import securityHeadersScreenshot from './security-headers-screenshot.png'
+import umamiScreenshot from './umami-screenshot.png'
 
-## Introduction
+## TL;DR
 
-In [Part 1: Why I Started Fresh](/blog/rebuilding-my-website-with-astro-why-and-results),
-I shared why I rebuilt my website with Astro and the results I achieved. Now let's look at
-how I actually built it.
+- **Static-first** + **typed content** made SEO and caching _deterministic_.
+- **Programmatic OG images** removed design bottlenecks for sharing.
+- **Four cache policies** balance freshness for lists and stability for details.
+- **Cookie-free analytics** (Umami) is enough for a personal site.
+- **Interactivity ladder:** CSS → JS → Preact (last).
+- **Security & A11y**: ship sane defaults, verify, iterate.
 
-This is a technical case study of my implementation - what I did, not what you should do.
-These are the choices I made and why. Your needs might be different, but maybe you'll find
-some useful patterns here.
+## Introduction - Field Notes, Not a Tutorial
 
-I'll cover SEO setup, caching strategies, OG image generation, RSS feeds, analytics, and
-more. All with detailed code examples from my actual site.
+In
+[Part 1: From Next.js Complexity to Static Simplicity](/blog/rebuilding-my-website-with-astro-why-and-results),
+I explained _why_ I rebuilt my site and the results.  
+This is the _how_: pragmatic decisions, with code I actually run in production.
 
-## Site Overview
+**Constraints** I set for myself:
 
-This is a completely new site, not a migration. I started fresh and made different
-choices. I kept TypeScript and Tailwind, but everything else changed: framework (Next.js →
-Astro), hosting (Vercel → Cloudflare Workers), content approach (Sanity CMS → MDX &
-Content Collections), and UI kit (custom components → DaisyUI).
+- Static-first pages with zero-JS by default
+- Content as code (MDX + types), no CMS
+- Fast publishing: no manual thumbnails, minimal ceremony
+- Cloudflare-first caching
+- Security and A11y good enough to ship, then harden
 
-## SEO
+Each section follows a consistent pattern: **Context → Decision → Implementation → Gotchas
+→ Verification → Takeaway**.
 
-### Sitemap
+## Foundation: Content as Code (MDX + Content Collections)
 
-Astro provides an official sitemap integration that is super simple to set up. I've
-enabled it in production environment only. The whole solution looks like this:
+**Context.** I wanted a writing flow that feels like coding: types, version control,
+local-first.  
+**Decision.** Use Astro _content collections_ with typed frontmatter, and centralize SEO
+defaults.
+
+**Implementation.** Below is a definition of **Blog** content collection. Yes, Astro uses
+`zod` to define the schema so it's very familiar.
+
+```ts
+// src/content/config.ts
+const blogCollection = defineCollection({
+  loader: glob({ pattern: '**/*.{mdx,md}', base: './src/content/blog' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      date: z.date(),
+      isDraft: z.boolean().optional().default(false),
+      isFeatured: z.boolean().optional().default(false),
+      category: z.enum(['dev', 'beyond']).optional().default('dev'),
+      tags: z.array(z.string()).optional(),
+      thumbnail: image(),
+    }),
+})
+```
+
+**Gotchas.** Make sure your layout or component is in sync with the collection schema to
+not have mismatch between what is required to build and what to render. Use
+`CollectionEntry<'collectionName'>` generic type. **Verification.** Type errors break the
+build before publishing.  
+**Takeaway.** **Treat content like code** - types guard publishing and ensure props for
+your content components.
+
+## SEO That Ships: Sitemap, Canonical, Robots, Schema
+
+### Sitemap (prod-only, env-guarded)
+
+**Context.** I want sitemap generation only on production.  
+**Decision.** Enable `@astrojs/sitemap` conditionally via env.
+
+**Implementation:**
 
 ```ts
 // astro.config.ts
@@ -62,16 +111,23 @@ export default defineConfig({
 })
 ```
 
-<Alert>
-  This example reads environment variables in the Astro config. See [this
-  section](https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file)
-  in the docs for more information.
-</Alert>
+**Gotchas.** Reading env in astro config requires
+[Astro’s documented pattern](https://docs.astro.build/en/guides/environment-variables/#in-the-astro-config-file).  
+**Verification.**
+Build logs show integration enabled/disabled; `/sitemap-index.xml` exists in prod.
 
-### Self-referencing canonical tag
+```txt
+11:13:42 [@astrojs/sitemap] `sitemap-index.xml` created at `dist`
+```
 
-Super simple — it just reads `Astro.site` from `astro.config.*` and is used in the shared
-layout `<head>`.
+**Takeaway.** **Automate the obvious:** sitemaps should be boring and reliable.
+
+### Self-Referencing Canonical
+
+**Context.** Avoid duplicate content and preview URL indexing.  
+**Decision.** Build canonical from `Astro.site` + `Astro.url.pathname`.
+
+**Implementation:**
 
 ```astro
 ---
@@ -82,9 +138,17 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
 <link rel="canonical" href={canonicalUrl} />
 ```
 
-### robots.txt
+**Gotchas.** Ensure `site` is set in `astro.config.*`.  
+**Verification.** View-source and devtools confirm a single canonical per page.  
+**Takeaway.** **Always be canonical.** It’s cheap insurance for search.
 
-I made sure to disallow crawling my website or app in all environments except production.
+### Robots per Environment (dynamic sitemap URL)
+
+**Context.** Crawl only in production; stage everywhere else.  
+**Decision.** Serve `robots.txt` as an API route that injects a dynamic sitemap URL in
+prod.
+
+**Implementation:**
 
 ```ts
 // pages/robots.txt.ts
@@ -96,9 +160,7 @@ import STAGING_ROBOTS_TXT from '@/config/robots/staging.robots.txt?raw'
 import { ensureAstroSite } from '@/lib/utils/guards'
 
 const SITEMAP_URL_PLACEHOLDER = '{{SITEMAP_URL}}'
-
 const getSitemapUrl = (site: URL) => new URL('sitemap-index.xml', site).href
-
 const injectSitemapUrl = (content: string, url: string) =>
   content.replace(SITEMAP_URL_PLACEHOLDER, url)
 
@@ -108,78 +170,85 @@ export const GET: APIRoute = ({ site }) => {
     : STAGING_ROBOTS_TXT
 
   return new Response(body, {
-    headers: {
-      'content-type': 'text/plain; charset=utf-8',
-    },
+    headers: { 'content-type': 'text/plain; charset=utf-8' },
   })
 }
 ```
 
-In the code snippet above, I treat `robots.txt` as an API endpoint. It checks whether the
-environment name is production and decides whether to return the robots.txt file that
-allows or disallows crawling.
-
-The site url is not hardcoded but it's injected in a place of a placeholder.
-
-The production one:
-
 ```txt
+# production.robots.txt
 User-agent: *
 Disallow:
 
 Sitemap: {{SITEMAP_URL}}
 ```
 
-All other envs have crawling disallowed:
-
 ```txt
+# staging.robots.txt
 User-agent: *
 Disallow: /
 ```
 
-### Structured data
+**Gotchas.** When storing in `.txt` file, use `?raw` import; beware accidental caching.  
+**Verification.** `curl /robots.txt` returns “Disallow: /” in non-prod and a concrete
+sitemap URL in prod.  
+**Takeaway.** **Block early, unblock deliberately.**
 
-I decided to try [schema.org](https://schema.org/) structured data for the first time. Not
-sure yet how much value it brings but the implementation was quite simple. I decided to
-set it up just for articles since that is the main purpose of this website.
+### Structured Data (WebSite, Person, BlogPosting)
 
-So I use three schema models — `WebSite`, `Person` and `BlogPosting`. You can see the full
-definition
-[here](https://github.com/marekh19/marekhonzal.com/blob/main/src/config/schemaJson.ts). It
-allows me to pass all the dynamic parts from the articles into the `createBlogPostSchema`
-function.
+**Context.** Low-effort structured data for articles.  
+**Decision.** Generate JSON-LD for `WebSite`, `Person`, and `BlogPosting` using typed
+content.
 
-### Domain choice
+**Implementation.** Full definition lives
+[here](https://github.com/marekh19/marekhonzal.com/blob/main/src/config/schemaJson.ts).
+Below is an example of just the `PersonSchema`
 
-I chose to use my full name for the domain. Using your full name helps your site rank
-first when people search for you, strengthening your personal brand and credibility. It's
-more effective than domains like _john.dev_ because _johndoe.com_ directly matches search
-intent and signals personal authenticity. This was particularly important after my
-previous domain didn't perform well in search results.
+```ts
+export const createPersonSchema = (siteUrl: URL) =>
+  ({
+    ...CONTEXT,
+    '@type': 'Person',
+    '@id': createId(IDS.me, siteUrl),
+    name: 'Marek Honzal',
+    url: siteUrl,
+    sameAs: SAME_AS,
+  }) as const
+```
 
-## Caching
+Which then produces this:
 
-Beyond SEO, performance was crucial. Since the old site struggled with Core Web Vitals, I
-wanted a caching strategy that balances speed with freshness. I host this website on
-Cloudflare Workers so I use the `_headers` file to define response headers for any
-request.
+```html
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://marekhonzal.com#me",
+    "name": "Marek Honzal",
+    "url": "https://marekhonzal.com/",
+    "sameAs": [
+      "https://www.linkedin.com/in/marekhonzal",
+      "https://github.com/marekh19",
+      "https://bsky.app/profile/marekhonzal.com"
+    ]
+  }
+</script>
+```
 
-I've split caching into four categories:
+**Gotchas.** Don’t over-promise fields you don’t have (e.g., `image` if none).  
+**Verification.** Rich Results Test passes; Search Console shows no SD errors.  
+**Takeaway.** **Describe what’s there, not what might be.**
 
-- **Immutable assets**: Files I can cache basically indefinitely like `.js` and `.css`
-  files since these are always fingerprinted. Same for fonts. These are okay to be cached
-  in the browser as well. In Astro, this is anything at `/_astro/*`.
-- **Rarely changing assets**: All videos I embed in articles (cached for a week) and
-  favicon + OG images (cached for 24 hours)
-- **Often changing pages**: Homepage, blog page, projects page — all these pages include
-  lists of projects and posts. If a new post comes out, I don't want to show a page
-  without links to newly posted content. So I cache these pages on CDN level only for 10
-  minutes and allow up to 24 hours of stale content while revalidating in the background.
-- **Not so often changing pages**: All article and project detail pages. When these
-  change, it's usually a small update. I cache them on CDN for an hour while serving stale
-  content for up to 24 hours with background revalidation.
+> With discoverability handled, the next bottleneck is _freshness_-making sure new posts
+> appear quickly without trashing cache hit rates.
 
-The headers look like this:
+## Fast by Default: 4 Cache Policies and When They Apply
+
+**Context.** Old site struggled with Core Web Vitals; I want predictable freshness.  
+**Decision.** Four buckets: **immutable**, **rarely changing**, **often changing
+(lists)**, **less often changing (details)** - applied via `_headers` file on Cloudflare.
+
+**Policy summary:**
 
 ```txt
 # Immutable assets
@@ -188,32 +257,37 @@ The headers look like this:
 # Rarely changing assets
   Cache-Control: public, max-age=86400
 
-# Homepage & list pages — short CDN TTL
+# Homepage & list pages - short CDN TTL
   Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
 
-# Detail pages — longer CDN TTL
+# Detail pages - longer CDN TTL
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 ```
 
-This allows for a good balance between aggressive caching and not serving stale content.
+**Gotchas.** Ensure fingerprinting for JS/CSS; avoid browser caching HTML.  
+**Verification.** `curl -I` shows expected headers by route; list pages refresh within ~10
+minutes.
 
-## OG Images generation
+| Requested resource             | Expected Cache-Control response header                                       |
+| ------------------------------ | ---------------------------------------------------------------------------- |
+| /blog                          | Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400 |
+| /projects/narrowland           | Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=8640 |
+| /\_astro/\_slug\_.AoLrhcsV.css | Cache-Control: public, max-age=63072000, immutable                           |
+| /favicon/favicon.ico           | Cache-Control: public, max-age=86400                                         |
 
-For social sharing, I wanted programmatic OG images so I wouldn't have to manually create
-them for every post or project. When searching for a simple solution, I stumbled upon
-[@vercel/og](https://www.npmjs.com/package/@vercel/og) library. It offers `ImageResponse`
-constructor to create OG images with HTML and CSS. I decided to render it with _preact_
-and _tailwind_ using the `h` function from preact. It uses
-[Satori](https://github.com/vercel/satori#documentation) under the hood. Not all CSS
-properties are supported, but for something simple like an OG image, it gets the job done.
+**Takeaway.** **Serve hard; revalidate softly.** Lists get fast freshness; details get
+stability.
 
-I use two types of OG images:
+> Once pages load fast, shares should look great. I didn’t want manual thumbnails to slow
+> publishing.
 
-- The generic base one with site name and description (homepage, blog, projects)
-- Specific image with content injected from the resource (project detail, article
-  detail) - has the name and description of the content
+## Never Design a Thumbnail Again: Programmatic OG Images
 
-The implementation looks like this:
+**Context.** No manual image work; consistent brand; good link unfurls.  
+**Decision.** Use `@vercel/og` with Preact/`h`, Tailwind-like tokens, custom fonts, and an
+inline-tinted SVG.
+
+**Implementation:**
 
 ```ts
 // src/pages/og/[slug].png.ts
@@ -228,23 +302,19 @@ type OGHtmlData = Pick<CollectionEntryItem['data'], 'title' | 'description'>
 
 const tintSvg = (svg: string, color: string) => {
   const tinted = svg.replace(/fill="currentColor"/gi, `fill="${color}"`)
-
   return `data:image/svg+xml;base64,${Buffer.from(tinted).toString('base64')}`
 }
 
 const generateHtml = (data: OGHtmlData): JSX.Element => {
-  // Load avatar svg, tint it and inline it
   const rawSvg = fs.readFileSync(
     path.resolve(process.cwd(), 'src/assets/avatar.svg'),
     'utf8',
   )
   const svgDataUrl = tintSvg(rawSvg, '#f2f1f4')
 
-  // All the html elements with `tw` prop to style them
   return h('div', {
     tw: 'h-full w-full bg-[#151219] flex items-center justify-start p-40',
-    // ... the rest
-    // NOTE: Can't use any css variables or tokens from the project, this is isolated context
+    // ... elements using `tw` props
   })
 }
 
@@ -253,11 +323,9 @@ export const GET: OGAPIRoute = async ({ props }) => {
     item: { data },
   } = props
 
-  // Load font files to be used in the OG image
   const loraRegular = fs.readFileSync(
     path.resolve(process.cwd(), 'public/fonts/lora-v36-latin-500.woff'),
   )
-
   const openSansRegular = fs.readFileSync(
     path.resolve(process.cwd(), 'public/fonts/open-sans-v43-latin-600.woff'),
   )
@@ -268,16 +336,8 @@ export const GET: OGAPIRoute = async ({ props }) => {
     width: 1200,
     height: 630,
     fonts: [
-      {
-        name: 'Open Sans Semibold',
-        data: openSansRegular.buffer,
-        style: 'normal',
-      },
-      {
-        name: 'Lora Medium',
-        data: loraRegular.buffer,
-        style: 'normal',
-      },
+      { name: 'Open Sans Semibold', data: openSansRegular.buffer, style: 'normal' },
+      { name: 'Lora Medium', data: loraRegular.buffer, style: 'normal' },
     ],
   })
 }
@@ -286,30 +346,44 @@ export const getStaticPaths = (async () => {
   const posts = await getCollection('blog', shouldIncludeItem)
   const projects = await getCollection('projects', shouldIncludeItem)
 
-  // Generate all OG images at build time — `staticPageOgFallback` is the generic one.
   return [...posts, ...projects, staticPageOgFallback].map((item) => ({
-    params: {
-      slug: item.id,
-    },
+    params: { slug: item.id },
     props: { item },
   }))
 }) satisfies GetStaticPaths
 ```
 
-## RSS feed
+**Gotchas.** Satori CSS support is limited; no project CSS vars in this isolated context.
+**Verification.** Paste OG URLs in Slack/Twitter/X - unfurls show correct
+image/title/desc.
 
-To help readers discover new content, I added an RSS feed. Since this site is mostly about
-the blog, I thought adding an RSS feed made sense. I decided to fill the feed with blog
-posts only. Astro has a nice `@astrojs/rss` package that helps with the feed generation.
-Similar to the OG image, it works as an API route with a static response that is
-pre-generated at build time.
+<Figure
+  caption="OG image displayed when sharing the URL via Slack"
+  className="mx-auto max-w-lg"
+>
+  <Image
+    src={ogExampleImg}
+    alt="OG image displayed when sharing the URL via Slack"
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+  />
+</Figure>
 
-Thanks to Astro's handy library, it's very simple.
+**Takeaway.** **Automate visuals** so publishing never waits on thumbnail design.
+
+> Social is bursty; RSS is steady. A simple feed gives loyal readers a quiet path.
+
+## Distribution, Not Afterthought: RSS in ~30 Lines
+
+**Context.** Some readers prefer feeds; easy win for discovery and habit.  
+**Decision.** `@astrojs/rss` with a prod-only route.
+
+**Implementation:**
 
 ```ts
 // src/pages/rss.xml.ts
 export const GET: APIRoute = async ({ site }) => {
-  // I don't care about the RSS feed in any other environment than production
   if (!ENV.IS_PRODUCTION) {
     return new Response(null, { status: 404, statusText: 'Not found' })
   }
@@ -332,192 +406,176 @@ export const GET: APIRoute = async ({ site }) => {
 }
 ```
 
-I load the content collection I want, filter and sort it, then pass the desired values
-into the `rss` function from `@astrojs/rss`.
+**Gotchas.** Guard non-prod; keep dates ISO.  
+**Verification.** Validates with a [feed validator](https://www.feedvalidator.org/); feed
+readers pull latest within minutes.
 
-## Analytics
+**Takeaway.** **Low effort, high goodwill.**
 
-I wanted lightweight analytics without the complexity and privacy concerns of traditional
-tools. It would be overkill to use something like Google Analytics for a simple website,
-and I didn't want to deal with cookie consents. I wanted something more privacy-oriented.
+> With the site discoverable and shareable, the last mile is understanding _what works_ -
+> without chasing vanity metrics.
 
-I've decided to try [Umami](https://umami.is/) which seems like the perfect choice. It
-does everything I want. You can check the public
-{<Link href={ENV.PUBLIC_UMAMI_SHARE_URL}>Analytics dashboard</Link>} of this site.
+## See What Matters: Lightweight, Cookie-Free Analytics
 
-It has a nicely organized UI, the script is tiny (a little over 2kB), and it doesn't use
-cookies.
+**Context.** I don’t want cookies or heavy scripts; I want enough to spot real issues.  
+**Decision.** Use [**Umami**](https://umami.is/) with a public share URL.
 
-## Interactivity - keep it simple
+**Implementation.** Script injected in production only;
 
-Astro's islands architecture is great, but I didn't want to overuse it. I developed a
-simple philosophy for interactivity. When I think something should be interactive (like
-animation or some kind of state), I use a mental checklist:
+```astro
+---
+import { ENV } from '@/config/env'
 
-1. Could it be done with CSS only? _if not then_
-2. Could it be done with simple vanilla JS only? (Well, anything can be, but whether it
-   makes sense is another question.) _if not then_
-3. Use Preact as a last resort
+const config = {
+  url: 'https://cloud.umami.is/script.js',
+  websiteId: ENV.PUBLIC_UMAMI_SITE_ID,
+} as const
+---
 
-Currently the only thing I built with Preact is the list of available tags on the
-[blog](/blog) page. It renders up to 5 tags, and if there are more, they're hidden by
-default with a button to reveal them — just to avoid cluttering the UI visually. This
-would work without Preact, but I decided to use it for the convenience of `useState`.
+<script is:inline defer src={config.url} data-website-id={config.websiteId}></script>
+```
 
-I find you rarely need something like a `motion` library. CSS keyframes will get you
-pretty far. For super simple interactive elements, I just use vanilla JavaScript — like
-the scroll progress bar or table of contents I used on article and project detail pages.
+**Gotchas.** Check how heavy the analytics script is to not slow your website too much.
+Umami script is below ~3kB.  
+**Verification.** Confirm pageviews fire, outbound link tracking works.
 
-But I also did not want to limit myself. So whenever I want to sprinkle a bit of (p)react
-I can. Like here below, I can just smash a bit of preact inside this article because it
-uses MDX.
+<Figure caption="Screenshot from Umami analytics dashboard from staging environment.">
+  <Image
+    src={umamiScreenshot}
+    alt="Screenshot from Umami analytics dashboard from staging environment."
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+  />
+</Figure>
+
+**Takeaway.** **Measure less, learn more.**
+
+> With the basics solid, I allowed myself small bits of delight-but only when the zero-JS
+> default wasn’t enough.
+
+## Sprinkle, Don’t Pour: A Ladder for Interactivity
+
+**Context.** Islands are powerful, but I want restraint. **Decision.** Ladder: **CSS first
+→ vanilla JS → Preact last**.
+
+**Implementation.**
+
+- Tags toggle on `/blog` uses a tiny Preact island for convenience (`useState`).
+- Many “animations” are just CSS keyframes.
+- Simple behaviors (scroll progress, ToC) use vanilla JS.
+
+**Demo:** This article can inline a tiny island thanks to MDX:
 
 <center>
   <CounterDemo client:visible />
 </center>
 
-## A11y
+**Gotchas.** Hydration cost creeps in if islands multiply.  
+**Verification.** Lighthouse shows zero-JS on most pages; islands only where needed.  
+**Takeaway.** **Make the quiet path the default.**
 
-Accessibility is important to me - I want the site to be usable for everyone. I always try
-to aim for at least basic accessibility. Some rules of thumb from my experience.
+> Hygiene rounds out the release: ship with guardrails, keep it usable by default.
 
-- use semantic html elements like `<header>`, `<footer>`, `<main>`, `<time>`, `<figure>`
-  and `<figcaption>`, `<article>`, `<aside>`, etc.
-- check for contrast ratios (dev tools is your friend)
-- Any interactive element without visible label must have either `aria-label` or something
-  like `<span class="sr-only">label</span>`. Think any icon button.
-- Respect reduced motion preference. There's a media query for that. If using Tailwind you
-  can just prefix your transition classes with `motion-safe:`
-- Ensure all interactive elements are accessible for keyboard navigation (with tab). And
-  they have visible outline.
-- Add "Skip links" — a button that is the very first tabbable element on the page that if
-  you press, the focus is moved into the main part of the page (skip navigation links in
-  the header etc.)
-- Validate focus order and screen reader behavior with tool like
-  [Silktide](https://silktide.com/) browser extension.
+## A11y in Passing: The 20% That Solves 80%
 
-## Markdown as a component
+**Context.** I want the site usable for everyone, without ceremony.  
+**Decision.** Semantic HTML, contrast checks, focus-visible, skip links, and respect
+`prefers-reduced-motion`.
 
-One of Astro's strengths is its flexibility with content formats. I love that I can use
-markdown and MDX anywhere in Astro. I can even use MDX components inside Astro components.
-I used this for the [about](/#about) section of the homepage. The homepage is composed of
-Astro components. But this one section is very "prose" heavy. It would be painful to write
-and maintain this block of text as html elements. So I just wrote it as MDX component and
-imported into Astro component.
+**Implementation.**
+
+- Use `<header>`, `<main>`, `<article>`, `<time>`, `<figure>` + `<figcaption>`, `<aside>`,
+  etc.
+- Any icon-only button gets an `aria-label` or `<span class="sr-only">...</span>`.
+- Tailwind: prefix motion with `motion-safe:`.
+- Tabbable skip link is the first focusable element.
+
+_Focus outline + screen reader label_
 
 ```astro
 ---
-// AboutSection.astro
-// MDX component imported into Astro component
-import AboutText from './AboutText.mdx'
+import { Icon } from 'astro-icon/components'
+
+import { socials } from '@/config/socials'
 ---
 
-<section aria-labelledby={sectionId} class={className}>
-  <h2 id={sectionId}>A Bit About Me</h2>
-  <AboutText />
-  {/* The rest of the section... */}
-</section>
-```
-
-This way whenever I want to update the text, I don't have to worry about manually adding
-`<strong>` tags and passing classes to style them.
-
-## Astro components with `cva`
-
-For component styling variants, I wanted type safety without overcomplicating things. I
-love using the [class-variance-authority](https://cva.style/) library. Whenever I need a
-component with multiple variants, it provides a great developer experience. It's not
-possible to use it directly inside `.astro` files, so I split the variants into a separate
-`.ts` file and import it into the `.astro` component. Works like a charm. Here's a simple
-example below.
-
-```ts
-// contentGridVariants.ts
-import { cva, type VariantProps } from 'class-variance-authority'
-
-export const contentGridVariants = cva(
-  ['grid grid-cols-1 min-[600px]:grid-cols-2 gap-x-8 gap-y-12'],
+<ul class="flex items-center gap-3">
   {
-    variants: {
-      type: {
-        article: ['lg:grid-cols-3'],
-        project: ['lg:grid-cols-1', 'lg:gap-y-8'],
-      },
-    },
-    defaultVariants: { type: 'article' },
-  },
-)
-
-export type ContentGridVariant = VariantProps<typeof contentGridVariants>
+    socials.map(({ label, url, iconName }) => (
+      <li>
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener"
+          class="link-outline block rounded-sm"
+        >
+          <Icon class="size-5" name={iconName} />
+          <span class="sr-only">{label}</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
 ```
 
-```astro
----
-import { cn } from '@/lib/utils/cn'
+**Gotchas.** Validate focus order with a screen reader; test keyboard-only flows.  
+**Verification.** Quick pass with [Silktide](https://silktide.com/)/axe + manual
+tab-through.  
+**Takeaway.** **Ship empathy by default.**
 
-import { contentGridVariants, type ContentGridVariant } from './contentGridVariants'
+## Ship with Guardrails: Security Headers That Matter
 
-type Props = ContentGridVariant & {
-  className?: string
-}
+**Context.** Get to “A” quickly, then refine.  
+**Decision.** Set a small set of strong headers; iterate on CSP with islands constraint.
 
-const { type, className } = Astro.props
----
+**Headers I set:**
 
-<div class={cn(contentGridVariants({ type }), className)}>
-  <slot />
-</div>
-```
-
-## Security headers
-
-Finally, before launching, I wanted to ensure proper security headers. Before launching
-any web app or website, I like to validate security headers. There's a nice tool by Snyk
-aptly named [Security Headers](https://securityheaders.com/). You can scan any website and
-it will give you a rank between **A** and **F**.
-
-I always add _at least_ these.
-
-| Header                       | Value                                                       |
-| ---------------------------- | ----------------------------------------------------------- |
-| `Referrer-Policy`            | `strict-origin-when-cross-origin`                           |
-| `Strict-Transport-Security`  | `max-age=31536000; includeSubDomains`                       |
-| `Content-Security-Policy`    | _As strict as possible, based on usage. But see note below_ |
-| `Permissions-Policy`         | _Only those you need, forbid the rest_                      |
-| `Cross-Origin-Opener-Policy` | `same-origin`                                               |
-| `X-Frame-Options`            | `DENY`                                                      |
-| `X-Content-Type-Options`     | `nosniff`                                                   |
+| Header                       | Value                                       |
+| ---------------------------- | ------------------------------------------- |
+| `Referrer-Policy`            | `strict-origin-when-cross-origin`           |
+| `Strict-Transport-Security`  | `max-age=31536000; includeSubDomains`       |
+| `Content-Security-Policy`    | _As strict as possible; islands note below_ |
+| `Permissions-Policy`         | _Only those you need; forbid the rest_      |
+| `Cross-Origin-Opener-Policy` | `same-origin`                               |
+| `X-Frame-Options`            | `DENY`                                      |
+| `X-Content-Type-Options`     | `nosniff`                                   |
 
 <Alert title="Astro Islands and CSP">
-  When using [Islands architecture](https://docs.astro.build/en/concepts/islands/) with
-  Astro. You must add `script-src: unsafe-inline` to your **Content-Security-Policy**.
-  Otherwise it won't work.
+  [Islands architecture](https://docs.astro.build/en/concepts/islands/) with
+  Astro, you must add `script-src 'unsafe-inline'` to your **Content-Security-Policy**, or islands won’t hydrate.
 
-There's currently an
-[experimental option](https://docs.astro.build/en/reference/experimental-flags/csp/) in
-Astro config to enable hashes to avoid the `unsafe-inline` but I wasn't able to make it
-work with my Cloudflare Workers deployment while not losing the option to set it globally
-for everything else.
+Astro has an
+[experimental CSP hashes flag](https://docs.astro.build/en/reference/experimental-flags/csp/),
+but I couldn’t make it work with Cloudflare Workers and a global policy yet.
 
 </Alert>
 
+**Gotchas.** CSP + islands require a tradeoff unless you adopt hashing.  
+**Verification.** SecurityHeaders grade: **A**; note any intentional relaxations.
+
+<Figure
+  caption="Screenshot from securityheaders.com. A grade."
+  className="mx-auto max-w-md"
+>
+  <Image
+    src={securityHeadersScreenshot}
+    alt="Screenshot from securityheaders.com. A grade."
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+  />
+</Figure>
+
+**Takeaway.** **Default to safe, document your exceptions.**
+
 ## Conclusion
 
-These are the technical choices I made for my blog and how I implemented them. I'm sharing
-what worked for me - your needs might be different, and that's okay.
+These choices reflect my constraints: static-first, content-as-code, and **fast to
+publish**.  
+What worked especially well: **content collections**, **cache buckets**, and
+**programmatic OG**.  
+What surprised me: how _little_ JavaScript I actually needed.
 
-What worked particularly well? Astro's content collections made MDX feel like a
-first-class citizen, which was exactly what I wanted. The caching strategy on Cloudflare
-Workers has been straightforward and effective. And programmatic OG images eliminated a
-tedious manual step.
-
-What surprised me? How little JavaScript I actually needed - most interactivity works fine
-with CSS and vanilla JS. I also didn't expect structured data to be as simple as it was,
-though I'm still not sure how much value it actually provides.
-
-If I were doing it again, I might experiment with Astro's experimental CSP hashes feature
-more, but the current setup works well. Overall, Astro gave me the flexibility to build
-exactly what I needed without unnecessary complexity.
-
-For the full story and results, see
+For the story behind these decisions and the results, see
 [Part 1: Why I Started Fresh](/blog/rebuilding-my-website-with-astro-why-and-results).
