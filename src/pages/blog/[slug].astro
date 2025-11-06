@@ -6,7 +6,6 @@ import ArticleHeader from '@/components/Content/ArticleHeader.astro'
 import { mdxComponents } from '@/components/MDX/MDXComponents.astro'
 import StructuredData from '@/components/Meta/SchemaOrg/Base.astro'
 import { createBlogPostSchema } from '@/config/schemaJson'
-import { defaultSeo } from '@/config/seo'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
 import { ensureAstroSite } from '@/lib/utils/guards'
@@ -31,7 +30,7 @@ const structuredData = createBlogPostSchema(siteUrl, post, readingTime.words)
 ---
 
 <ReadingLayout
-  pageTitle={defaultSeo.pageTitle(data.title)}
+  pageTitle={data.title}
   pageDescription={data.description}
   headings={headings}
 >

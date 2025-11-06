@@ -5,9 +5,11 @@ import HeroSection from '@/components/Homepage/sections/Hero/HeroSection.astro'
 import ProjectsSection from '@/components/Homepage/sections/Projects/ProjectsSection.astro'
 import { defaultSeo } from '@/config/seo'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+
+const homepageTitle = 'Building thoughtful web experiences'
 ---
 
-<BaseLayout pageTitle={defaultSeo.baseTitle}>
+<BaseLayout pageTitle={defaultSeo.pageTitle(homepageTitle)}>
   <HeroSection />
   <AboutSection className="mb-40" />
   <BlogSection className="mb-40" />
