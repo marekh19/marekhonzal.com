@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions'
+
 import Analytics from '@/components/Meta/Analytics.astro'
 import AppVersion from '@/components/Meta/AppVersion.astro'
 import CanonicalLink from '@/components/Meta/CanonicalLink.astro'
@@ -37,4 +39,5 @@ const { title, description, ogImagePath } = Astro.props
 <CommonSchemaOrg />
 <AppVersion />
 <InlineStyles />
+<ClientRouter />
 <slot />
