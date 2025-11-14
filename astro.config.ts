@@ -10,8 +10,7 @@ import { loadEnv } from 'vite'
 import { envConfig } from './env.config.ts'
 import { remarkReadingTime } from './plugins/remark-reading-time'
 
-const { SITE_URL } = loadEnv(process.env.SITE_URL!, process.cwd(), '')
-const { ENV_NAME } = loadEnv(process.env.ENV_NAME!, process.cwd(), '')
+const { SITE_URL, ENV_NAME } = loadEnv('', process.cwd(), '')
 
 // https://astro.build/config
 export default defineConfig({
