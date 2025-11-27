@@ -9,7 +9,7 @@ type Props = {
 const { className } = Astro.props
 
 const bubbleMix =
-  'bg-primary-mix motion-safe:animate-slide-in absolute top-0 aspect-square h-full rounded-full'
+  'bg-primary-mix motion-safe:animate-slide-in absolute top-0 aspect-square h-full rounded-full motion-safe:[backface-visibility:hidden] motion-safe:[will-change:transform,opacity]'
 ---
 
 <div class={cn('relative flex h-12 items-center justify-start', 'lg:h-16', className)}>
