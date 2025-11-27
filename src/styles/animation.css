@@ -35,19 +35,12 @@
 
 @keyframes underline-wipe {
   0% {
-    transform: scale3d(0, 1, 1);
-    transform-origin: left;
+    clip-path: inset(0 100% 0 0);
   }
   50% {
-    transform: scale3d(1, 1, 1);
-    transform-origin: left;
-  }
-  50.001% {
-    transform: scale3d(1, 1, 1);
-    transform-origin: right;
+    clip-path: inset(0 0% 0 0);
   }
   100% {
-    transform: scale3d(0, 1, 1);
-    transform-origin: right;
+    clip-path: inset(0 0% 0 100%);
   }
 }
