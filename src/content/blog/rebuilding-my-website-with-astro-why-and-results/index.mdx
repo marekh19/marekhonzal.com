@@ -17,6 +17,7 @@ thumbnail: './thumbnail.png'
 import { Image } from 'astro:assets'
 
 import Diagram from './diagram.svg'
+import googleSearch from './google-search.png'
 import oldWebPerformanceImg from './old-web-performance.png'
 import newWebPsi from './psi-new.png'
 import oldWebPsi from './psi-old.png'
@@ -213,8 +214,23 @@ _Source: Cloudflare Radar (radar.cloudflare.com)_
   </Figure>
 </div>
 
-> At the time of writing, the site isn’t indexed on Google yet. I’ll update the article
-> once it is.
+### Google Search
+
+<small>Updated on {<time datetime="2025-11-27">Nov 27, 2025</time>}.</small>
+
+<Figure caption="My site now appears as the first Google search result for 'Marek Honzal'.">
+  <Image
+    src={googleSearch}
+    alt="My website appears as the first Google search result for 'Marek Honzal'."
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+  />
+</Figure>
+
+With my old website, Google never properly indexed the page or ranked it even in the top
+five results for my name. Now, just three weeks after publishing the new site, I’m already
+seeing solid SEO performance that I never achieved with the previous setup.
 
 ## Conclusion: Simplicity Is a Feature
 
