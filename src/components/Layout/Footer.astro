@@ -1,6 +1,7 @@
 ---
 import { cn } from '@/lib/utils/cn'
 
+import KbClub from './Footer/512kbClub.astro'
 import Copyright from './Footer/Copyright.astro'
 import Navigation from './Footer/Navigation.astro'
 import SiteUpdatedAt from './Footer/SiteUpdatedAt.astro'
@@ -31,7 +32,10 @@ import SocialLinks from './Footer/SocialLinks.astro'
       </div>
       <div class={cn('flex flex-col-reverse justify-between gap-y-8', 'md:flex-col')}>
         <Navigation />
-        <SiteUpdatedAt />
+        <div class="grid gap-y-3">
+          <SiteUpdatedAt />
+          <KbClub />
+        </div>
       </div>
     </div>
   </div>

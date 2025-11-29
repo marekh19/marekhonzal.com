@@ -1,0 +1,18 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { cn } from '@/lib/utils/cn'
+---
+
+<span class="text-base-content/60 text-xs"
+  >Proud member of <a
+    href="https://512kb.club/"
+    rel="noopener"
+    target="_blank"
+    class={cn(
+      'inline-flex items-center gap-1 rounded-sm transition-colors duration-200',
+      'hover:text-base-content',
+      'link-outline',
+    )}>The 512KB Club <Icon class="size-3" name="lucide:arrow-up-right" /></a
+  ></span
+>
