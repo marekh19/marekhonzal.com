@@ -9,7 +9,7 @@ type Props = {
 
 const { title, description, imagePath } = Astro.props
 const origin = ensureAstroSite(Astro.site)
-const pageUrl = Astro.url.toString()
+const pageUrl = Astro.url.toString().replace(/\/$/, '')
 const imageUrl = new URL(imagePath, origin).toString()
 
 const OG_WIDTH = 1200
