@@ -5,8 +5,7 @@ export default {
     config: ['astro.config.{js,cjs,mjs,ts,mts}'],
     entry: [
       'src/content/config.ts',
-      'src/content.config.ts',
-      'src/pages/**/*.{astro,mdx,js,ts}',
+      'src/pages/**/*.{astro,mdx,ts}',
       '!src/pages/**/_*',
       '!src/pages/**/_*/**',
       'src/content/**/*.mdx',
@@ -19,10 +18,6 @@ export default {
     '@iconify-json/lucide',
     '@iconify-json/ph',
     'sharp',
-    '@tailwindcss/typography',
-    'tailwindcss',
     'wrangler',
-    'daisyui',
-    'astro:env',
   ],
 } satisfies KnipConfig
