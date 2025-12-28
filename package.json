@@ -27,7 +27,7 @@
     "clsx": "^2.1.1",
     "lucide-preact": "^0.562.0",
     "narrowland": "^1.4.0",
-    "preact": "^10.28.0",
+    "preact": "^10.28.1",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.4.0"
   },
@@ -48,7 +48,7 @@
     "eslint": "^9.39.2",
     "eslint-plugin-astro": "^1.5.0",
     "husky": "^9.1.7",
-    "knip": "^5.76.1",
+    "knip": "^5.78.0",
     "lint-staged": "^16.2.7",
     "mdast-util-to-string": "^4.0.0",
     "prettier": "^3.7.4",
@@ -58,7 +58,7 @@
     "remark-sectionize": "^2.1.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.50.0",
+    "typescript-eslint": "^8.50.1",
     "vite": "^7.3.0",
     "wrangler": "^4.56.0"
   },
