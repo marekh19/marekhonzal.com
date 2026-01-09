@@ -6,6 +6,8 @@ import { Icon } from 'astro-icon/components'
 import { cn } from '@/lib/utils/cn'
 import { formatDateMachine } from '@/lib/utils/date'
 
+import ProjectCardStars from './ProjectCardStars.astro'
+
 const IMAGE_CONFIG = {
   widths: [340, 480, 656, 720, 768, 960, 1024, 1280],
   sizes: `
@@ -22,6 +24,7 @@ type Props = {
   date: Date
   thumbnail: ImageMetadata
   isPriorityImage?: boolean
+  gitHubUrl?: string
 }
 
 const {
@@ -31,13 +34,14 @@ const {
   date,
   thumbnail,
   isPriorityImage = false,
+  gitHubUrl,
 } = Astro.props
 ---
 
 <a
   href={targetUrl}
   class={cn(
-    'border-base-content/15 group bg-base-100 overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
+    'border-base-content/15 group bg-base-100 relative overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
     'hover:border-base-content/25',
     'link-outline',
   )}
@@ -52,7 +56,7 @@ const {
         class={cn(
           'size-full object-cover transition-transform duration-300 ease-out',
           'motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105',
-          'lg:max-w-[22.5rem]',
+          'lg:max-w-90',
         )}
         {...IMAGE_CONFIG}
       />
@@ -72,5 +76,9 @@ const {
         /></span
       >
     </div>
+    <ProjectCardStars
+      className="absolute top-1 right-1 font-semibold"
+      gitHubUrl={gitHubUrl}
+    />
   </article>
 </a>

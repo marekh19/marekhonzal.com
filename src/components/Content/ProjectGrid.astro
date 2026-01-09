@@ -26,6 +26,7 @@ const { projects, className, isAboveFold = false } = Astro.props
         date={project.data.date}
         thumbnail={project.data.thumbnail}
         isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES}
+        gitHubUrl={project.data.githubUrl}
       />
     ))
   }

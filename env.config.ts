@@ -13,6 +13,11 @@ export const envConfig = {
       access: 'public',
       default: 'staging',
     }),
+    GH_API_TOKEN: envField.string({
+      context: 'server',
+      access: 'secret',
+      default: crypto.randomUUID(),
+    }),
     PUBLIC_UMAMI_SITE_ID: envField.string({
       context: 'client',
       access: 'public',

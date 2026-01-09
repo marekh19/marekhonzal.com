@@ -23,6 +23,18 @@ export const getGitHubRepoPart = (url: string): string | null => {
   }
 }
 
+export const getGitHubOwnerRepoFromUrl = (
+  url: string,
+): Readonly<{ owner: string; repo: string }> | null => {
+  const repoPart = getGitHubRepoPart(url)
+  if (!repoPart) return null
+
+  const [owner, repo] = repoPart.split('/')
+  if (!owner || !repo) return null
+
+  return { owner, repo }
+}
+
 export const getDisplayDomain = (url: string): string | null => {
   try {
     return new URL(url).hostname

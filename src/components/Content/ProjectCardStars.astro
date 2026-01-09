@@ -1,0 +1,23 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { cn } from '@/lib/utils/cn'
+import { getGitHubRepoStarGazers } from '@/lib/utils/github'
+
+type Props = {
+  gitHubUrl?: string
+  className?: string
+}
+
+const { gitHubUrl, className } = Astro.props
+if (!gitHubUrl) return null
+
+const numOfStargazers = await getGitHubRepoStarGazers(gitHubUrl)
+if (!numOfStargazers) return null
+---
+
+<div class={cn('badge badge-sm gap-x-1.5', className)}>
+  <Icon name="lucide:star" class="text-accent" />
+  <span class="sr-only">Number of GitHub stars: </span>
+  <span>{numOfStargazers}</span>
+</div>
