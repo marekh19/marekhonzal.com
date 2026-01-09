@@ -26,8 +26,8 @@ project showcases, and a clean, performant static site architecture.
 
 ### Prerequisites
 
-- Node.js 24.11.0
-- pnpm 10.20.0+
+- Node.js >=24
+- pnpm >=10
 
 ### Installation
 
