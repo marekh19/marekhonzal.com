@@ -39,6 +39,7 @@ jobs:
           ENV_NAME: staging
           PUBLIC_UMAMI_SITE_ID: ${{ vars.PUBLIC_UMAMI_SITE_ID }}
           PUBLIC_UMAMI_SHARE_URL: ${{ vars.PUBLIC_UMAMI_SHARE_URL}}
+          GH_API_TOKEN: ${{ vars.GH_API_TOKEN }}
         run: pnpm build
 
       - name: 🚀 Deploy with Wrangler
