@@ -15,6 +15,7 @@ technologies:
   - turboRepo
   - zustand
 githubUrl: https://github.com/marekh19/rsbuild-module-federation
+demoUrl: https://mfe-shell.marek.work
 ---
 
 import Diagram from './diagram.svg'
@@ -28,6 +29,14 @@ This project showcases **Module Federation 2.0** using manifests - the next evol
 microfrontend architecture. We've created a system where three applications can operate
 independently or as a unified experience, all while sharing state and dependencies
 intelligently.
+
+Each remote app runs independently:
+
+- [Remote 1](https://mfe-remote-1.marek.work)
+- [Remote 2](https://mfe-remote-2.marek.work)
+
+Or they can be composed together in the [shell app](https://mfe-shell.marek.work), where
+all three applications share reactive state seamlessly.
 
 ### Architecture Overview
 
