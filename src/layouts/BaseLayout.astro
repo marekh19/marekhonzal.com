@@ -38,7 +38,7 @@ const hasCustomMain = Astro.slots.has('main')
 
   <body>
     <SkipLink />
-    <Header />
+    <Header transition:persist />
 
     {
       hasCustomMain ? (
@@ -62,7 +62,7 @@ const hasCustomMain = Astro.slots.has('main')
       )
     }
 
-    <Footer />
+    <Footer transition:persist />
 
     <slot name="endOfBody" />
   </body>
