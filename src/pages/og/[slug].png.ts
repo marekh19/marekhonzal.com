@@ -60,7 +60,7 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
       h(
         'div',
         {
-          tw: 'text-6xl mb-16 font-medium tracking-wide leading-[133%]',
+          tw: 'text-5xl mb-16 font-medium tracking-wide leading-[133%]',
           style: { fontFamily: 'Lora Medium' },
         },
         data.title,
@@ -68,7 +68,7 @@ const generateHtml = (data: OGHtmlData): JSX.Element => {
       h(
         'div',
         {
-          tw: 'text-3xl font-semibold leading-[150%]',
+          tw: 'text-2xl font-semibold leading-[150%]',
           style: { fontFamily: 'Open Sans Semibold' },
         },
         data.description,
