@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
 export const contentGridVariants = cva(
-  ['grid grid-cols-1 min-[600px]:grid-cols-2 gap-x-8 gap-y-12'],
+  ['grid grid-cols-1 gap-x-8 gap-y-12', 'min-[600px]:grid-cols-2'],
   {
     variants: {
       type: {

@@ -3,7 +3,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Content-Type-Options: nosniff
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://giscus.app https://cloud.umami.is https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://giscus.app; font-src 'self' data:; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://api-gateway.umami.dev; frame-src https://giscus.app; frame-ancestors 'self'; upgrade-insecure-requests; require-trusted-types-for 'script';
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' data: https://giscus.app https://cloud.umami.is https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://giscus.app; font-src 'self' data:; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://api-gateway.umami.dev; frame-src https://giscus.app; frame-ancestors 'self'; upgrade-insecure-requests; require-trusted-types-for 'script';
   X-Frame-Options: DENY
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=(), web-share=(), xr-spatial-tracking=(), screen-wake-lock=(), clipboard-write=(self), fullscreen=(self)
   Cross-Origin-Opener-Policy: same-origin

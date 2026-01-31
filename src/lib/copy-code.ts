@@ -42,9 +42,10 @@ const enhanceCodeBlocks = () => {
 
   blocks.forEach((pre) => {
     if (!(pre instanceof HTMLPreElement)) return
+    if (pre.parentElement?.classList.contains('code-block')) return
 
     const wrapper = document.createElement('div')
-    wrapper.classList.add('code-block')
+    wrapper.classList.add('code-block', 'group')
 
     pre.parentNode?.insertBefore(wrapper, pre)
     wrapper.appendChild(pre)
@@ -54,4 +55,4 @@ const enhanceCodeBlocks = () => {
   })
 }
 
-window.addEventListener('DOMContentLoaded', enhanceCodeBlocks)
+document.addEventListener('astro:page-load', enhanceCodeBlocks)

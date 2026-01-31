@@ -103,7 +103,7 @@ export const drawPath = () => {
   })
 }
 
-export const addIntersectionObserver = () => {
+export const addIntersectionObserver = (): IntersectionObserver => {
   const observer = new IntersectionObserver((sections) => {
     sections.forEach((section) => {
       const heading = section.target.querySelector('h2, h3, h4, h5')
@@ -126,6 +126,8 @@ export const addIntersectionObserver = () => {
   document.querySelectorAll('main section').forEach((section) => {
     observer.observe(section)
   })
+
+  return observer
 }
 
 const updatePath = () => {

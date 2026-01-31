@@ -14,5 +14,10 @@
 <script>
   import { initScrollProgressBar } from '@/lib/scrollProgress.ts'
 
-  initScrollProgressBar()
+  let cleanup: (() => void) | undefined
+
+  document.addEventListener('astro:page-load', () => {
+    cleanup?.()
+    cleanup = initScrollProgressBar()
+  })
 </script>

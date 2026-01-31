@@ -47,10 +47,7 @@ const { pageTitle, pageDescription, headings } = Astro.props
             <!-- ToC column -->
             <aside
               aria-labelledby={tocHeadingId}
-              class={cn(
-                'sticky top-8 order-2 hidden w-[var(--toc-w)] self-start',
-                'lg:block',
-              )}
+              class={cn('sticky top-8 order-2 hidden w-(--toc-w) self-start', 'lg:block')}
             >
               <nav
                 aria-labelledby={tocHeadingId}

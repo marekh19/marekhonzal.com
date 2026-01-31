@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions'
+
 import Footer from '@/components/Layout/Footer.astro'
 import Header from '@/components/Layout/Header.astro'
 import Head from '@/components/Meta/Head.astro'
@@ -30,12 +32,13 @@ const hasCustomMain = Astro.slots.has('main')
   <head>
     <Head title={pageTitle} description={pageDescription} ogImagePath={ogImageUrl}>
       <slot name="head" />
+      <ClientRouter />
     </Head>
   </head>
 
   <body>
     <SkipLink />
-    <Header />
+    <Header transition:persist />
 
     {
       hasCustomMain ? (
@@ -59,7 +62,7 @@ const hasCustomMain = Astro.slots.has('main')
       )
     }
 
-    <Footer />
+    <Footer transition:persist />
 
     <slot name="endOfBody" />
   </body>
