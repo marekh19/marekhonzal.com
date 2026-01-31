@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils/cn'
 <div
   class={cn(
     'prose lg:prose-lg max-w-none',
-    'prose-pre:leading-[140%]',
+    'prose-pre:leading-[133.33%]',
     'prose-p:text-base-content',
     'prose-headings:text-balance prose-headings:font-serif prose-headings:font-medium prose-headings:text-primary prose-headings:leading-tight',
     'prose-h1:font-normal',
@@ -14,7 +14,8 @@ import { cn } from '@/lib/utils/cn'
     'prose-ul:text-base-content',
     'prose-ol:text-base-content',
     'prose-img:rounded-md',
-    'prose-inline-code:bg-neutral prose-inline-code:text-neutral-content dark:prose-inline-code:border-base-content/10',
+    'prose-inline-code:border-none prose-inline-code:bg-base-100 prose-inline-code:text-base-content/75',
+    'prose-pre:border prose-pre:border-base-100 dark:prose-pre:border-neutral',
   )}
 >
   <slot />

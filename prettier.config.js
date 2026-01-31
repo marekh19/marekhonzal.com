@@ -9,8 +9,8 @@ const config = {
   singleQuote: true,
   plugins: [
     'prettier-plugin-astro',
-    'prettier-plugin-tailwindcss',
     '@ianvs/prettier-plugin-sort-imports',
+    'prettier-plugin-tailwindcss',
   ],
   tailwindFunctions: ['cva', 'cn'],
   importOrder: [

@@ -38,6 +38,11 @@ export const tocHeadingId = 'toc-heading'
 <script>
   import { addIntersectionObserver, drawPath } from '@/lib/utils/tableOfContents'
 
-  drawPath()
-  addIntersectionObserver()
+  let observer: IntersectionObserver | undefined
+
+  document.addEventListener('astro:page-load', () => {
+    observer?.disconnect()
+    drawPath()
+    observer = addIntersectionObserver()
+  })
 </script>

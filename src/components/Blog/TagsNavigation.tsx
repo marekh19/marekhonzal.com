@@ -28,7 +28,7 @@ export const TagsNavigation = ({ tags, className }: Props) => {
           <li>
             <a
               className={cn(
-                'badge dark:badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-accent/20',
                 'focus-visible:bg-accent/20',
@@ -47,15 +47,13 @@ export const TagsNavigation = ({ tags, className }: Props) => {
           <li className="tooltip" data-tip="Show all tags">
             <button
               className={cn(
-                'badge dark:badge-soft badge-accent badge-sm inline-flex cursor-pointer items-center rounded-full transition-colors duration-200 ease-out',
+                'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
                 'md:badge-md',
                 'hover:bg-accent/20',
                 'focus-visible:bg-accent/20',
                 'link-outline-accent',
               )}
-              onClick={() => {
-                setShouldShowAll(true)
-              }}
+              onClick={() => setShouldShowAll(true)}
             >
               <EllipsisIcon />
               <span className="sr-only">Show all tags</span>
