@@ -8,3 +8,9 @@ declare module 'preact' {
     }
   }
 }
+
+declare global {
+  const umami: {
+    track(eventName: string, data?: Record<string, unknown>): void
+  }
+}
