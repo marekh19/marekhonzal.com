@@ -1,8 +1,8 @@
 ---
-title: 'Case Study: From Webpack to Rspack'
+title: '25 Minutes to Change a Button Color'
 description:
-  How I 7x the build speed of a large component library by migrating from webpack + babel
-  to rspack + swc.
+  'Migrating 15 React apps from Webpack to Rspack, and what I learned shipping the
+  microfrontend architecture I disagreed with.'
 date: 2026-02-09
 isDraft: false
 isFeatured: true
@@ -21,8 +21,8 @@ import MigrationOrderDiagram from './migration-order.svg'
 import ToolingMigrationDiagram from './tooling-migration.svg'
 
 A 7-year-old codebase. 15 interconnected React apps and libraries. Webpack, Create React
-App with CRACO, even Gulp. Hundreds of lines of hand-rolled plugin configs. And a 25 plus
-minute deployment cycle just to change a button color.
+App with CRACO, even Gulp. Hundreds of lines of hand-rolled plugin configs. And a
+25-plus-minute deployment cycle just to change a button color.
 
 The client wanted microfrontends. I thought we should go monorepo. We did the migration
 anyway. Here's what happened — and what I learned about when to push back and when to
@@ -53,16 +53,17 @@ another pipeline wait.
 
 ### Death by a Thousand Reloads
 
-And between those waits? No hot module replacement either. You'd change a file, save, and
-the entire app would do a full reload — losing whatever state you'd navigated to for
-debugging. Do that a couple hundred times a day and you stop even noticing how much focus
-you're bleeding.
+And between those waits? No hot module replacement either. I was debugging interaction
+logic in a multistep form — save, wait for the full page reload, click through three steps
+to get back to the one I needed, fill in the required fields again, and finally see if my
+fix worked. It didn't. Repeat. Over and over, dozens of times in an afternoon. With HMR, I
+would have stayed on that exact step with the form state intact.
 
 The tooling itself was fragile too. Each app had a different build setup — some on pure
 Webpack with custom loaders, some on CRA with CRACO overrides, one still on Gulp. The
-developers who originally configured it all had long left the company. The remaining team
-was afraid to touch any of it. Seven years of accumulated config debt that nobody fully
-understood.
+developers who originally configured it had long since left the company. The remaining
+team was afraid to touch any of it. Seven years of accumulated config debt that nobody
+fully understood.
 
 ## The Strategic Disagreement
 
@@ -75,12 +76,12 @@ deploy with a single PR. For a team of roughly ten developers working across the
 codebase — not in independent, isolated teams — this felt like the right fit.
 
 The client insisted on microfrontends. Their reasoning: mirror the backend's microservices
-architecture and provice access to certain repositories only to certain developers. Each
+architecture and provide access to certain repositories only to certain developers. Each
 frontend app would be built as a Docker container and served via Nginx.
 
 As an external developer from an agency, I didn't have the political weight to override
-this decision. The development lead's position was firm: "We will never go monorepo." So
-we went with microfrontends.
+this. The development lead's position was firm: "We will never go monorepo." So we went
+with microfrontends.
 
 I still think it was the wrong call. But I executed it anyway, and I learned a lot doing
 it.
@@ -115,10 +116,10 @@ realized the fundamental constraint:
 
 <MigrationOrderDiagram className="size-full" />
 
-Once I flipped the order — shell app first (CRA + CRACO → Rsbuild, which was
-straightforward), then child apps, then shared libraries last — everything fell into
-place. The modernized shell app happily consumed the old-format packages while I migrated
-the rest at my own pace.
+Once I flipped the order — shell app first, then child apps, then shared libraries last —
+everything fell into place. The shell migration from CRA + CRACO to Rsbuild was
+straightforward, and the modernized shell app happily consumed the old-format packages
+while I migrated the rest at my own pace.
 
 **The results spoke for themselves:**
 
@@ -140,17 +141,25 @@ publishing with runtime-loaded Module Federation bundles.
 
 <BeforeAfterDiagram className="size-full" />
 
-// TODO: Update description here -> 1 bump The version-bump-and-republish cycle
-disappeared. That one-line cursor fix? Now it's: change the file, merge, deploy. The shell
-app picks up the new version at runtime. No version bumping, no cascading PRs. That was a
-genuine improvement.
+The cascading version-bump ritual got significantly shorter. That one-line cursor fix? You
+still bump the UI library and install the new version in the consuming apps — the shared
+library remains an npm package, not a runtime module. But that's where it stops. Since the
+child apps are now loaded at runtime via Module Federation, the shell app picks up the
+changes automatically on the next page load. One version bump instead of four. No more
+cascading PRs through every level of the dependency tree.
 
 ### The Trade-offs Nobody Warns You About
 
 But the downsides were real. Infrastructure complexity jumped — every app that was
 previously an npm package now needed its own Docker container, Nginx config, CORS setup,
-and base URL configuration. The build time improvements from Phase 1 partially crept back
-up due to Module Federation overhead.
+and base URL configuration. In practice, this meant a constant back-and-forth loop with
+the infrastructure engineer. First, CORS errors when loading remote modules across
+containers. Fix that, and the remotes wouldn't load at all — the manifest file needed
+relative URLs instead of absolute ones to work across different environments. Fix that,
+update the env variables, redeploy, and discover the next issue. Each problem only
+revealed itself after deploying to staging, so the feedback loop was painfully slow. The
+build time improvements from Phase 1 partially crept back up due to Module Federation
+overhead.
 
 And here's the most dangerous trade-off: **breaking changes became silent.** With npm
 packages, you could pin a version and upgrade when ready. With Module Federation,
@@ -158,12 +167,12 @@ consumers always load the latest. Picture this: a developer renames a prop in a 
 on Friday afternoon and merges it. By Monday, the shell app is broken in production —
 because it loaded the latest remote and the interface it expects no longer exists. No
 version mismatch warning, no build failure, just a runtime crash. We haven't had this
-happen yet because everyone was thoroughly warned, but the risk is structural and
+happen yet because everyone has been thoroughly warned, but the risk is structural and
 permanent.
 
 There's another operational headache that a monorepo would have solved trivially. Module
 Federation requires all apps to share the exact same versions of core dependencies —
-React, React DOM, and so on. With 14 apps across separate repositories, we had to develop
+React, React DOM, and so on. With 15 apps across separate repositories, we had to develop
 a **custom script to align third-party dependency versions** across all repos, because any
 mismatch would cause subtle runtime bugs. In a monorepo, this is a solved problem — tools
 like pnpm catalogs handle it out of the box.
@@ -179,14 +188,12 @@ We shipped what was asked for. It works. But it's microfrontends in name, not in
 
 ## What I'd Do Differently
 
-**Modernizing tooling is always worth it.** The Rspack migration was a clear win — fast
-builds, HMR that actually works, dramatically simpler configs, lower CI/CD costs. If
-you're sitting on a legacy Webpack or CRA setup, this alone can transform your team's
-productivity pretty fast.
-
-**Migration order matters more than you think.** Start from the top of your dependency
-tree, not the bottom. New can consume old; old can't consume new. This single insight
-would have saved me days of wasted effort.
+**Budget for the infrastructure tax, not just the code.** I knew going in that the Module
+Federation code would be the smaller part of the job. What I didn't expect was the sheer
+volume of back-and-forth — every fix gated behind a staging deploy, every deploy revealing
+the next issue. And after the massive build time improvements from Phase 1, watching
+pipeline times creep back up due to MFE overhead stung. Not back to original levels, but
+enough to take the shine off those sub-minute builds the team had just been celebrating.
 
 **Microfrontends need prerequisites most teams don't have.** If you're considering the
 architecture, here's the honest checklist:
@@ -214,5 +221,8 @@ means paying a tax on every change you make for years to come.
 
 ---
 
-> The best technical decision is the one that matches your actual constraints — not the
-> one that matches the architecture diagram in a conference talk.
+> I'd still pick a monorepo if I had the choice again — and I don't think everyone on the
+> team would disagree. But the codebase is in a genuinely better place than where we
+> started, the client shipped what they wanted, and I picked up some hard-won Module
+> Federation experience along the way. Not the path I'd have chosen, but I'll take where
+> it ended up.

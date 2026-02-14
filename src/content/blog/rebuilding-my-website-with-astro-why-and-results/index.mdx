@@ -16,11 +16,11 @@ thumbnail: './thumbnail.png'
 
 import { Image } from 'astro:assets'
 
-import Diagram from './diagram.svg'
 import googleSearch from './google-search.png'
 import oldWebPerformanceImg from './old-web-performance.png'
 import newWebPsi from './psi-new.png'
 import oldWebPsi from './psi-old.png'
+import RevalidationDiagram from './revalidation.svg'
 import newPageSize from './size-new.png'
 import oldPageSize from './size-old.png'
 
@@ -60,9 +60,9 @@ worked flawlessly. Sanity gave me a polished content interface. For a while, I w
 
 <Figure
   caption="The flow of on-demand ISR with Next.js and Sanity CMS"
-  className="mx-auto max-w-md"
+  className="mx-auto max-w-sm"
 >
-  <Diagram />
+  <RevalidationDiagram className="size-full" />
 </Figure>
 
 Then the pain started.  
