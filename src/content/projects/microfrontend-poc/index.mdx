@@ -18,7 +18,7 @@ githubUrl: https://github.com/marekh19/rsbuild-module-federation
 demoUrl: https://mfe-shell.marek.work
 ---
 
-import Diagram from './diagram.svg'
+import MfeDiagram from './mfe-diagram.svg'
 
 A proof of concept that demonstrates how to create independent microfrontends that can run
 solo or together, sharing state across boundaries.
@@ -40,7 +40,12 @@ all three applications share reactive state seamlessly.
 
 ### Architecture Overview
 
-<Diagram className="mx-auto size-full max-w-lg" />
+<Figure
+  caption="Architecture of my Module Federation setup — Shell consumes remotes, all sharing common packages."
+  className="mx-auto max-w-md"
+>
+  <MfeDiagram className="size-full" />
+</Figure>
 
 ## Key Features
 
