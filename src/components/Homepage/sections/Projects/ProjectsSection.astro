@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content'
 
 import ProjectGrid from '@/components/Content/ProjectGrid.astro'
 import { ROUTES } from '@/config/routes'
+import { umamiEventTracker } from '@/lib/utils/analytics'
 import { cn } from '@/lib/utils/cn'
 import { getFeaturedSectionContent, shouldIncludeItem } from '@/lib/utils/content'
 
@@ -29,5 +30,20 @@ const featuredProjects = getFeaturedSectionContent(projects)
     A small selection of personal projects. More below if you’re into that kind of thing.
   </p>
   <ProjectGrid projects={featuredProjects} className="mb-8" />
-  <a class="btn btn-lg btn-primary" href={ROUTES.projects._}>See all projects</a>
+  <a
+    id={umamiEventTracker.selectorIds.homepage.projectsLink}
+    class="btn btn-lg btn-primary"
+    href={ROUTES.projects._}>See all projects</a
+  >
 </section>
+
+<script>
+  import { umamiEventTracker } from '@/lib/utils/analytics'
+
+  document.addEventListener('astro:page-load', () => {
+    umamiEventTracker.trackOnceOnScroll(
+      `#${umamiEventTracker.selectorIds.homepage.projectsLink}`,
+      'homepage-reached-bottom',
+    )
+  })
+</script>
