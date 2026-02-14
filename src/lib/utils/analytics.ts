@@ -1,3 +1,5 @@
+import { isDefined } from 'narrowland'
+
 type TrackOnceOnScrollOptions = {
   threshold?: number
   oncePer?: 'session' | 'visit'
@@ -27,7 +29,9 @@ class UmamiEventTracker {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          umami.track(eventName, eventProperties)
+          if (isDefined(umami)) {
+            umami.track(eventName, eventProperties)
+          }
           if (oncePer === 'session') {
             sessionStorage.setItem(storageKey, 'true')
           }
