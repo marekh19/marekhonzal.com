@@ -123,13 +123,13 @@ while I migrated the rest at my own pace.
 
 **The results spoke for themselves:**
 
-| Metric              | Before            | After        | Improvement   |
-| ------------------- | ----------------- | ------------ | ------------- |
-| Shell app build     | 3 min 20s         | 14s          | 96% faster    |
-| Dev server reload   | ~4s (full reload) | ~100ms (HMR) | 97% faster    |
-| CI/CD total         | ~25 min           | ~6 min       | 72% faster    |
-| Config complexity   | 2500 LOC          | < 200 LOC    | 92% less code |
-| Legacy dependencies | 40+ packages      | Removed      | Clean slate   |
+| Metric              | Before            | After        | Improvement    |
+| ------------------- | ----------------- | ------------ | -------------- |
+| Shell app build     | 3 min 20s         | 14s          | ~14x faster    |
+| Dev server reload   | ~4s (full reload) | ~100ms (HMR) | 40x faster     |
+| CI/CD total         | ~25 min           | ~6 min       | ~4x faster     |
+| Config complexity   | 2500 LOC          | < 200 LOC    | ~12x less code |
+| Legacy dependencies | 40+ packages      | Removed      | Clean slate    |
 
 This phase took about 1 month. The ROI was obvious. Developers got hot module replacement,
 sub-second feedback loops, and build configs they could actually read and understand.
