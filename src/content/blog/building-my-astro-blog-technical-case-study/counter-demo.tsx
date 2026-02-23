@@ -36,7 +36,7 @@ export const CounterDemo = () => {
   return (
     <button
       className="btn btn-lg btn-primary h-auto py-3"
-      onClick={() => setCount((prev) => ++prev)}
+      onClick={() => setCount((prev) => prev + 1)}
     >
       {getClickMessage(count)}
     </button>
