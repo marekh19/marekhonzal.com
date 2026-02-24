@@ -175,7 +175,10 @@ Federation requires all apps to share the exact same versions of core dependenci
 React, React DOM, and so on. With 15 apps across separate repositories, we had to develop
 a **custom script to align third-party dependency versions** across all repos, because any
 mismatch would cause subtle runtime bugs. In a monorepo, this is a solved problem — tools
-like pnpm catalogs handle it out of the box.
+like pnpm catalogs handle it out of the box. (I built a
+[proof-of-concept](/projects/microfrontend-poc) before this migration that demonstrates
+exactly this — Rsbuild + Module Federation 2.0 in a monorepo with pnpm catalogs handling
+dependency alignment automatically.)
 
 **The deeper problem** was that these apps were never designed for true independence.
 Every child app depended on global state passed down from the shell app. None of them
