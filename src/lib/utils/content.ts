@@ -15,7 +15,8 @@ const getTopN = <T extends Content>(items: readonly T[], n: number): readonly T[
 
 export const getSortedContentByDateDesc = <T extends Content>(
   items: readonly T[],
-): readonly T[] => items.toSorted((a, b) => b.data.date.getTime() - a.data.date.getTime())
+): readonly T[] =>
+  items.toSorted((a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime())
 
 export const getFeaturedSectionContent = <T extends Content>(
   items: readonly T[],

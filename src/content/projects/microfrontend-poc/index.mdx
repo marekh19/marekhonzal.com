@@ -3,7 +3,8 @@ title: Microfrontend POC
 description:
   'A proof-of-concept microfrontend setup using Rsbuild and Turborepo, featuring a shared
   Zustand store for seamless state management across apps.'
-date: 2025-06-30
+createdAt: 2025-06-30
+updatedAt: 2026-02-24
 isDraft: false
 isFeatured: true
 thumbnail: './thumbnail.png'
@@ -245,6 +246,10 @@ With **Rsbuild** and its **Module Federation plugin**, things feel a lot smoothe
 up manifests and sharing dependencies is straightforward, and having everything inside a
 **monorepo** makes the developer experience even better. It also makes global state
 sharing (like our counter) almost effortless.
+
+The experience from this POC came in handy when I later migrated a much larger codebase —
+15 React apps — to microfrontend architecture. You can read the full story in
+[25 Minutes to Change a Button Color](/blog/webpack-packages-to-rspack-microfrontends).
 
 👉 Don’t take my word for it - clone the repo, run the apps, and see how it works for
 yourself!

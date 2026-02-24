@@ -58,7 +58,8 @@ export const createBlogPostSchema = (siteUrl: URL, post: Post, wordCount: number
     author: { '@id': createId(IDS.me, siteUrl) },
     publisher: { '@id': createId(IDS.me, siteUrl) },
 
-    datePublished: post.data.date.toISOString(),
+    datePublished: post.data.createdAt.toISOString(),
+    ...(post.data.updatedAt && { dateModified: post.data.updatedAt.toISOString() }),
 
     inLanguage: 'en',
     keywords: post.data.tags,

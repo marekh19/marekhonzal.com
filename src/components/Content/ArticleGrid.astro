@@ -23,7 +23,7 @@ const { posts, className, isAboveFold = false } = Astro.props
         title={post.data.title}
         description={post.data.description}
         targetUrl={ROUTES.blog.post(post.id)}
-        date={post.data.date}
+        createdAt={post.data.createdAt}
         thumbnail={post.data.thumbnail}
         tags={post.data.tags}
         isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES}

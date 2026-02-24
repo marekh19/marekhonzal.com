@@ -23,7 +23,7 @@ const { projects, className, isAboveFold = false } = Astro.props
         title={project.data.title}
         description={project.data.description}
         targetUrl={ROUTES.projects.detail(project.id)}
-        date={project.data.date}
+        createdAt={project.data.createdAt}
         thumbnail={project.data.thumbnail}
         isPriorityImage={isAboveFold && index < NUM_PRIORITY_IMAGES}
         gitHubUrl={project.data.githubUrl}
