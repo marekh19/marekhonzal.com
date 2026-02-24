@@ -14,7 +14,7 @@ type Props = PostData & {
   className?: string
 }
 
-const { title, createdAt, tags, className, readingTime } = Astro.props
+const { title, createdAt, updatedAt, tags, className, readingTime } = Astro.props
 
 const tagsWithSlugs = getTagsWithSlugs(tags)
 ---
@@ -24,7 +24,11 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
     <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start"
       ><Icon name="lucide:arrow-left" class="size-3.5" />Blog</Link
     >
-    <ContentMetadata createdAt={createdAt} readingTime={readingTime} />
+    <ContentMetadata
+      createdAt={createdAt}
+      updatedAt={updatedAt}
+      readingTime={readingTime}
+    />
     <h1
       class:list={[
         'text-primary font-serif text-4xl leading-tight text-balance',

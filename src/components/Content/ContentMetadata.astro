@@ -5,12 +5,22 @@ import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
 type Props = {
   readingTime: ReadingTime
   createdAt: Date
+  updatedAt?: Date
 }
 
-const { createdAt, readingTime } = Astro.props
+const { createdAt, updatedAt, readingTime } = Astro.props
 ---
 
 <span class="text-base-content/75 inline-block font-serif">
   <time datetime={formatDateMachine(createdAt)}>{formatDateHuman(createdAt)}</time>
-  {readingTime.minutes > 0 ? ` ● ${readingTime.text}` : null}
+  {
+    updatedAt && (
+      <span>
+        {' '}
+        (updated{' '}
+        <time datetime={formatDateMachine(updatedAt)}>{formatDateHuman(updatedAt)}</time>)
+      </span>
+    )
+  }
+  {readingTime.minutes > 0 && <span class="whitespace-nowrap">● {readingTime.text}</span>}
 </span>
