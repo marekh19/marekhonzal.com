@@ -23,7 +23,7 @@ export const GET: APIRoute = async ({ site }) => {
     site: ensureAstroSite(site),
     items: sortedPosts.map((post) => ({
       title: post.data.title,
-      pubDate: post.data.date,
+      pubDate: post.data.createdAt,
       description: post.data.description,
       link: ROUTES.blog.post(post.id),
     })),

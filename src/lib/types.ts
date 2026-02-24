@@ -23,7 +23,7 @@ export type Content = {
   data: {
     isFeatured: boolean
     isDraft: boolean
-    date: Date
+    createdAt: Date
   }
 }
 

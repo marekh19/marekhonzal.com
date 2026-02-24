@@ -21,7 +21,7 @@ type Props = {
   title: string
   description: string
   targetUrl: string
-  date: Date
+  createdAt: Date
   thumbnail: ImageMetadata
   tags?: string[]
   isPriorityImage?: boolean
@@ -31,7 +31,7 @@ const {
   title,
   description,
   targetUrl,
-  date,
+  createdAt,
   thumbnail,
   tags,
   isPriorityImage = false,
@@ -68,7 +68,7 @@ const hasTags = !!visibleTags && visibleTags.length > 0
       <div class="mb-3 flex items-start justify-between gap-3">
         <time
           class="text-base-content/75 text-xs text-nowrap"
-          datetime={formatDateMachine(date)}>{formatDateHuman(date)}</time
+          datetime={formatDateMachine(createdAt)}>{formatDateHuman(createdAt)}</time
         >
         {
           hasTags && (

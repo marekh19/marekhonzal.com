@@ -21,7 +21,7 @@ type Props = {
   title: string
   description: string
   targetUrl: string
-  date: Date
+  createdAt: Date
   thumbnail: ImageMetadata
   isPriorityImage?: boolean
   gitHubUrl?: string
@@ -31,7 +31,7 @@ const {
   title,
   description,
   targetUrl,
-  date,
+  createdAt,
   thumbnail,
   isPriorityImage = false,
   gitHubUrl,
@@ -61,9 +61,9 @@ const {
         {...IMAGE_CONFIG}
       />
       <time
-        datetime={formatDateMachine(date)}
+        datetime={formatDateMachine(createdAt)}
         class="badge badge-sm absolute top-1 left-1 font-semibold"
-        >{date.getFullYear()}</time
+        >{createdAt.getFullYear()}</time
       >
     </div>
     <div class="p-4">

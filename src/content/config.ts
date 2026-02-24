@@ -9,7 +9,8 @@ const blogCollection = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      date: z.date(),
+      createdAt: z.date(),
+      updatedAt: z.date().optional(),
       isDraft: z.boolean().optional().default(false),
       isFeatured: z.boolean().optional().default(false),
       category: z.enum(['dev', 'beyond']).optional().default('dev'),
@@ -24,7 +25,8 @@ const projectsCollection = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
-      date: z.date(),
+      createdAt: z.date(),
+      updatedAt: z.date().optional(),
       isDraft: z.boolean().optional().default(false),
       isFeatured: z.boolean().optional().default(false),
       thumbnail: image(),

@@ -4,13 +4,13 @@ import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
 
 type Props = {
   readingTime: ReadingTime
-  date: Date
+  createdAt: Date
 }
 
-const { date, readingTime } = Astro.props
+const { createdAt, readingTime } = Astro.props
 ---
 
 <span class="text-base-content/75 inline-block font-serif">
-  <time datetime={formatDateMachine(date)}>{formatDateHuman(date)}</time>
+  <time datetime={formatDateMachine(createdAt)}>{formatDateHuman(createdAt)}</time>
   {readingTime.minutes > 0 ? ` ● ${readingTime.text}` : null}
 </span>

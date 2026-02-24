@@ -14,7 +14,7 @@ type Props = ProjectData & {
   className?: string
 }
 
-const { title, date, demoUrl, githubUrl, className, readingTime } = Astro.props
+const { title, createdAt, demoUrl, githubUrl, className, readingTime } = Astro.props
 
 const technologies = getTechnologiesByProject(Astro.props)
 const details = { demoUrl, githubUrl, technologies }
@@ -25,7 +25,7 @@ const details = { demoUrl, githubUrl, technologies }
     <Link href={ROUTES.projects._} class="inline-flex items-center gap-1 self-start"
       ><Icon name="lucide:arrow-left" class="size-3.5" />Projects</Link
     >
-    <ContentMetadata date={date} readingTime={readingTime} />
+    <ContentMetadata createdAt={createdAt} readingTime={readingTime} />
 
     <h1
       class:list={[
