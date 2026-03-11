@@ -1,4 +1,4 @@
-import { z } from 'astro:schema'
+import { z } from 'astro/zod'
 
 import { ENV } from '@/config/env'
 import { getGitHubOwnerRepoFromUrl } from '@/lib/utils/string'

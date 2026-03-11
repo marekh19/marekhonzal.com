@@ -17,7 +17,6 @@ export default defineConfig({
   env: envConfig,
   site: SITE_URL ?? 'http://localhost:4321',
   vite: {
-    // @ts-expect-error https://tailwindcss.com/docs/installation/framework-guides/astro
     plugins: [tailwindcss()],
   },
   integrations: [

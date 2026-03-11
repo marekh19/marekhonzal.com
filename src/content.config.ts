@@ -1,5 +1,6 @@
-import { defineCollection, z } from 'astro:content'
+import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 
 import { TECHNOLOGY_SLUGS } from '@/lib/technologies'
 
@@ -31,8 +32,8 @@ const projectsCollection = defineCollection({
       isFeatured: z.boolean().optional().default(false),
       thumbnail: image(),
       technologies: z.array(z.enum(TECHNOLOGY_SLUGS)),
-      githubUrl: z.string().url().optional(),
-      demoUrl: z.string().url().optional(),
+      githubUrl: z.url().optional(),
+      demoUrl: z.url().optional(),
     }),
 })
 
