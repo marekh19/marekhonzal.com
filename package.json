@@ -35,7 +35,7 @@
     "@astrojs/check": "^0.9.9",
     "@astrojs/mdx": "^5.0.4",
     "@astrojs/ts-plugin": "^1.10.7",
-    "@commitlint/cli": "^20.5.3",
+    "@commitlint/cli": "^21.0.0",
     "@commitlint/config-conventional": "^21.0.0",
     "@eslint/js": "^10.0.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
