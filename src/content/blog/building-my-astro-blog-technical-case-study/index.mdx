@@ -1,9 +1,10 @@
 ---
-title: 'Building My Astro Blog: Technical Implementation Case Study'
+title: 'Building My Astro Blog: Technical Case Study'
 description:
   'A technical case study of my Astro blog. Learn how I implemented SEO, caching, OG
   images, and RSS feeds with real code examples.'
 createdAt: 2025-11-05
+updatedAt: 2026-05-13
 isDraft: false
 isFeatured: true
 tags:
@@ -35,7 +36,7 @@ import umamiScreenshot from './umami-screenshot.png'
 ## Introduction – Field Notes, Not a Tutorial
 
 In
-[Part 1: From Next.js Complexity to Static Simplicity](/blog/rebuilding-my-website-with-astro-why-and-results),
+[Part 1: Rebuilding My Website with Astro](/blog/rebuilding-my-website-with-astro-why-and-results),
 I explained _why_ I rebuilt my site and the results.  
 This is the _how_: pragmatic decisions with code I actually run in production.
 
@@ -505,9 +506,10 @@ constraint.
   Astro, you must add `script-src 'unsafe-inline'` to your **Content-Security-Policy**, or
   islands won’t hydrate.
 
-Astro has an
-[experimental CSP hashes flag](https://docs.astro.build/en/reference/experimental-flags/csp/),
-but I couldn’t make it work with Cloudflare Workers and a global policy yet.
+At the time of writing, Astro had an
+[experimental CSP hashes feature](https://docs.astro.build/en/reference/configuration-reference/#securitycsp)
+that I couldn’t make work with Cloudflare Workers and a global policy. It has since been
+fully released — I haven’t revisited it yet, but plan to at some point.
 
 </Alert>
 
