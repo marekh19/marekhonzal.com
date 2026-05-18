@@ -3,40 +3,21 @@
 # To review: run `pnpm audit` after upgrading direct deps — once upstream
 # packages pull in safe versions themselves, the relevant override can be removed.
 
+allowBuilds:
+  workerd: true
+
 overrides:
-  # Multiple CVEs in axios; remove when direct deps no longer pull in axios <1.15.2
-  axios@>=1.0.0 <1.12.0: '>=1.12.0'
-  axios@>=1.0.0 <1.15.0: '>=1.15.0'
-  axios@>=1.0.0 <1.15.1: '>=1.15.1'
-  axios@>=1.0.0 <1.15.2: '>=1.15.2'
-  axios@>=1.0.0 <=1.13.4: '>=1.13.5'
-
-  # XML parsing vulnerabilities; remove when upstream deps require fast-xml-parser >=5.7.0
-  fast-xml-builder@<=1.1.6: '>=1.1.7'
-  fast-xml-parser@<5.7.0: '>=5.7.0'
-
-  # SSRF via open redirect (CVE-2024-28849); remove when deps no longer pull in follow-redirects <=1.15.11
-  follow-redirects@<=1.15.11: '>=1.16.0'
-
-  # Prototype pollution in form-data; remove when deps require form-data >=4.0.4
-  form-data@>=4.0.0 <4.0.4: '>=4.0.4'
-
-  # ReDoS vulnerability in picomatch; remove when deps require picomatch >=4.0.4
-  picomatch@>=4.0.0 <4.0.4: '>=4.0.4'
-
-  # CVE in postcss CSS parser; remove when deps require postcss >=8.5.10
-  postcss@<8.5.10: '>=8.5.10'
-
-  # CVE in rollup bundler; remove when deps require rollup >=4.59.0
-  rollup@>=4.0.0 <4.59.0: '>=4.59.0'
-
-  # Multiple tar CVEs accumulated over time; remove when deps no longer pull in tar <7.5.11
-  tar@<7.5.7: '>=7.5.7'
-  tar@<7.5.8: '>=7.5.8'
-  tar@<=7.5.10: '>=7.5.11'
-  tar@<=7.5.2: '>=7.5.3'
-  tar@<=7.5.3: '>=7.5.4'
-  tar@<=7.5.9: '>=7.5.10'
-
-  # CVE in yaml parser; remove when deps require yaml >=2.8.3
-  yaml@>=2.0.0 <2.8.3: '>=2.8.3'
+  # tar <7.5.11 — hardlink/symlink path traversal allowing arbitrary file
+  # read/write during archive extraction. astro-icon > @iconify/tools pins
+  # tar@6.2.1 and the v6 line has no patched release.
+  # CVE-2026-24842, CVE-2026-23745, CVE-2026-26960, CVE-2026-29786, CVE-2026-31802
+  tar: '^7.5.15'
+  # ws >=8.0.0 <8.20.1 — websocket.close() leaks uninitialized memory when the
+  # reason argument is a TypedArray. Pulled in via wrangler > miniflare.
+  # CVE-2026-45736
+  ws: '^8.20.1'
+  # yaml >=2.0.0 <2.8.3 — unbounded recursion in node composition lets a small
+  # crafted document trigger RangeError (stack overflow). Pulled in via
+  # @astrojs/check > @astrojs/language-server > volar-service-yaml > yaml-language-server.
+  # CVE-2026-33532
+  yaml: '^2.8.3'
