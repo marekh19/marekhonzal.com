@@ -4,6 +4,8 @@
 # packages pull in safe versions themselves, the relevant override can be removed.
 
 allowBuilds:
+  esbuild: true
+  sharp: true
   workerd: true
 
 overrides:
