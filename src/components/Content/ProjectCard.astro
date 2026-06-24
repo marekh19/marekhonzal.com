@@ -38,47 +38,47 @@ const {
 } = Astro.props
 ---
 
-<a
-  href={targetUrl}
+<article
   class={cn(
-    'border-base-content/15 group bg-base-100 relative overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
-    'hover:border-base-content/25',
-    'link-outline',
+    'border-base-content/15 group bg-base-100 relative flex h-full flex-col overflow-hidden rounded-xl border transition-colors duration-200 ease-out',
+    'hover:border-base-content/25 has-[a:focus-visible]:border-base-content/25',
+    'has-[a:focus-visible]:outline-primary has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2',
+    'lg:flex-row',
   )}
 >
-  <article class={cn('flex h-full flex-col', 'lg:flex-row')}>
-    <div class="aspect-og relative shrink-0 self-stretch overflow-hidden">
-      <Image
-        src={thumbnail}
-        alt={title}
-        quality={isPriorityImage ? 'high' : 'mid'}
-        priority={isPriorityImage}
-        class={cn(
-          'size-full object-cover transition-transform duration-300 ease-out',
-          'motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105',
-          'lg:max-w-90',
-        )}
-        {...IMAGE_CONFIG}
-      />
-      <time
-        datetime={formatDateMachine(createdAt)}
-        class="badge badge-sm absolute top-1 left-1 font-semibold"
-        >{createdAt.getFullYear()}</time
-      >
-    </div>
-    <div class="p-4">
-      <h3 class="mb-3 line-clamp-2 text-lg font-bold">{title}</h3>
-      <p class="text-base-content/75 mb-3 line-clamp-3">{description}</p>
-      <span class="mt-auto inline-flex items-center gap-1"
-        >Read more<Icon
-          name="lucide:arrow-right"
-          class="ease-springy size-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1.25 motion-safe:group-focus-visible:translate-x-1.25"
-        /></span
-      >
-    </div>
-    <ProjectCardStars
-      className="absolute top-1 right-1 font-semibold"
-      gitHubUrl={gitHubUrl}
+  <div class="aspect-og relative shrink-0 self-stretch overflow-hidden">
+    <Image
+      src={thumbnail}
+      alt={title}
+      quality={isPriorityImage ? 'high' : 'mid'}
+      priority={isPriorityImage}
+      class={cn(
+        'size-full object-cover transition-transform duration-300 ease-out',
+        'motion-safe:group-hover:scale-105 motion-safe:group-has-[a:focus-visible]:scale-105',
+        'lg:max-w-90',
+      )}
+      {...IMAGE_CONFIG}
     />
-  </article>
-</a>
+    <time
+      datetime={formatDateMachine(createdAt)}
+      class="badge badge-sm absolute top-1 left-1 font-semibold"
+      >{createdAt.getFullYear()}</time
+    >
+  </div>
+  <div class="p-4">
+    <h3 class="mb-3 line-clamp-2 text-lg font-bold">
+      <a href={targetUrl} class="link-overlay">{title}</a>
+    </h3>
+    <p class="text-base-content/75 mb-3 line-clamp-3">{description}</p>
+    <span class="mt-auto inline-flex items-center gap-1"
+      >Read more<Icon
+        name="lucide:arrow-right"
+        class="ease-springy size-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1.25 motion-safe:group-has-[a:focus-visible]:translate-x-1.25"
+      /></span
+    >
+  </div>
+  <ProjectCardStars
+    className="pointer-events-none absolute top-1 right-1 font-semibold"
+    gitHubUrl={gitHubUrl}
+  />
+</article>

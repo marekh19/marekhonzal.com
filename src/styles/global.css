@@ -97,6 +97,23 @@ html {
     @apply focus:outline-primary focus:rounded-sm focus:outline-offset-2;
   }
 
+  /*
+   * Block-link / card pattern: wrap only the title in the anchor, then stretch
+   * an ::after pseudo over the whole card to reclaim the clickable surface.
+   * Keeps the link's accessible name short and allows nested interactive
+   * elements. The focus outline lives on the card element itself (not the
+   * pseudo) so the card's overflow-hidden doesn't clip it — an element's own
+   * outline is never clipped by its own overflow.
+   * See https://adrianroselli.com/2020/02/block-links-cards-clickable-regions-etc.html
+   */
+  .link-overlay {
+    @apply focus-visible:outline-none;
+
+    &::after {
+      @apply absolute inset-0 content-[''];
+    }
+  }
+
   .bg-primary-mix {
     background: color-mix(
       in oklch,
