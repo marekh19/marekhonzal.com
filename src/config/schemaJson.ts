@@ -40,6 +40,23 @@ export const createPersonSchema = (siteUrl: URL) =>
     sameAs: SAME_AS,
   }) as const
 
+type Crumb = {
+  name: string
+  path: string
+}
+
+export const createBreadcrumbSchema = (siteUrl: URL, crumbs: readonly Crumb[]) =>
+  ({
+    ...CONTEXT,
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbs.map((crumb, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: crumb.name,
+      item: new URL(crumb.path, siteUrl).toString(),
+    })),
+  }) as const
+
 export const createBlogPostSchema = (siteUrl: URL, post: Post, wordCount: number) =>
   ({
     ...CONTEXT,

@@ -6,7 +6,8 @@ import ArticleHeader from '@/components/Content/ArticleHeader.astro'
 import { mdxComponents } from '@/components/MDX/MDXComponents'
 import ArticleMeta from '@/components/Meta/ArticleMeta.astro'
 import StructuredData from '@/components/Meta/SchemaOrg/Base.astro'
-import { createBlogPostSchema } from '@/config/schemaJson'
+import { ROUTES } from '@/config/routes'
+import { createBlogPostSchema, createBreadcrumbSchema } from '@/config/schemaJson'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
 import { ensureAstroSite } from '@/lib/utils/guards'
@@ -28,6 +29,11 @@ const { readingTime } = remarkPluginFrontmatter
 
 const siteUrl = ensureAstroSite(Astro.site)
 const structuredData = createBlogPostSchema(siteUrl, post, readingTime.words)
+const breadcrumbData = createBreadcrumbSchema(siteUrl, [
+  { name: 'Home', path: ROUTES.home },
+  { name: 'Blog', path: ROUTES.blog._ },
+  { name: data.title, path: ROUTES.blog.post(post.id) },
+])
 ---
 
 <ReadingLayout
@@ -38,6 +44,7 @@ const structuredData = createBlogPostSchema(siteUrl, post, readingTime.words)
 >
   <Fragment slot="head">
     <StructuredData schema={structuredData} />
+    <StructuredData schema={breadcrumbData} />
     <ArticleMeta
       publishedTime={data.createdAt}
       modifiedTime={data.updatedAt}

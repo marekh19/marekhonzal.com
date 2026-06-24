@@ -5,8 +5,12 @@ import { getCollection, render } from 'astro:content'
 import ProjectHeader from '@/components/Content/ProjectHeader.astro'
 import { mdxComponents } from '@/components/MDX/MDXComponents'
 import ArticleMeta from '@/components/Meta/ArticleMeta.astro'
+import StructuredData from '@/components/Meta/SchemaOrg/Base.astro'
+import { ROUTES } from '@/config/routes'
+import { createBreadcrumbSchema } from '@/config/schemaJson'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
+import { ensureAstroSite } from '@/lib/utils/guards'
 
 export const getStaticPaths = (async () => {
   const projects = await getCollection('projects', shouldIncludeItem)
@@ -22,6 +26,13 @@ const { Content, headings, remarkPluginFrontmatter } = await render(project)
 
 const { data } = project
 const { readingTime } = remarkPluginFrontmatter
+
+const siteUrl = ensureAstroSite(Astro.site)
+const breadcrumbData = createBreadcrumbSchema(siteUrl, [
+  { name: 'Home', path: ROUTES.home },
+  { name: 'Projects', path: ROUTES.projects._ },
+  { name: data.title, path: ROUTES.projects.detail(project.id) },
+])
 ---
 
 <ReadingLayout
@@ -31,6 +42,7 @@ const { readingTime } = remarkPluginFrontmatter
   ogType="article"
 >
   <Fragment slot="head">
+    <StructuredData schema={breadcrumbData} />
     <ArticleMeta
       publishedTime={data.createdAt}
       modifiedTime={data.updatedAt}
