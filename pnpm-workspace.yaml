@@ -9,17 +9,5 @@ allowBuilds:
   workerd: true
 
 overrides:
-  # tar <7.5.11 — hardlink/symlink path traversal allowing arbitrary file
-  # read/write during archive extraction. astro-icon > @iconify/tools pins
-  # tar@6.2.1 and the v6 line has no patched release.
-  # CVE-2026-24842, CVE-2026-23745, CVE-2026-26960, CVE-2026-29786, CVE-2026-31802
-  tar: '^7.5.15'
-  # ws >=8.0.0 <8.20.1 — websocket.close() leaks uninitialized memory when the
-  # reason argument is a TypedArray. Pulled in via wrangler > miniflare.
-  # CVE-2026-45736
-  ws: '^8.20.1'
-  # yaml >=2.0.0 <2.8.3 — unbounded recursion in node composition lets a small
-  # crafted document trigger RangeError (stack overflow). Pulled in via
-  # @astrojs/check > @astrojs/language-server > volar-service-yaml > yaml-language-server.
-  # CVE-2026-33532
-  yaml: '^2.8.3'
+  tar: "^7.5.16"
+  yaml: "^2.8.3"

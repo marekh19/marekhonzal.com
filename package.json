@@ -1,7 +1,7 @@
 {
   "name": "marekhonzal-com",
   "type": "module",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
@@ -16,13 +16,13 @@
     "knip": "knip"
   },
   "dependencies": {
-    "@astrojs/preact": "^5.1.5",
+    "@astrojs/preact": "^6.0.0",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.3",
     "@iconify-json/logos": "^1.2.11",
     "@iconify-json/lucide": "^1.2.114",
     "@iconify-json/ph": "^1.2.2",
-    "astro": "^6.4.8",
+    "astro": "^7.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-preact": "^1.21.0",
@@ -33,20 +33,20 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/mdx": "^7.0.0",
     "@astrojs/ts-plugin": "^1.10.9",
-    "@commitlint/cli": "^21.0.2",
-    "@commitlint/config-conventional": "^21.0.2",
+    "@commitlint/cli": "^21.1.0",
+    "@commitlint/config-conventional": "^21.1.0",
     "@eslint/js": "^10.0.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.1",
-    "@types/node": "^25.9.4",
+    "@types/node": "^26.0.0",
     "@vercel/og": "^0.11.1",
     "astro-icon": "^1.1.5",
     "daisyui": "^5.5.23",
     "eslint": "^10.5.0",
-    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-astro": "^2.0.0",
     "husky": "^9.1.7",
     "knip": "^6.18.0",
     "lint-staged": "^17.0.8",
@@ -59,8 +59,8 @@
     "tailwindcss": "^4.3.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.0",
-    "vite": "^7.3.5",
-    "wrangler": "^4.103.0"
+    "vite": "^8.1.0",
+    "wrangler": "^4.104.0"
   },
   "engineStrict": true,
   "engines": {
