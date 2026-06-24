@@ -1,4 +1,3 @@
----
 import Alert from '@/components/ui/Alert/Alert.astro'
 import Figure from '@/components/ui/Figure.astro'
 import H1 from '@/components/ui/Heading/H1.astro'
@@ -21,6 +20,3 @@ export const mdxComponents = {
   h5: H5,
   h6: H6,
 }
----
-
-<!-- The component doesn't render anything -->

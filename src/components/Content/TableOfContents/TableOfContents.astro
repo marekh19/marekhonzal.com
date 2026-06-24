@@ -3,6 +3,7 @@ import type { MarkdownHeading } from 'astro'
 
 import { buildToc } from '@/lib/utils/tableOfContents'
 
+import { tocHeadingId } from './constants'
 import TableOfContentsItem from './TableOfContentsItem.astro'
 
 type Props = {
@@ -11,8 +12,6 @@ type Props = {
 
 const { headings } = Astro.props
 const toc = buildToc(headings)
-
-export const tocHeadingId = 'toc-heading'
 ---
 
 <h2 id={tocHeadingId} class="sr-only">Table of contents</h2>
