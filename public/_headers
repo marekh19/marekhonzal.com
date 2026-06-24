@@ -8,38 +8,63 @@
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=(), web-share=(), xr-spatial-tracking=(), screen-wake-lock=(), clipboard-write=(self), fullscreen=(self)
   Cross-Origin-Opener-Policy: same-origin
 
-# Immutable assets
+# Immutable assets — content-hashed filenames, safe to cache forever.
+# 63072000 = 2 years. immutable = never even revalidate.
 
 /_astro/*
   Cache-Control: public, max-age=63072000, immutable
 
+# Fonts are versioned in the filename (lora-v36, open-sans-v43), not
+# content-hashed. 2 years is fine as long as we never edit a file in place.
 /fonts/*
   Cache-Control: public, max-age=63072000, immutable
 
-# Rarely changing
+# Rarely changing, unhashed assets
 
+# 604800 = 7 days
 /videos/*
   Cache-Control: public, max-age=604800
 
+# 86400 = 1 day
 /favicon/*
   Cache-Control: public, max-age=86400
 
+# 86400 = 1 day — OG images are rebuilt from posts on deploy
 /og/*.png
   Cache-Control: public, max-age=86400
 
-# Homepage & list pages — short CDN TTL
+# Homepage & list pages — must show new posts soon after publish.
+# A redeploy does NOT purge the edge cache (same URL), so s-maxage is the
+# real staleness ceiling. Keep it short for lists.
+# max-age=0       browser always revalidates (cheap 304, always fresh)
+# s-maxage=3600   CDN serves cached for 1 hour
+# swr=86400       CDN may serve stale up to 1 day while refetching
 
 /
-  Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 /projects
-  Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 /blog
-  Cache-Control: public, max-age=0, s-maxage=600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 
-# Detail pages — longer CDN TTL
+# Detail pages — change only on edit.
+# s-maxage=10800  CDN serves cached for 3 hours = max wait for a fix to show
+# swr=86400       CDN may serve stale up to 1 day while refetching
 
 /projects/*
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+  Cache-Control: public, max-age=0, s-maxage=10800, stale-while-revalidate=86400
 /blog/*
+  Cache-Control: public, max-age=0, s-maxage=10800, stale-while-revalidate=86400
+
+# Feeds & crawler files (production-only output)
+# s-maxage=3600   CDN 1 hour; swr=86400 stale up to 1 day
+
+/rss.xml
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/sitemap-*.xml
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
+# 86400 = 1 day
+/robots.txt
+  Cache-Control: public, max-age=86400
 
