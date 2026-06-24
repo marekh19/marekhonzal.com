@@ -1,3 +1,4 @@
+import { unified } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import preact from '@astrojs/preact'
 import sitemap from '@astrojs/sitemap'
@@ -36,6 +37,8 @@ export default defineConfig({
         dark: 'catppuccin-mocha',
       },
     },
-    remarkPlugins: [sectionize, remarkReadingTime],
+    processor: unified({
+      remarkPlugins: [sectionize, remarkReadingTime],
+    }),
   },
 })

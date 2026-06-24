@@ -1,7 +1,7 @@
 {
   "name": "marekhonzal-com",
   "type": "module",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "scripts": {
     "dev": "astro dev --host",
     "build": "astro build",
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/markdown-remark": "^7.2.0",
     "@astrojs/mdx": "^7.0.0",
     "@astrojs/ts-plugin": "^1.10.9",
     "@commitlint/cli": "^21.1.0",
