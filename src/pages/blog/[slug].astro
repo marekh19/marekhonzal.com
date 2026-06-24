@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content'
 
 import ArticleHeader from '@/components/Content/ArticleHeader.astro'
 import { mdxComponents } from '@/components/MDX/MDXComponents'
+import ArticleMeta from '@/components/Meta/ArticleMeta.astro'
 import StructuredData from '@/components/Meta/SchemaOrg/Base.astro'
 import { createBlogPostSchema } from '@/config/schemaJson'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
@@ -33,9 +34,15 @@ const structuredData = createBlogPostSchema(siteUrl, post, readingTime.words)
   pageTitle={data.title}
   pageDescription={data.description}
   headings={headings}
+  ogType="article"
 >
   <Fragment slot="head">
     <StructuredData schema={structuredData} />
+    <ArticleMeta
+      publishedTime={data.createdAt}
+      modifiedTime={data.updatedAt}
+      tags={data.tags}
+    />
   </Fragment>
   <Fragment slot="contentHeader">
     <ArticleHeader className="mt-5" readingTime={readingTime} {...data} />

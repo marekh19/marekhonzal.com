@@ -4,6 +4,7 @@ import { getCollection, render } from 'astro:content'
 
 import ProjectHeader from '@/components/Content/ProjectHeader.astro'
 import { mdxComponents } from '@/components/MDX/MDXComponents'
+import ArticleMeta from '@/components/Meta/ArticleMeta.astro'
 import ReadingLayout from '@/layouts/ReadingLayout.astro'
 import { shouldIncludeItem } from '@/lib/utils/content'
 
@@ -27,7 +28,15 @@ const { readingTime } = remarkPluginFrontmatter
   pageTitle={data.title}
   pageDescription={data.description}
   headings={headings}
+  ogType="article"
 >
+  <Fragment slot="head">
+    <ArticleMeta
+      publishedTime={data.createdAt}
+      modifiedTime={data.updatedAt}
+      tags={data.technologies}
+    />
+  </Fragment>
   <Fragment slot="contentHeader">
     <ProjectHeader className="mt-5" readingTime={readingTime} {...data} />
   </Fragment>

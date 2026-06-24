@@ -15,10 +15,14 @@ import '@/styles/global.css'
 type Props = {
   pageTitle?: string
   pageDescription?: string
+  ogType?: 'website' | 'article'
 }
 
-const { pageTitle = defaultSeo.baseTitle, pageDescription = defaultSeo.metaDescription } =
-  Astro.props
+const {
+  pageTitle = defaultSeo.baseTitle,
+  pageDescription = defaultSeo.metaDescription,
+  ogType = 'website',
+} = Astro.props
 
 const pathname = Astro.url.pathname
 const params = Astro.params
@@ -30,7 +34,12 @@ const hasCustomMain = Astro.slots.has('main')
 
 <html lang="en">
   <head>
-    <Head title={pageTitle} description={pageDescription} ogImagePath={ogImageUrl}>
+    <Head
+      title={pageTitle}
+      description={pageDescription}
+      ogImagePath={ogImageUrl}
+      ogType={ogType}
+    >
       <slot name="head" />
       <ClientRouter />
     </Head>

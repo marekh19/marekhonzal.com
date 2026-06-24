@@ -18,9 +18,10 @@ type Props = {
   title: string
   description: string
   ogImagePath: string
+  ogType?: 'website' | 'article'
 }
 
-const { title, description, ogImagePath } = Astro.props
+const { title, description, ogImagePath, ogType = 'website' } = Astro.props
 ---
 
 <title>{title}</title>
@@ -33,7 +34,12 @@ const { title, description, ogImagePath } = Astro.props
 {!ENV.IS_LOCAL && <Analytics />}
 {ENV.IS_PRODUCTION && <Sitemap />}
 <PreloadFonts type="sans" />
-<OpenGraph title={title} description={description} imagePath={ogImagePath} />
+<OpenGraph
+  title={title}
+  description={description}
+  imagePath={ogImagePath}
+  type={ogType}
+/>
 <CommonSchemaOrg />
 <AppVersion />
 <InlineStyles />

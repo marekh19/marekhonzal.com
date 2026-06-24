@@ -1,0 +1,21 @@
+---
+import { ensureAstroSite } from '@/lib/utils/guards'
+
+type Props = {
+  publishedTime: Date
+  modifiedTime?: Date
+  tags?: readonly string[]
+}
+
+const { publishedTime, modifiedTime, tags } = Astro.props
+const author = ensureAstroSite(Astro.site).origin
+---
+
+<meta property="article:published_time" content={publishedTime.toISOString()} />
+{
+  modifiedTime && (
+    <meta property="article:modified_time" content={modifiedTime.toISOString()} />
+  )
+}
+<meta property="article:author" content={author} />
+{tags?.map((tag) => <meta property="article:tag" content={tag} />)}

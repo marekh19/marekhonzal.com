@@ -16,12 +16,17 @@ type Props = {
   pageTitle: string
   pageDescription: string
   headings: MarkdownHeading[]
+  ogType?: 'website' | 'article'
 }
 
-const { pageTitle, pageDescription, headings } = Astro.props
+const { pageTitle, pageDescription, headings, ogType = 'website' } = Astro.props
 ---
 
-<BaseLayout pageTitle={defaultSeo.pageTitle(pageTitle)} pageDescription={pageDescription}>
+<BaseLayout
+  pageTitle={defaultSeo.pageTitle(pageTitle)}
+  pageDescription={pageDescription}
+  ogType={ogType}
+>
   <Fragment slot="head">
     <PreloadFonts type="serif" />
     <slot name="head" />

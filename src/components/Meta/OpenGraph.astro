@@ -5,9 +5,10 @@ type Props = {
   title: string
   description: string
   imagePath: string
+  type?: 'website' | 'article'
 }
 
-const { title, description, imagePath } = Astro.props
+const { title, description, imagePath, type = 'website' } = Astro.props
 const origin = ensureAstroSite(Astro.site)
 const pageUrl = Astro.url.toString().replace(/\/$/, '')
 const imageUrl = new URL(imagePath, origin).toString()
@@ -20,7 +21,7 @@ const siteName = new URL(origin).hostname
 ---
 
 <!-- Open Graph -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={pageUrl} />
