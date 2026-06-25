@@ -68,6 +68,8 @@
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 /sitemap-*.xml
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+/llms.txt
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 
 # 86400 = 1 day
 /robots.txt
