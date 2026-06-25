@@ -47,6 +47,11 @@
 /blog
   Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 
+# Tag pages are lists — new posts must show soon, like /blog. More specific
+# than /blog/* so this wins on Cloudflare (specificity, not order).
+/blog/tags/*
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
+
 # Detail pages — change only on edit.
 # s-maxage=10800  CDN serves cached for 3 hours = max wait for a fix to show
 # swr=86400       CDN may serve stale up to 1 day while refetching
@@ -67,4 +72,9 @@
 # 86400 = 1 day
 /robots.txt
   Cache-Control: public, max-age=86400
+
+# 404 page — only /* matched it before (no Cache-Control). Keep it off the
+# browser and short at the edge so a stale error page can't get pinned.
+/404.html
+  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 
