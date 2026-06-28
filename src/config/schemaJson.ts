@@ -36,6 +36,7 @@ export const createPersonSchema = (siteUrl: URL) =>
     '@type': 'Person',
     '@id': createId(IDS.me, siteUrl),
     name: 'Marek Honzal',
+    jobTitle: defaultSeo.jobTitle,
     url: siteUrl,
     sameAs: SAME_AS,
   }) as const
