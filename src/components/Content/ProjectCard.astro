@@ -1,41 +1,22 @@
 ---
-import type { ImageMetadata } from 'astro'
-import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 
+import Thumbnail from '@/components/Content/Thumbnail.astro'
 import { cn } from '@/lib/utils/cn'
 import { formatDateMachine } from '@/lib/utils/date'
 
 import ProjectCardStars from './ProjectCardStars.astro'
-
-const IMAGE_CONFIG = {
-  widths: [340, 480, 656, 720, 768, 960, 1024, 1280],
-  sizes: `
-    (max-width: 599px) calc(100vw - 2.5rem),
-    (max-width: 1023px) calc(50vw - 6rem),
-    340px
-  `,
-}
 
 type Props = {
   title: string
   description: string
   targetUrl: string
   createdAt: Date
-  thumbnail: ImageMetadata
-  isPriorityImage?: boolean
+  slug: string
   gitHubUrl?: string
 }
 
-const {
-  title,
-  description,
-  targetUrl,
-  createdAt,
-  thumbnail,
-  isPriorityImage = false,
-  gitHubUrl,
-} = Astro.props
+const { title, description, targetUrl, createdAt, slug, gitHubUrl } = Astro.props
 ---
 
 <article
@@ -47,17 +28,10 @@ const {
   )}
 >
   <div class="aspect-og relative shrink-0 self-stretch overflow-hidden">
-    <Image
-      src={thumbnail}
-      alt={title}
-      quality={isPriorityImage ? 'high' : 'mid'}
-      priority={isPriorityImage}
-      class={cn(
-        'size-full object-cover transition-transform duration-300 ease-out',
-        'motion-safe:group-hover:scale-105 motion-safe:group-has-[a:focus-visible]:scale-105',
-        'lg:max-w-90',
-      )}
-      {...IMAGE_CONFIG}
+    <Thumbnail
+      collection="projects"
+      slug={slug}
+      class="lg:max-w-90 lg:border-r lg:border-b-0"
     />
     <time
       datetime={formatDateMachine(createdAt)}

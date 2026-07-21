@@ -6,7 +6,7 @@ import { TECHNOLOGY_SLUGS } from '@/lib/technologies'
 
 const blogCollection = defineCollection({
   loader: glob({ pattern: '**/*.{mdx,md}', base: './src/content/blog' }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       description: z.string(),
@@ -16,13 +16,12 @@ const blogCollection = defineCollection({
       isFeatured: z.boolean().optional().default(false),
       category: z.enum(['dev', 'beyond']).optional().default('dev'),
       tags: z.array(z.string()).optional(),
-      thumbnail: image(),
     }),
 })
 
 const projectsCollection = defineCollection({
   loader: glob({ pattern: '**/*.{mdx,md}', base: './src/content/projects' }),
-  schema: ({ image }) =>
+  schema: () =>
     z.object({
       title: z.string(),
       description: z.string(),
@@ -30,7 +29,6 @@ const projectsCollection = defineCollection({
       updatedAt: z.date().optional(),
       isDraft: z.boolean().optional().default(false),
       isFeatured: z.boolean().optional().default(false),
-      thumbnail: image(),
       technologies: z.array(z.enum(TECHNOLOGY_SLUGS)),
       githubUrl: z.url().optional(),
       demoUrl: z.url().optional(),

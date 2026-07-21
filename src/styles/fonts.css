@@ -55,3 +55,12 @@
     url('/fonts/lora-v36-latin-500.woff2') format('woff2'),
     url('/fonts/lora-v36-latin-500.woff') format('woff');
 }
+
+/* excalifont - excalidraw diagrams & thumbnails (self-hosted, not preloaded) */
+@font-face {
+  font-display: swap;
+  font-family: 'Excalifont';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/excalifont-regular.woff2') format('woff2');
+}

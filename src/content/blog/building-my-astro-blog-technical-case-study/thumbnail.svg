@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 608.8 258.7">
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="#e9ecef" stroke-width="0" d="M523 82c-23-3-88-26-134-27-47-1-119 8-147 21-27 12-19 35-18 54 0 19-3 48 22 60 25 11 84 11 129 9 45-1 118 2 142-17 24-20 2-84 3-102"/>
+    <path fill="none" stroke="#1e1e1e" stroke-width="4" d="M521 81c-23-4-89-25-135-26-46-2-115 3-142 15-28 12-20 36-21 56 0 20-8 53 17 66 26 12 87 11 134 9s122-2 147-21c25-20 1-81 2-97m2-2c-22-5-93-29-140-31s-116 9-143 22c-27 12-21 36-20 56 1 19-1 48 25 60s86 14 130 12c45-1 113 1 137-19 24-19 5-82 6-99"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-error) 0.85 c h)" stroke-width="0" d="M524 82c8 2 33 8 46 16 13 9 32 25 31 35-2 11-26 20-40 27-13 6-32 20-40 13-9-6-11-35-11-50s8-34 11-40"/>
+    <path fill="none" stroke="var(--color-error)" stroke-width="4" d="M524 83c7 3 34 9 46 17 13 8 30 20 29 30s-22 20-34 27c-13 8-33 26-42 21-8-5-11-36-10-51 0-16 9-37 11-44m5 0c7 4 27 10 38 19 11 8 29 20 28 30 0 10-18 21-30 29-12 7-35 24-44 17-10-6-12-39-11-56 1-16 14-35 17-41"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-error) 0.85 c h)" stroke-width="0" d="M329 204c-5 4-19 14-26 21-8 7 1 19-19 22-20 2-86-2-103-5-18-2-8-8-2-11 5-4 26-4 37-11 10-7 8-30 26-33 17-3 65 14 79 17"/>
+    <path fill="none" stroke="var(--color-error)" stroke-width="4" d="M327 203c-3 3-16 9-24 16-7 7 3 23-18 26-22 3-91-4-109-6s-5-4 1-7c7-3 28-6 39-12 11-7 8-24 27-27 18-3 70 7 84 8m-1-1c-4 3-19 13-26 21s4 24-17 27-90-5-109-7c-18-3-8-5 0-9 7-3 34-6 45-13 11-8 2-28 20-32 17-3 72 9 87 12"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-error) 0.85 c h)" stroke-width="0" d="M320 51c-5-6-9-33-33-39-23-5-89 4-107 7s-7 5 0 10c7 6 31 16 42 23s17 16 25 18c7 2 11-5 18-7l24-5c10-2 30-8 35-8"/>
+    <path fill="none" stroke="var(--color-error)" stroke-width="4" d="M317 53c-6-6-11-35-33-41-23-6-83 3-102 6-18 3-15 5-8 9 7 5 40 13 51 20 12 8 14 21 20 24 7 3 13-4 19-6l20-5 35-10m2 4c-7-6-17-34-40-40-24-5-82 3-100 6-18 2-15 5-8 10 7 4 39 11 50 17 12 6 12 18 19 21 7 2 18-3 25-5 7-1 7-3 16-5l37-2"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="#e9ecef" stroke-width="0" d="M225 92c-5 1-19-3-25 5-6 7-13 28-12 40 0 12 7 27 13 32s18 9 21-4c4-12 0-59 0-72"/>
+    <path fill="none" stroke="#1e1e1e" stroke-width="4" d="M222 88c-3 1-15-3-21 5-5 8-11 32-11 44q0 20 9 29c5 5 19 15 23 2 3-12-1-64 0-77m-5 1c-4 0-15-4-19 3-5 6-7 25-7 37 0 13 1 30 7 36 6 7 23 17 27 4 5-13 0-67 0-81"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="#ffec99" stroke-width="0" d="M195 95c-4-2-10-12-20-13-10-2-37 1-40 3-4 3 27 8 19 11-9 3-60 6-68 8s34 1 21 5c-13 5-98 18-98 21 0 4 84-2 98 0 13 2-20 11-18 13 3 2 32-2 34 1 1 2-28 12-24 15 3 3 38 2 44 5s-13 14-9 15c5 0 27-7 36-10q16-1 21-7c3-5-4-12-3-24 1-11 7-39 9-46"/>
+    <path fill="none" stroke="#f08c00" stroke-width="4" d="M194 96c-3-1-6-11-16-12s-39 1-42 5c-4 3 28 12 19 14-8 1-61-6-70-5-8 1 34 4 21 10-12 5-96 19-96 23 0 5 83 2 97 4 13 2-18 7-15 8 3 2 29-2 30 0 1 3-28 12-24 15 4 4 43 2 49 5s-17 11-13 12 28-2 38-4c9-2 16-2 18-8 3-6-5-19-4-30s9-30 11-37m-6-3c-4-1-7-7-16-7-10 0-38 4-42 5-4 2 26 3 19 4-8 1-55 2-62 4s33 1 20 7-99 25-100 30c-1 4 82-4 95-2s-20 10-18 12c3 3 33 2 34 4 2 2-27 9-23 11 4 1 40-3 46 0 6 2-12 11-8 13 4 3 23 4 32 2 10-2 22-7 24-14 3-7-8-14-7-26s11-39 13-46"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-error) 0.85 c h)" stroke-width="0" d="M228 114c-8-1-44 1-52 2q-13 0 1 4c9 4 43 21 51 20 9-1-2-23-2-26"/>
+    <path fill="none" stroke="var(--color-error)" stroke-width="4" d="m224 114-45 1c-8 2-12 3-4 7 8 5 42 22 51 21 8-1 2-25 2-29m0 0-49-3q-13 0-2 7c8 4 42 21 50 21 8-1-1-22-1-26"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-info) 1 c h)" stroke-width="0" d="M237 71c-2 2-10 5-11 14s-8 33 5 39c14 6 57 4 77-2 19-7 32-25 41-36 8-10 20-23 10-27s-50 3-71 6c-20 2-42 8-51 9"/>
+    <path fill="none" stroke="var(--color-info)" stroke-width="4" d="M234 72q-3 3-6 15c0 9-12 30 1 36 13 5 57 5 78-1 20-5 35-20 43-31 9-11 18-31 9-36-10-5-46 0-66 4-21 3-46 14-56 16m1 1c-1 4-9 7-10 15-2 8-13 29-1 35 12 5 53 6 73-1 20-6 39-29 48-40s17-21 7-25c-11-4-48 0-68 3-20 2-43 10-51 12"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-success) 1 c h)" stroke-width="0" d="M232 131c0 7-3 29-1 39 2 9-2 15 14 19s60 4 81 6c21 1 36 11 46 4 10-8 17-34 14-49-4-14-23-37-34-41s-23 14-34 17-17 1-31 1l-56 1"/>
+    <path fill="none" stroke="var(--color-success)" stroke-width="4" d="M231 130c0 7-5 30-2 40s3 16 19 20c16 5 58 6 78 7s32 6 42-1 21-29 18-43-25-35-35-40c-11-6-19 5-29 8s-17 8-33 10c-15 2-49 1-60 1m-1-4c-1 7-5 35-1 45 3 9 3 8 20 13 16 4 57 11 78 13s38 4 47-3c10-8 13-30 10-44-4-14-20-37-30-42-10-6-21 6-32 10-11 3-19 7-34 9l-55 4"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-secondary) 1 c h)" stroke-width="0" d="M355 113c-3-3-19-8-18-12 0-5 16-7 21-14 4-6 0-21 4-26q8-6 23-3c11 0 19 2 40 6l84 20c16 4 6 0 7 2 2 3 8 9 2 11-7 2-24-3-39 1s-31 20-52 23-63-5-75-7"/>
+    <path fill="none" stroke="var(--color-secondary)" stroke-width="4" d="M355 110c-3-1-17-4-17-8s14-10 18-17c5-8 2-22 7-26s13-1 23 0l38 4c21 4 71 12 86 16 15 3 5 2 6 5 1 4 6 13-1 15s-24-5-39-2-31 17-51 19c-20 3-59-5-71-6m-3 6c-3-1-16-6-15-11 0-5 14-10 18-17 5-7 5-22 10-26 5-5 9-2 19-2 9 1 15-2 36 2l93 21c17 4 8-2 9 1 1 2 5 9-3 13-7 3-25 2-41 6-15 3-31 15-52 16s-62-9-74-10"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-primary) 1 c h)" stroke-width="0" d="M360 117c5 5 18 14 23 23 5 10 8 24 7 33s-22 21-13 24c8 4 56 4 66-3 9-8-5-30-9-42s-7-25-14-31c-7-5-16 0-27 0-10-1-28-1-34-3"/>
+    <path fill="none" stroke="var(--color-primary)" stroke-width="4" d="M358 112c3 4 18 16 23 26q7 16 7 32c-1 10-19 22-10 26 8 4 51 7 60 0 9-8-2-33-5-46q-2-20-11-29c-7-6-18-3-29-4l-32-3m1 2c5 5 20 18 24 26q4 11 1 23c-2 9-17 28-8 33 10 5 53 7 63-2 9-8-3-35-6-48q-3-22-12-31c-8-5-21-1-32-1l-34 3"/>
+  </g>
+  <g fill-rule="evenodd" stroke-linecap="round">
+    <path fill="oklch(from var(--color-warning) 1 c h)" stroke-width="0" d="m428 118 9 39 6 22c1 6-10 14-3 15 7 2 35-1 48-4 12-3 26-5 29-12 2-8-12-24-13-35-1-10 4-22 5-30 0-7 2-13-2-15-5-2-18 0-26 2l-28 9c-7 4-15 11-20 13"/>
+    <path fill="none" stroke="var(--color-warning)" stroke-width="4" d="M432 119c1 5 2 25 5 35 2 11 8 18 10 25 1 7-10 14-3 16 6 3 31 0 42-3 12-3 26-4 29-12s-11-24-12-35c-1-12 8-25 8-33q1-11-7-14a154 154 0 0 0-52 10c-8 3-18 10-21 12m-2 4c2 6 11 24 13 34q4 15 4 25c0 6-8 14-1 15 6 2 26-2 38-6 12-3 30-6 34-14 3-9-12-26-13-37s3-24 4-30 5-6 1-8c-5-2-17-4-27-3-9 1-21 7-30 10l-25 8"/>
+  </g>
+  <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(260 79)">SEO</text>
+  <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(389 145)">OG</text>
+  <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(278 144)">RSS</text>
+  <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(364 66)">Caching</text>
+  <path fill="none" stroke="var(--color-error)" stroke-linecap="round" stroke-width="2" d="M474 124c5 0 15 5 19 8q6 4 5 10 2 8-1 15-4 6-12 9-11 3-20 2-9-5-13-12-4-6-2-14c1-4-1-10 7-11s34 2 41 6c6 4 1 17 0 17m-20-29q11 2 17 9t6 15q0 7-5 10-7 7-18 10-11 1-19-3-9-4-12-12 0-7 5-15 1-9 7-13c5-3 18-1 21 0h-2M458 162l34-27m-37 24 35-29"/>
+  <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(457 134)">JS</text>
+</svg>
