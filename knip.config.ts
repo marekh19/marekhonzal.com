@@ -17,6 +17,7 @@ export default {
     '@iconify-json/logos',
     '@iconify-json/lucide',
     '@iconify-json/ph',
+    '@iconify-json/devicon',
     'wrangler',
   ],
 } satisfies KnipConfig

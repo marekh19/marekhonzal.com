@@ -1,0 +1,140 @@
+---
+title: meowsoot.nvim
+description:
+  'A Neovim colorscheme where strings are yellow, functions pink, types lavender — and
+  green never reaches code.'
+createdAt: 2026-05-31
+isDraft: false
+isFeatured: true
+technologies:
+  - neovim
+  - lua
+githubUrl: https://github.com/marekh19/meowsoot.nvim
+---
+
+import { Image } from 'astro:assets'
+
+import colorSchemeShowcase from './showcase-main.png'
+
+_The one piece of software I stare at more than anything else is my editor. So at some
+point it stopped feeling silly to spend a weekend getting its colors exactly right._
+
+## Years of "almost"
+
+I ran [Catppuccin](https://github.com/catppuccin/nvim) for most of the last couple of
+years. Great theme — but something always felt slightly off, and I could never quite name
+it. Every few months I'd wander off, try Tokyo Night, try one of the quiet low-contrast
+ones, live with it for a week, and then quietly crawl back to Catppuccin.
+
+Two things nagged at me the whole time. The background was never dark enough for my taste.
+And — I know this is irrational — I can't stand green in code. Strings, comments,
+whatever; green just reads as noise and I can't unsee it. But I also didn't want one of
+those washed-out, everything-is-grey themes. I like a pop of color and a strong contrast
+ratio.
+
+Eventually I stopped hunting and built my own.
+
+## Soot sprites and a Pop-Tart cat
+
+The palette started as two mental images.
+
+The background is charcoal, borrowed from Studio Ghibli's _susuwatari_ — the little soot
+sprites from Spirited Away and Totoro. The pink and peach came from, of all things, Nyan
+Cat's Pop-Tart body. From there I sat down with the HSL color wheel and worked out cyan,
+yellow, and lavender until it settled into a six-hue system that feels balanced, not
+random.
+
+<Figure caption="Neovim running the meowsoot Night variant — the warm default theme.">
+  <Image
+    src={colorSchemeShowcase}
+    alt="Neovim editor with the meowsoot Night colorscheme: a charcoal background with yellow strings, pink functions, lavender types, and cyan keywords."
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+    quality={90}
+  />
+</Figure>
+
+## The one rule: no green in code
+
+Here's the opinionated part. In meowsoot:
+
+- **strings** are yellow
+- **functions** are pink
+- **types** are lavender
+- **keywords** are cyan
+
+And green? Green only shows up where I actually want it — diff and git-add markers,
+success states, the terminal's ANSI slots — and never in your actual code.
+
+The fun bit is that this isn't just me being disciplined. It's enforced in the theme's own
+code: the green value simply isn't reachable from any syntax-highlighting group. If I ever
+slip and reach for it in the wrong place, the theme fails to load. The rule can't rot.
+
+```lua
+-- "No green in code": green is unreachable from syntax groups, not filtered.
+
+-- palette.lua — green exists, one per variant, reserved:
+green = { 140, 35, 70 },
+
+-- palette.lua:resolve() — resolver is blind to intent, so p.green gets a hex.
+
+-- colors.lua — THE CHOKEPOINT: `c` is built by hand and skips the green key.
+local c = {
+  pink = p.pink, cyan = p.cyan, yellow = p.yellow, --[[ ... ]] -- no `green`
+  hint = p.cyan,   -- classic green sneak-point, pinned to cyan on purpose
+  ok   = p.green,  -- green leaks ONLY via namespaced aliases from here down:
+}
+c.diff.add, c.git.add, c.terminal.green = p.green -- diff / git / ANSI slot
+
+-- theme.lua — groups get ONLY `c`; they never require the palette.
+require("meowsoot.groups").setup(c, opts)
+
+-- Result: in any group file, c.green == nil.
+--   fg = c.yellow  -- ok
+--   fg = c.green   -- nil → no green reaches code
+-- Guarantee: unreachable is hard. "Fails loudly" only when nil is USED where
+-- it errors (e.g. blend(c.green, ...)); a bare `fg = c.green` silently no-ops.
+```
+
+## Building it (with a co-pilot)
+
+Under the hood it's pure Lua with zero runtime dependencies. The architecture leans
+heavily on [tokyonight](https://github.com/folke/tokyonight.nvim) — folke's module layout
+and caching are excellent and I saw no reason to reinvent them. The one thing I wanted to
+do my own way was author colors on the plain HSL wheel, so the little ~50-line HSL→hex
+engine at the center is mine.
+
+I'll be straight about this, same as I was when I posted it: I built a lot of it with AI.
+Without that speedup I'd never have found the time to stand up this much scaffolding — the
+HSL engine, 22 plugin integrations, the generators for the matching terminal configs. It's
+the thing that turned "someday" into an actual weekend.
+
+## Putting it out there
+
+This is the first theme I've ever released publicly, so I did the scary thing and
+[posted it to r/neovim](https://www.reddit.com/r/neovim/comments/1tutbvq/meowsootnvim_a_colorscheme_where_strings_are/).
+It went over better than I expected — and the best part wasn't the upvotes, it was the
+feedback.
+
+A few people asked for a cooler background — the calming-blues crowd who live in Rosé
+Pine. My main variant is staying warm; that's the whole point of it. But it was the
+perfect excuse to add a second. So now there's **Moon**, a cool blue-tinted dark variant,
+alongside the warm **Night** and the light **Dawn** — which one reviewer called
+"FANTASTIC!" Same six hues, three moods.
+
+## Try it
+
+```vim
+" Inside Neovim
+:colorscheme meowsoot        " Night — warm, the default
+:colorscheme meowsoot-moon   " Moon — cool, blue-tinted
+:colorscheme meowsoot-dawn   " Dawn — light
+```
+
+It ships with a bundled lualine theme and terminal configs regenerated from the same
+palette, so your Ghostty / Kitty / WezTerm / Tmux / Fish can match the editor. Needs
+Neovim 0.9+.
+
+Grab it on [GitHub](https://github.com/marekh19/meowsoot.nvim). And if you try it, I'd
+genuinely love to hear what you think — the green thing is a hill I'm happy to defend.
