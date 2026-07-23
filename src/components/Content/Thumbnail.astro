@@ -1,13 +1,6 @@
 ---
 import { cn } from '@/lib/utils/cn'
-
-// Every thumbnail is an inline SVG (themeable, follows the color-scheme toggle).
-// Convention: <collection>/<slug>/thumbnail.svg. Resolved at build, no runtime JS.
-const thumbnails = import.meta.glob<string>('/src/content/**/thumbnail.svg', {
-  query: '?raw',
-  import: 'default',
-  eager: true,
-})
+import { getThumbnails } from '@/lib/utils/thumbnails'
 
 type Props = {
   collection: 'blog' | 'projects'
@@ -17,7 +10,7 @@ type Props = {
 
 const { collection, slug, class: className } = Astro.props
 
-const svg = thumbnails[`/src/content/${collection}/${slug}/thumbnail.svg`]
+const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
 ---
 
 <div

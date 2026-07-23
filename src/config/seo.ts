@@ -8,6 +8,9 @@ export const defaultSeo = {
 
 export const OG_FALLBACK_SLUG = 'base'
 
+/** OG image dimensions — shared by the renderer and the meta tags. */
+export const OG_IMAGE = { width: 1200, height: 630 } as const
+
 export const staticPageOgFallback = {
   id: OG_FALLBACK_SLUG,
   data: {

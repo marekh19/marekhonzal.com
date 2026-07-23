@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 646.4 338.1">
   <g stroke-linecap="round">
-    <path fill="oklch(from var(--color-primary) 1 c h" stroke-width="0" d="M31 45q105 4 224 0c9-5 16 7 21 21 2 13-4 22 0 41-1 16-4 24-21 21-57 0-111-2-224 0-12 5-21-11-21-21 1-9-4-18 0-41-1-18 2-17 21-21"/>
+    <path fill="oklch(from var(--color-primary) 1 c h)" stroke-width="0" d="M31 45q105 4 224 0c9-5 16 7 21 21 2 13-4 22 0 41-1 16-4 24-21 21-57 0-111-2-224 0-12 5-21-11-21-21 1-9-4-18 0-41-1-18 2-17 21-21"/>
     <path fill="none" stroke="var(--color-primary)" stroke-width="4" d="M31 45c88 2 171 2 224 0M31 45h224m0 0q18-3 21 21m-21-21c17-5 17 4 21 21m0 0c4 16 2 36 0 41m0-41q-2 19 0 41m0 0c2 11-9 21-21 21m21-21q4 16-21 21m0 0H31m224 0c-59-2-121-1-224 0m0 0c-17 2-18-5-21-21m21 21c-13 1-20-9-21-21m0 0c2-12 3-32 0-41m0 41q3-16 0-41m0 0q2-25 21-21M10 66Q6 42 31 45"/>
   </g>
   <text x="63.7" y="31.7" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="36" style="white-space:pre" text-anchor="middle" transform="translate(79 64)">Button</text>
