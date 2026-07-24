@@ -2,9 +2,18 @@
   padding-block: 1.75em;
 }
 
+/* Shiki inlines the light theme as the default and keeps dark in CSS vars.
+   Follow the site's theme: dark when forced dark, otherwise the OS preference
+   only while in system mode (no data-theme override). */
+:root[data-theme='custom-dark'] .astro-code,
+:root[data-theme='custom-dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+}
+
 @media (prefers-color-scheme: dark) {
-  .astro-code,
-  .astro-code span {
+  :root:not([data-theme]) .astro-code,
+  :root:not([data-theme]) .astro-code span {
     color: var(--shiki-dark) !important;
     background-color: var(--shiki-dark-bg) !important;
   }
