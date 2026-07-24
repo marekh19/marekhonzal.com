@@ -52,7 +52,7 @@ const breadcrumbData = createBreadcrumbSchema(siteUrl, [
     />
   </Fragment>
   <Fragment slot="contentHeader">
-    <ArticleHeader className="mt-5" readingTime={readingTime} {...data} />
+    <ArticleHeader className="mt-5" readingTime={readingTime} slug={post.id} {...data} />
   </Fragment>
 
   <Content components={mdxComponents} />

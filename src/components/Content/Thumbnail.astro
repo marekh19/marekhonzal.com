@@ -19,6 +19,7 @@ const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
     'motion-safe:group-hover:[&>svg]:scale-105 motion-safe:group-has-[a:focus-visible]:[&>svg]:scale-105',
     className,
   )}
+  transition:name={`thumbnail-${collection}-${slug}`}
   aria-hidden="true"
   set:html={svg}
 />

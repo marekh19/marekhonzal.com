@@ -1,0 +1,25 @@
+---
+import Thumbnail from '@/components/Content/Thumbnail.astro'
+import { cn } from '@/lib/utils/cn'
+
+type Props = {
+  collection: 'blog' | 'projects'
+  slug: string
+  class?: string
+}
+
+const { collection, slug, class: className } = Astro.props
+---
+
+<!-- The colocated sketch, framed as a plate beside the title. Same drafting-paper
+     surface as the card so the detail page reads as the card's destination.
+     Static here (no card link to hover), border-b dropped for the full frame. -->
+<div
+  class={cn(
+    'aspect-og border-base-content/15 overflow-hidden rounded-xl border',
+    'max-w-87.5',
+    className,
+  )}
+>
+  <Thumbnail collection={collection} slug={slug} class="border-b-0" />
+</div>

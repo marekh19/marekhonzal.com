@@ -7,57 +7,67 @@ import type { PostData, ReadingTime } from '@/lib/types'
 import { cn } from '@/lib/utils/cn'
 import { getTagsWithSlugs } from '@/lib/utils/posts'
 
+import ContentHeaderThumbnail from './ContentHeaderThumbnail.astro'
 import ContentMetadata from './ContentMetadata.astro'
 
 type Props = PostData & {
+  slug: string
   readingTime: ReadingTime
   className?: string
 }
 
-const { title, createdAt, updatedAt, tags, className, readingTime } = Astro.props
+const { title, slug, createdAt, updatedAt, tags, className, readingTime } = Astro.props
 
 const tagsWithSlugs = getTagsWithSlugs(tags)
 ---
 
 <div class={className}>
-  <div class="flex flex-col gap-y-3">
-    <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start"
-      ><Icon name="lucide:arrow-left" class="size-3.5" />Blog</Link
-    >
-    <ContentMetadata
-      createdAt={createdAt}
-      updatedAt={updatedAt}
-      readingTime={readingTime}
-    />
-    <h1
-      class:list={[
-        'text-primary font-serif text-4xl leading-tight text-balance',
-        'lg:text-5xl',
-      ]}
-    >
-      {title}
-    </h1>
+  <div
+    class={cn(
+      'grid grid-cols-1 items-center gap-y-8',
+      'lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-x-12',
+    )}
+  >
+    <div class="flex flex-col gap-y-3">
+      <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start"
+        ><Icon name="lucide:arrow-left" class="size-3.5" />Blog</Link
+      >
+      <ContentMetadata
+        createdAt={createdAt}
+        updatedAt={updatedAt}
+        readingTime={readingTime}
+      />
+      <h1
+        class:list={[
+          'text-primary font-serif text-4xl leading-tight text-balance',
+          'lg:text-5xl',
+        ]}
+      >
+        {title}
+      </h1>
+      {
+        !!tagsWithSlugs && (
+          <ul class={cn('mt-2 flex flex-wrap gap-3', 'md:gap-x-5')}>
+            {tagsWithSlugs.map((tag) => (
+              <li>
+                <a
+                  href={ROUTES.blog.tag(tag.slug)}
+                  class={cn(
+                    'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
+                    'md:badge-md',
+                    'hover:bg-neutral/75',
+                    'link-outline',
+                  )}
+                >
+                  {tag.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+    <ContentHeaderThumbnail collection="blog" slug={slug} />
   </div>
-  {
-    !!tagsWithSlugs && (
-      <ul class={cn('mt-5 flex flex-wrap gap-3', 'md:gap-x-5')}>
-        {tagsWithSlugs.map((tag) => (
-          <li>
-            <a
-              href={ROUTES.blog.tag(tag.slug)}
-              class={cn(
-                'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
-                'md:badge-md',
-                'hover:bg-neutral/75',
-                'link-outline',
-              )}
-            >
-              {tag.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )
-  }
   <div class="divider"></div>
 </div>
