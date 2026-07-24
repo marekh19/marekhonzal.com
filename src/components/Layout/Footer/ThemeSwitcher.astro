@@ -1,0 +1,136 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { cn } from '@/lib/utils/cn'
+
+const options = [
+  { value: 'system', label: 'System', icon: 'lucide:monitor' },
+  { value: 'light', label: 'Light', icon: 'lucide:sun' },
+  { value: 'dark', label: 'Dark', icon: 'lucide:moon' },
+] as const
+---
+
+<div class="theme-switcher">
+  <button
+    type="button"
+    popovertarget="theme-menu"
+    aria-label="Change theme"
+    style="anchor-name:--theme-anchor"
+    class={cn(
+      'link-outline inline-flex cursor-pointer items-center gap-1.5 rounded-sm text-sm',
+      'text-base-content/75 transition-colors duration-200',
+      'hover:text-base-content',
+    )}
+  >
+    <Icon name="lucide:monitor" class="theme-active-icon theme-active-system size-4" />
+    <Icon name="lucide:sun" class="theme-active-icon theme-active-light size-4" />
+    <Icon name="lucide:moon" class="theme-active-icon theme-active-dark size-4" />
+    <span>Theme</span>
+    <Icon
+      name="lucide:chevron-down"
+      class="theme-chevron size-3 transition-transform duration-200"
+    />
+  </button>
+
+  <ul
+    popover
+    id="theme-menu"
+    style="position-anchor:--theme-anchor"
+    class={cn(
+      'dropdown dropdown-top dropdown-end bg-base-100 rounded-box border-base-content/10',
+      'mb-2 w-44 border p-1.5 shadow-lg',
+    )}
+  >
+    {
+      options.map(({ value, label, icon }) => (
+        <li>
+          <label
+            class={cn(
+              'flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm',
+              'transition-colors duration-150',
+              'hover:bg-base-200 has-focus-visible:bg-base-200',
+            )}
+          >
+            <Icon name={icon} class="size-4 opacity-70" />
+            <span class="grow">{label}</span>
+            <input
+              type="radio"
+              name="theme-pref"
+              value={value}
+              checked={value === 'system'}
+              class="theme-pref-input radio radio-primary radio-sm"
+            />
+          </label>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  /* Collapsed trigger shows a single icon for the active choice — pure CSS. */
+  .theme-active-icon {
+    display: none;
+  }
+  .theme-switcher:has(.theme-pref-input[value='system']:checked) .theme-active-system,
+  .theme-switcher:has(.theme-pref-input[value='light']:checked) .theme-active-light,
+  .theme-switcher:has(.theme-pref-input[value='dark']:checked) .theme-active-dark {
+    display: inline-block;
+  }
+
+  /* Chevron flips while the popover menu is open. */
+  .theme-switcher:has([popover]:popover-open) .theme-chevron {
+    transform: rotate(180deg);
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = 'theme'
+  const THEME_ATTR: Record<string, string> = {
+    light: 'custom-light',
+    dark: 'custom-dark',
+  }
+
+  const applyTheme = (pref: string) => {
+    const theme = THEME_ATTR[pref]
+    if (theme) document.documentElement.dataset.theme = theme
+    else delete document.documentElement.dataset.theme
+  }
+
+  const readPref = (): string => {
+    try {
+      return localStorage.getItem(STORAGE_KEY) ?? 'system'
+    } catch {
+      return 'system'
+    }
+  }
+
+  // Reflect the stored choice in the radios (dot + trigger icon).
+  const syncControls = () => {
+    const pref = readPref()
+    for (const input of document.querySelectorAll('.theme-pref-input')) {
+      if (input instanceof HTMLInputElement) {
+        input.checked = input.value === pref
+      }
+    }
+  }
+
+  const onChange = (event: Event) => {
+    const input = event.target
+    if (
+      !(input instanceof HTMLInputElement) ||
+      !input.classList.contains('theme-pref-input')
+    ) {
+      return
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, input.value)
+    } catch {
+      // Persisting failed — apply for this session anyway.
+    }
+    applyTheme(input.value)
+  }
+
+  document.addEventListener('change', onChange)
+  document.addEventListener('astro:page-load', syncControls)
+</script>

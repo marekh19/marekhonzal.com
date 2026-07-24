@@ -12,6 +12,7 @@ import PreloadFonts from '@/components/Meta/PreloadFonts.astro'
 import Rss from '@/components/Meta/Rss.astro'
 import CommonSchemaOrg from '@/components/Meta/SchemaOrg/Common.astro'
 import Sitemap from '@/components/Meta/Sitemap.astro'
+import ThemeScript from '@/components/Meta/ThemeScript.astro'
 import { ENV } from '@/config/env'
 
 type Props = {
@@ -27,6 +28,7 @@ const { title, description, ogImagePath, ogType = 'website' } = Astro.props
 <title>{title}</title>
 <Meta description={description} />
 {!ENV.IS_PRODUCTION && <DisallowRobots />}
+<ThemeScript />
 <ColorScheme />
 <Favicon />
 <CanonicalLink />

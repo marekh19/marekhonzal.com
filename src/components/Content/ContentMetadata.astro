@@ -18,7 +18,8 @@ const { createdAt, updatedAt, readingTime } = Astro.props
       <span>
         {' '}
         (updated{' '}
-        <time datetime={formatDateMachine(updatedAt)}>{formatDateHuman(updatedAt)}</time>)
+        <time datetime={formatDateMachine(updatedAt)}>{formatDateHuman(updatedAt)}</time>
+        ){' '}
       </span>
     )
   }

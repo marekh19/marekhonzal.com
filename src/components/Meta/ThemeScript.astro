@@ -1,0 +1,33 @@
+---
+// Applies the persisted theme override before first paint (no flash), and
+// re-applies after client-router swaps, which reset <html>'s attributes.
+// "system" stores nothing / removes data-theme so the CSS prefers-color-scheme
+// media query decides — no JS needed for the default case.
+---
+
+<script is:inline>
+  ;(() => {
+    const STORAGE_KEY = 'theme'
+    const THEME_ATTR = { light: 'custom-light', dark: 'custom-dark' }
+
+    const apply = () => {
+      let pref = null
+      try {
+        pref = localStorage.getItem(STORAGE_KEY)
+      } catch {
+        // localStorage blocked (private mode / disabled) — fall back to system.
+      }
+      const theme = THEME_ATTR[pref]
+      if (theme) document.documentElement.dataset.theme = theme
+      else delete document.documentElement.dataset.theme
+    }
+
+    apply()
+
+    // Bind once — inline scripts may re-run on navigation with the client router.
+    if (!window.__themeSwapBound) {
+      window.__themeSwapBound = true
+      document.addEventListener('astro:after-swap', apply)
+    }
+  })()
+</script>

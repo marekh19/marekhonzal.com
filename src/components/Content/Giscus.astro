@@ -19,10 +19,37 @@ const { className } = Astro.props
     'reactions-enabled': '1',
     'emit-metadata': '0',
     'input-position': 'top',
-    theme: 'preferred_color_scheme',
     lang: 'en',
     loading: 'lazy',
   }
+
+  // Resolve the site's effective theme so Giscus follows the manual override
+  // (data-theme on <html>) rather than the OS preference alone.
+  const resolveTheme = (): 'light' | 'dark' => {
+    const attr = document.documentElement.dataset.theme
+    if (attr === 'custom-dark') return 'dark'
+    if (attr === 'custom-light') return 'light'
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  }
+
+  // Push the resolved theme to an already-loaded Giscus iframe.
+  const syncGiscusTheme = () => {
+    const iframe = document.querySelector('iframe.giscus-frame')
+    if (!(iframe instanceof HTMLIFrameElement) || !iframe.contentWindow) return
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme: resolveTheme() } } },
+      'https://giscus.app',
+    )
+  }
+
+  // React to manual switches (data-theme) and OS changes (system mode).
+  new MutationObserver(syncGiscusTheme).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
+  })
+  window
+    .matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener('change', syncGiscusTheme)
 
   document.addEventListener('astro:page-load', () => {
     const container = document.getElementById('giscus-container')
@@ -38,6 +65,7 @@ const { className } = Astro.props
         script.setAttribute(`data-${key}`, value)
       }
     }
+    script.setAttribute('data-theme', resolveTheme())
     container.appendChild(script)
   })
 </script>

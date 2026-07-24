@@ -6,6 +6,7 @@ import Copyright from './Footer/Copyright.astro'
 import Navigation from './Footer/Navigation.astro'
 import SiteUpdatedAt from './Footer/SiteUpdatedAt.astro'
 import SocialLinks from './Footer/SocialLinks.astro'
+import ThemeSwitcher from './Footer/ThemeSwitcher.astro'
 ---
 
 <div class="divider m-0 h-px"></div>
@@ -26,7 +27,10 @@ import SocialLinks from './Footer/SocialLinks.astro'
           </p>
         </div>
         <div class="space-y-5">
-          <SocialLinks />
+          <div class="flex items-center justify-between gap-4">
+            <SocialLinks />
+            <ThemeSwitcher />
+          </div>
           <Copyright />
         </div>
       </div>
