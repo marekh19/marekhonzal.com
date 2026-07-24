@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 646.4 338.1">
+  <g stroke-linecap="round">
+    <path fill="oklch(from var(--color-primary) 1 c h)" stroke-width="0" d="M31 45q105 4 224 0c9-5 16 7 21 21 2 13-4 22 0 41-1 16-4 24-21 21-57 0-111-2-224 0-12 5-21-11-21-21 1-9-4-18 0-41-1-18 2-17 21-21"/>
+    <path fill="none" stroke="var(--color-primary)" stroke-width="4" d="M31 45c88 2 171 2 224 0M31 45h224m0 0q18-3 21 21m-21-21c17-5 17 4 21 21m0 0c4 16 2 36 0 41m0-41q-2 19 0 41m0 0c2 11-9 21-21 21m21-21q4 16-21 21m0 0H31m224 0c-59-2-121-1-224 0m0 0c-17 2-18-5-21-21m21 21c-13 1-20-9-21-21m0 0c2-12 3-32 0-41m0 41q3-16 0-41m0 0q2-25 21-21M10 66Q6 42 31 45"/>
+  </g>
+  <text x="63.7" y="31.7" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="36" style="white-space:pre" text-anchor="middle" transform="translate(79 64)">Button</text>
+  <path fill="none" stroke="var(--color-base-content)" stroke-linecap="round" stroke-width="4" d="M591 97c11 9 18 24 24 37q8 20 10 43 3 24-2 47-5 21-18 38c-8 13-18 28-29 37q-17 14-36 20a155 155 0 0 1-89 4q-22-8-40-23-19-14-32-32-11-18-17-39-5-21-5-44c0-14 2-32 7-45q10-20 26-36 14-17 33-29 19-10 42-14 24-7 48-4 20 3 39 15c13 9 33 27 41 34s6 6 5 7M448 65c13-6 33-7 49-7q22 0 42 8a136 136 0 0 1 71 54q10 21 13 44 8 23 6 45-3 21-14 41c-7 13-18 29-28 40q-14 15-33 24a131 131 0 0 1-86 11 167 167 0 0 1-81-44q-15-18-23-39-7-19-7-41c-1-14-2-33 2-47q6-20 20-37c9-12 19-27 31-36 11-10 31-18 38-21 7-2 3 1 4 3"/>
+  <g stroke-linecap="round">
+    <path fill="var(--color-base-content)" stroke-width="0" d="M471 10c20-3 35 3 51 0 0 0 4 6 7 7-2 0 0 8 0 13-5 8-4 12-7 7-11 6-35-1-51 0-5 4-12 1-7-7 2-5 5-5 0-13-4-7 1-6 7-7"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M471 10q27 5 51 0m-51 0c11 2 23 1 51 0m0 0c1-3 4 2 7 7m-7-7c1-3 9 4 7 7m0 0c-2 2 1 8 0 13m0-13v13m0 0c-3 8-1 4-7 7m7-7c3 8-6 10-7 7m0 0c-15-2-36 3-51 0m51 0h-51m0 0q-7 3-7-7m7 7c-6 0-5 2-7-7m0 0V17m0 13q2-4 0-13m0 0c3-4 2-9 7-7m-7 7c3 0-1-12 7-7"/>
+  </g>
+  <g stroke-linecap="round">
+    <path fill="var(--color-base-content)" stroke-width="0" d="M487 36q9 6 22 0c0-4 5 6 5 4v10c-5 3-6-1-5 5-8 3-5 2-22 0q-4 1-4-5V40c0 2 3-8 4-4"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M487 36c7 3 15-1 22 0m-22 0h22m0 0c4 1 5-1 5 4m-5-4q6-3 5 4m0 0v10m0-10v10m0 0c1 4 1 2-5 5m5-5q-2 0-5 5m0 0h-22m22 0h-22m0 0c-5 3-1 2-4-5m4 5c-1-4-8 1-4-5m0 0q-2-3 0-10m0 10V40m0 0c-4-3 3-2 4-4m-4 4c1-7 3-2 4-4"/>
+  </g>
+  <g stroke-linecap="round">
+    <path fill="var(--color-base-content)" stroke-width="0" d="M380 93c8-6 10-8 14-13 3 2 0-2 5 0l5 5c-1 2 3 0-1 5-5 3-7 10-14 13q-3 1-5 0l-4-5c-3-2 0-6 0-5"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M380 93c4-4 6-7 14-13m-14 13 14-13m0 0q4-4 5 0m-5 0q4-2 5 0m0 0 5 5m-5-5 5 5m0 0c-1 3 2 3-1 5m1-5c1 1-2 3-1 5m0 0-14 13m14-13-14 13m0 0q-3 2-5 0m5 0q-3 3-5 0m0 0-4-5m4 5-4-5m0 0c-2-2-1-1 0-5m0 5q-2-6 0-5"/>
+  </g>
+  <g stroke-linecap="round">
+    <path fill="var(--color-base-content)" stroke-width="0" d="M360 77c14-7 18-15 22-19q11-2 9 0c4 0 2 7 8 9-3 2 3 5-1 9-6 1-13 12-21 19q-9 6-9 0c2-2-6-2-8-9-3-1-8-9 0-9"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M360 77q9-4 22-19m-22 19 22-19m0 0c-2-2 8-1 9 0m-9 0c1-1 5-5 9 0m0 0c4 2 8 8 8 9m-8-9 8 9m0 0c2 1 5 5-1 9m1-9c7 2 1 10-1 9m0 0-21 19m21-19-21 19m0 0c-3-1-5 6-9 0m9 0c-7 4-6-2-9 0m0 0-8-9m8 9-8-9m0 0v-9m0 9c-4-8 1-6 0-9"/>
+  </g>
+  <g stroke-linecap="round">
+    <path fill="var(--color-base-content)" stroke-width="0" d="M613 60c6 2 3 8 19 21 4-1 2 13 0 9-3 0-7 7-9 8q5 4-9 0c-7-3-17-15-19-22-6 1 2-2 0-8 4-1 10-6 9-9 2-4 9-2 9 1"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M613 60c6 9 12 19 19 21m-19-21q5 4 19 21m0 0c5 3 0 6 0 9m0-9c5-2 5 6 0 9m0 0c-3 0-5 6-9 8m9-8-9 8m0 0c-6 3-4 0-9 0m9 0c-2-2-3 4-9 0m0 0c-4-8-10-7-19-22m19 22q-6-10-19-22m0 0c-5 1-4-7 0-8m0 8c-4-3-4-3 0-8m0 0c5-3 4-7 9-9m-9 9 9-9m0 0q-1-5 9 1m-9-1c8-2 2 0 9 1"/>
+  </g>
+  <g stroke-linecap="round">
+    <path fill="var(--color-base-content)" stroke-width="0" d="M597 80c7 4 8 11 14 13l1 5-5 5c-3 5 1 2-5 0 1-1-5 0-14-12v-5q2-2 4-5c2-2 4 2 5-1"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M597 80q7 9 14 13m-14-13 14 13m0 0q3 1 1 5m-1-5q4 2 1 5m0 0-5 5m5-5-5 5m0 0q-2 4-5 0m5 0q-2 4-5 0m0 0-14-12m14 12q-8-8-14-12m0 0q-1-3 0-5m0 5q-2 0 0-5m0 0 4-5m-4 5 4-5m0 0q2-4 5-1m-5 1c3-3 4 0 5-1"/>
+  </g>
+  <path fill="none" stroke="var(--color-base-content)" stroke-linecap="round" stroke-width="4" d="m497 78-1 22m0-23-1 24M539 115l9-17m-10 16 13-18M574 147l21-9m-23 8 22-9M587 193l27 2m-28 0 27-1M575 238l26 14m-28-15 28 17M542 276l18 17m-21-18 20 21M496 287v23m1-24 1 25M433 296l22-18m-18 17 16-22M394 252l21-13m-22 12 25-10M378 193l27-1m-28-1 27 2M394 137l24 15m-20-17 19 13M437 91l15 26m-17-28 15 23"/>
+  <text y="42.1" fill="var(--color-base-content)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="47.8" style="white-space:pre" transform="translate(430 164)">25:00</text>
+  <g stroke-linecap="round">
+    <path fill="oklch(from var(--color-accent) 1 c h)" stroke-width="0" d="M31 219c62-6 120-7 224 0 19 3 16 6 21 21q4 11 0 42c-2 19-7 18-21 21-63-2-124-5-224 0-11 0-25-10-21-21-2-8 3-13 0-42 2-12 5-16 21-21"/>
+    <path fill="none" stroke="var(--color-accent)" stroke-width="4" d="M31 219c49-5 95-4 224 0m-224 0c64-3 130-3 224 0m0 0c17-3 20 8 21 21m-21-21c12 2 25 9 21 21m0 0c-2 19 0 27 0 42m0-42q2 21 0 42m0 0c3 16-7 22-21 21m21-21c0 13-9 24-21 21m0 0c-82 3-167 1-224 0m224 0q-107-5-224 0m0 0q-17 2-21-21m21 21c-10 3-18-10-21-21m0 0c2-12-2-23 0-42m0 42c1-12 2-20 0-42m0 0c-4-14 9-21 21-21m-21 21c3-17 11-19 21-21"/>
+  </g>
+  <text x="63.7" y="31.7" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="36" style="white-space:pre" text-anchor="middle" transform="translate(79 238)">Button</text>
+  <g stroke-linecap="round">
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="m141 145 4 54m-1-56-1 53M135 173q7 11 6 24m-5-26q2 9 8 25"/>
+    <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M152 173q-1 10-11 24m12-25-9 24"/>
+  </g>
+</svg>

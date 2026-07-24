@@ -12,7 +12,7 @@ export type Technology = {
   title: string
 } & (
   | {
-      iconName: `logos:${string}`
+      iconName: `${'logos' | 'devicon'}:${string}`
     }
   | {
       Icon: AstroComponentFactory

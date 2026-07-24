@@ -23,6 +23,8 @@ export const TECHNOLOGIES = {
   rsbuild: { title: 'Rsbuild', Icon: Rsbuild },
   vitest: { title: 'Vitest', iconName: 'logos:vitest' },
   rslib: { title: 'Rslib', Icon: Rslib },
+  neovim: { title: 'Neovim', iconName: 'devicon:neovim' },
+  lua: { title: 'Lua', iconName: 'logos:lua' },
 } as const satisfies Record<string, Technology>
 
 export const TECHNOLOGY_SLUGS = Object.keys(TECHNOLOGIES) as [

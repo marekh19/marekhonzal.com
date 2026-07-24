@@ -1,0 +1,48 @@
+---
+import { cn } from '@/lib/utils/cn'
+import { getThumbnails } from '@/lib/utils/thumbnails'
+
+type Props = {
+  collection: 'blog' | 'projects'
+  slug: string
+  class?: string
+}
+
+const { collection, slug, class: className } = Astro.props
+
+const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
+---
+
+<div
+  class={cn(
+    'thumb-surface border-base-content/10 size-full border-b p-3 [&>svg]:size-full [&>svg]:transition-transform [&>svg]:duration-300 [&>svg]:ease-out',
+    'motion-safe:group-hover:[&>svg]:scale-105 motion-safe:group-has-[a:focus-visible]:[&>svg]:scale-105',
+    className,
+  )}
+  transition:name={`thumbnail-${collection}-${slug}`}
+  data-thumbnail
+  aria-hidden="true"
+  set:html={svg}
+/>
+
+<style>
+  /* Drafting paper: a faint brand-tinted dot grid lit by a soft glow from the
+     top. Same base surface as the card, so it reads as a header, not a boxed-in
+     panel. Relative color keeps both layers correct in light and dark themes. */
+  .thumb-surface {
+    background-color: var(--color-base-100);
+    background-image:
+      radial-gradient(
+        oklch(from var(--color-primary) l c h / 0.16) 1.1px,
+        transparent 1.1px
+      ),
+      radial-gradient(
+        120% 90% at 50% 0%,
+        oklch(from var(--color-primary) l c h / 0.12),
+        transparent 55%
+      );
+    background-size:
+      15px 15px,
+      100% 100%;
+  }
+</style>
