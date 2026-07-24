@@ -20,6 +20,7 @@ const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
     className,
   )}
   transition:name={`thumbnail-${collection}-${slug}`}
+  data-thumbnail
   aria-hidden="true"
   set:html={svg}
 />
