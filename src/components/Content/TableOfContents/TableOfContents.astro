@@ -14,9 +14,13 @@ const { headings } = Astro.props
 const toc = buildToc(headings)
 ---
 
-<h2 id={tocHeadingId} class="sr-only">Table of contents</h2>
+<h2 id={tocHeadingId} class="sr-only">
+  Table of contents
+</h2>
 <ul class="flex flex-col gap-3 p-1">
-  {toc.map((heading) => <TableOfContentsItem heading={heading} />)}
+  {toc.map((heading) => (
+    <TableOfContentsItem heading={heading} />
+  ))}
 </ul>
 <svg
   class="toc-progress pointer-events-none absolute inset-0 top-0 h-full w-full noscript:hidden"
@@ -31,8 +35,7 @@ const toc = buildToc(headings)
     stroke-dashoffset="1"
     stroke-linecap="round"
     stroke-linejoin="round"
-  >
-  </path>
+  ></path>
 </svg>
 <script>
   import { addIntersectionObserver, drawPath } from '@/lib/utils/tableOfContents'

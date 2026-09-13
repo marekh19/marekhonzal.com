@@ -36,20 +36,24 @@ const { title, description, targetUrl, createdAt, slug, gitHubUrl } = Astro.prop
     <time
       datetime={formatDateMachine(createdAt)}
       class="badge badge-sm absolute top-1 left-1 font-semibold"
-      >{createdAt.getFullYear()}</time
     >
+      {createdAt.getFullYear()}
+    </time>
   </div>
   <div class="p-4">
     <h3 class="mb-3 line-clamp-2 text-lg font-bold">
-      <a href={targetUrl} class="link-overlay">{title}</a>
+      <a href={targetUrl} class="link-overlay">
+        {title}
+      </a>
     </h3>
     <p class="text-base-content/75 mb-3 line-clamp-3">{description}</p>
-    <span class="mt-auto inline-flex items-center gap-1"
-      >Read more<Icon
+    <span class="mt-auto inline-flex items-center gap-1">
+      Read more
+      <Icon
         name="lucide:arrow-right"
         class="ease-springy size-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1.25 motion-safe:group-has-[a:focus-visible]:translate-x-1.25"
-      /></span
-    >
+      />
+    </span>
   </div>
   <ProjectCardStars
     className="pointer-events-none absolute top-1 right-1 font-semibold"

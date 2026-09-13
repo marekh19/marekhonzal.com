@@ -35,9 +35,7 @@ const sectionId = 'hero'
       )}
     >
       I build the parts of frontend you don't see
-      <span
-        class="bg-base-content/60 motion-safe:animate-underline-wipe absolute bottom-0 left-0 h-0.5 w-full origin-left motion-safe:[will-change:transform] motion-safe:[animation-delay:800ms] motion-safe:[backface-visibility:hidden] motion-reduce:w-0"
-      ></span>
+      <span class="bg-base-content/60 motion-safe:animate-underline-wipe absolute bottom-0 left-0 h-0.5 w-full origin-left motion-safe:[will-change:transform] motion-safe:[animation-delay:800ms] motion-safe:[backface-visibility:hidden] motion-reduce:w-0"></span>
     </h2>
     <p
       class={cn(
@@ -50,8 +48,11 @@ const sectionId = 'hero'
       experience.
     </p>
     <p class={cn('text-base-content/75 leading-loose', '@lg:text-base', '@2xl:text-lg')}>
-      At <Link hasIcon={false} href="https://apify.com/">Apify</Link>, I'm a Senior
-      Engineer shaping the public web toward world-class.
+      At{' '}
+      <Link hasIcon={false} href="https://apify.com/">
+        Apify
+      </Link>
+      , I'm a Senior Engineer shaping the public web toward world-class.
     </p>
     <div
       class={cn(
@@ -59,8 +60,9 @@ const sectionId = 'hero'
         '@xl:mt-12 @xl:flex-row @xl:items-center @xl:gap-10',
       )}
     >
-      <a href={ROUTES.blog._} class={cn('btn btn-primary group', '@xl:btn-lg')}
-        >Read the Blog <Icon
+      <a href={ROUTES.blog._} class={cn('btn btn-primary group', '@xl:btn-lg')}>
+        Read the Blog{' '}
+        <Icon
           name="lucide:arrow-right"
           class={cn(
             'ease-springy size-[1.25em] transition-transform duration-300',
@@ -69,9 +71,9 @@ const sectionId = 'hero'
           )}
         />
       </a>
-      <a href={ROUTES.projects._} class={cn('btn btn-neutral', '@xl:btn-lg')}
-        >See What I'm Building</a
-      >
+      <a href={ROUTES.projects._} class={cn('btn btn-neutral', '@xl:btn-lg')}>
+        See What I'm Building
+      </a>
     </div>
   </div>
 </section>

@@ -5,19 +5,12 @@ import { socials } from '@/config/socials'
 ---
 
 <ul class="flex items-center gap-3">
-  {
-    socials.map(({ label, url, iconName }) => (
-      <li>
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener"
-          class="link-outline block rounded-sm"
-        >
-          <Icon class="size-5" name={iconName} />
-          <span class="sr-only">{label}</span>
-        </a>
-      </li>
-    ))
-  }
+  {socials.map(({ label, url, iconName }) => (
+    <li>
+      <a href={url} target="_blank" rel="noopener" class="link-outline block rounded-sm">
+        <Icon class="size-5" name={iconName} />
+        <span class="sr-only">{label}</span>
+      </a>
+    </li>
+  ))}
 </ul>

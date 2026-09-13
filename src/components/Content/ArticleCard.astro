@@ -36,27 +36,30 @@ const hasTags = !!visibleTags && visibleTags.length > 0
     <div class="mb-3 flex items-start justify-between gap-3">
       <time
         class="text-base-content/75 text-xs text-nowrap"
-        datetime={formatDateMachine(createdAt)}>{formatDateHuman(createdAt)}</time
+        datetime={formatDateMachine(createdAt)}
       >
-      {
-        hasTags && (
-          <div class="flex flex-wrap gap-1.5">
-            {visibleTags.map((tag) => (
-              <span class="badge badge-accent dark:badge-soft badge-sm">{tag}</span>
-            ))}
-          </div>
-        )
-      }
+        {formatDateHuman(createdAt)}
+      </time>
+      {hasTags && (
+        <div class="flex flex-wrap gap-1.5">
+          {visibleTags.map((tag) => (
+            <span class="badge badge-accent dark:badge-soft badge-sm">{tag}</span>
+          ))}
+        </div>
+      )}
     </div>
     <h3 class="mb-3 line-clamp-2 text-lg font-bold">
-      <a href={targetUrl} class="link-overlay">{title}</a>
+      <a href={targetUrl} class="link-overlay">
+        {title}
+      </a>
     </h3>
     <p class="text-base-content/75 mb-3 line-clamp-3">{description}</p>
-    <span class="mt-auto inline-flex items-center gap-1"
-      >Read more<Icon
+    <span class="mt-auto inline-flex items-center gap-1">
+      Read more
+      <Icon
         name="lucide:arrow-right"
         class="ease-springy size-4 transition-transform duration-300 motion-safe:group-hover:translate-x-1.25 motion-safe:group-has-[a:focus-visible]:translate-x-1.25"
-      /></span
-    >
+      />
+    </span>
   </div>
 </article>

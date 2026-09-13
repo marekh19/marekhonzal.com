@@ -15,16 +15,14 @@ const { projects, className } = Astro.props
 ---
 
 <ContentGrid type="project" className={className}>
-  {
-    projects.map((project) => (
-      <ProjectCard
-        title={project.data.title}
-        description={project.data.description}
-        targetUrl={ROUTES.projects.detail(project.id)}
-        createdAt={project.data.createdAt}
-        slug={project.id}
-        gitHubUrl={project.data.githubUrl}
-      />
-    ))
-  }
+  {projects.map((project) => (
+    <ProjectCard
+      title={project.data.title}
+      description={project.data.description}
+      targetUrl={ROUTES.projects.detail(project.id)}
+      createdAt={project.data.createdAt}
+      slug={project.id}
+      gitHubUrl={project.data.githubUrl}
+    />
+  ))}
 </ContentGrid>

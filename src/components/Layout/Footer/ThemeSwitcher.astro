@@ -41,29 +41,27 @@ const options = [
       'mb-2 w-44 border p-1.5 shadow-lg',
     )}
   >
-    {
-      options.map(({ value, label, icon }) => (
-        <li>
-          <label
-            class={cn(
-              'flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm',
-              'transition-colors duration-150',
-              'hover:bg-base-200 has-focus-visible:bg-base-200',
-            )}
-          >
-            <Icon name={icon} class="size-4 opacity-70" />
-            <span class="grow">{label}</span>
-            <input
-              type="radio"
-              name="theme-pref"
-              value={value}
-              checked={value === 'system'}
-              class="theme-pref-input radio radio-primary radio-sm"
-            />
-          </label>
-        </li>
-      ))
-    }
+    {options.map(({ value, label, icon }) => (
+      <li>
+        <label
+          class={cn(
+            'flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm',
+            'transition-colors duration-150',
+            'hover:bg-base-200 has-focus-visible:bg-base-200',
+          )}
+        >
+          <Icon name={icon} class="size-4 opacity-70" />
+          <span class="grow">{label}</span>
+          <input
+            type="radio"
+            name="theme-pref"
+            value={value}
+            checked={value === 'system'}
+            class="theme-pref-input radio radio-primary radio-sm"
+          />
+        </label>
+      </li>
+    ))}
   </ul>
 </div>
 
