@@ -24,19 +24,17 @@ const shouldRenderAnchor = !!id && level !== 1
   {...rest}
 >
   {!shouldRenderAnchor && <slot />}
-  {
-    shouldRenderAnchor && (
-      <a href={`#${id}`} class="not-prose group link-outline link-outline-rounded">
-        <slot />
-        <Icon
-          name="lucide:hash"
-          class={cn(
-            'text-neutral-content absolute top-1/2 -left-[0.8em] hidden size-[0.66em] -translate-x-4 -translate-y-1/2 opacity-0 transition duration-200 ease-in-out',
-            'lg:inline-block lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100 lg:group-focus-visible:translate-x-0 lg:group-focus-visible:opacity-100',
-          )}
-          aria-hidden="true"
-        />
-      </a>
-    )
-  }
+  {shouldRenderAnchor && (
+    <a href={`#${id}`} class="not-prose group link-outline link-outline-rounded">
+      <slot />
+      <Icon
+        name="lucide:hash"
+        class={cn(
+          'text-neutral-content absolute top-1/2 -left-[0.8em] hidden size-[0.66em] -translate-x-4 -translate-y-1/2 opacity-0 transition duration-200 ease-in-out',
+          'lg:inline-block lg:opacity-0 lg:group-hover:translate-x-0 lg:group-hover:opacity-100 lg:group-focus-visible:translate-x-0 lg:group-focus-visible:opacity-100',
+        )}
+        aria-hidden="true"
+      />
+    </a>
+  )}
 </Tag>

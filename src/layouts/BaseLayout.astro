@@ -49,27 +49,25 @@ const hasCustomMain = Astro.slots.has('main')
     <SkipLink />
     <Header transition:persist />
 
-    {
-      hasCustomMain ? (
-        // Page owns the whole main area (e.g., ReadingLayout with main+aside)
-        <slot name="main" />
-      ) : (
-        // Fallback: wrap default content in a semantic <main>
-        <main
-          id="main-content"
-          tabindex="-1"
-          class={cn(
-            'mx-auto max-w-6xl scroll-mt-[calc(var(--header-h)+1.25rem)] px-5 pb-40',
-            'focus:outline-none',
-            'md:px-8',
-          )}
-        >
-          <slot name="beforeContent" />
-          <slot />
-          <slot name="afterContent" />
-        </main>
-      )
-    }
+    {hasCustomMain ? (
+      // Page owns the whole main area (e.g., ReadingLayout with main+aside)
+      <slot name="main" />
+    ) : (
+      // Fallback: wrap default content in a semantic <main>
+      <main
+        id="main-content"
+        tabindex="-1"
+        class={cn(
+          'mx-auto max-w-6xl scroll-mt-[calc(var(--header-h)+1.25rem)] px-5 pb-40',
+          'focus:outline-none',
+          'md:px-8',
+        )}
+      >
+        <slot name="beforeContent" />
+        <slot />
+        <slot name="afterContent" />
+      </main>
+    )}
 
     <Footer transition:persist />
 

@@ -22,74 +22,68 @@ const { technologies, demoUrl, githubUrl, className } = Astro.props
     className,
   )}
 >
-  {
-    technologies.length > 0 && (
-      <>
-        <dt>Stack</dt>
-        <dd>
-          <ul class="flex flex-wrap items-center gap-3">
-            {technologies.map((t) => (
-              <li
-                class="tooltip bg-neutral border-base-content/10 inline-flex size-9 items-center justify-center rounded-lg border"
-                data-tip={t.title}
-              >
-                {'iconName' in t ? (
-                  <Icon name={t.iconName} class="size-6" />
-                ) : (
-                  <t.Icon class="size-6" />
-                )}
-                <span class="sr-only">{t.title}</span>
-              </li>
-            ))}
-          </ul>
-        </dd>
-      </>
-    )
-  }
-  {
-    !!githubUrl && (
-      <>
-        <dt>Source code</dt>
-        <dd>
-          <a
-            href={githubUrl}
-            class={cn(
-              'text-base-content inline-flex items-center gap-1 font-semibold',
-              'link-outline link-outline-rounded',
-            )}
-            target="_blank"
-            rel="noopener"
-          >
-            <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
-              {getGitHubRepoPart(githubUrl)}
-            </span>
-            <Icon name="lucide:github" class="size-4 shrink-0" />
-          </a>
-        </dd>
-      </>
-    )
-  }
-  {
-    !!demoUrl && (
-      <>
-        <dt>View the app</dt>
-        <dd>
-          <a
-            href={demoUrl}
-            class={cn(
-              'text-base-content inline-flex items-center gap-1 font-semibold',
-              'link-outline link-outline-rounded',
-            )}
-            target="_blank"
-            rel="noopener"
-          >
-            <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
-              {getDisplayDomain(demoUrl)}
-            </span>
-            <Icon name="lucide:external-link" class="size-4 shrink-0" />
-          </a>
-        </dd>
-      </>
-    )
-  }
+  {technologies.length > 0 && (
+    <>
+      <dt>Stack</dt>
+      <dd>
+        <ul class="flex flex-wrap items-center gap-3">
+          {technologies.map((t) => (
+            <li
+              class="tooltip bg-neutral border-base-content/10 inline-flex size-9 items-center justify-center rounded-lg border"
+              data-tip={t.title}
+            >
+              {'iconName' in t ? (
+                <Icon name={t.iconName} class="size-6" />
+              ) : (
+                <t.Icon class="size-6" />
+              )}
+              <span class="sr-only">{t.title}</span>
+            </li>
+          ))}
+        </ul>
+      </dd>
+    </>
+  )}
+  {!!githubUrl && (
+    <>
+      <dt>Source code</dt>
+      <dd>
+        <a
+          href={githubUrl}
+          class={cn(
+            'text-base-content inline-flex items-center gap-1 font-semibold',
+            'link-outline link-outline-rounded',
+          )}
+          target="_blank"
+          rel="noopener"
+        >
+          <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
+            {getGitHubRepoPart(githubUrl)}
+          </span>
+          <Icon name="lucide:github" class="size-4 shrink-0" />
+        </a>
+      </dd>
+    </>
+  )}
+  {!!demoUrl && (
+    <>
+      <dt>View the app</dt>
+      <dd>
+        <a
+          href={demoUrl}
+          class={cn(
+            'text-base-content inline-flex items-center gap-1 font-semibold',
+            'link-outline link-outline-rounded',
+          )}
+          target="_blank"
+          rel="noopener"
+        >
+          <span class={cn('max-w-[18ch] truncate', 'md:max-w-full')}>
+            {getDisplayDomain(demoUrl)}
+          </span>
+          <Icon name="lucide:external-link" class="size-4 shrink-0" />
+        </a>
+      </dd>
+    </>
+  )}
 </dl>

@@ -29,9 +29,10 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
     )}
   >
     <div class="flex flex-col gap-y-3">
-      <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start"
-        ><Icon name="lucide:arrow-left" class="size-3.5" />Blog</Link
-      >
+      <Link href={ROUTES.blog._} class="inline-flex items-center gap-1 self-start">
+        <Icon name="lucide:arrow-left" class="size-3.5" />
+        Blog
+      </Link>
       <ContentMetadata
         createdAt={createdAt}
         updatedAt={updatedAt}
@@ -45,27 +46,25 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
       >
         {title}
       </h1>
-      {
-        !!tagsWithSlugs && (
-          <ul class={cn('mt-2 flex flex-wrap gap-3', 'md:gap-x-5')}>
-            {tagsWithSlugs.map((tag) => (
-              <li>
-                <a
-                  href={ROUTES.blog.tag(tag.slug)}
-                  class={cn(
-                    'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
-                    'md:badge-md',
-                    'hover:bg-neutral/75',
-                    'link-outline',
-                  )}
-                >
-                  {tag.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
+      {!!tagsWithSlugs && (
+        <ul class={cn('mt-2 flex flex-wrap gap-3', 'md:gap-x-5')}>
+          {tagsWithSlugs.map((tag) => (
+            <li>
+              <a
+                href={ROUTES.blog.tag(tag.slug)}
+                class={cn(
+                  'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
+                  'md:badge-md',
+                  'hover:bg-neutral/75',
+                  'link-outline',
+                )}
+              >
+                {tag.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
     <ContentHeaderThumbnail collection="blog" slug={slug} />
   </div>

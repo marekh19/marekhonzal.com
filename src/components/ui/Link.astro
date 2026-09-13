@@ -25,35 +25,28 @@ if (linkType === 'anchor') {
 }
 ---
 
-{
-  linkType === 'external' && (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener"
-      class={cn(
-        'link-gradient link-outline link-outline-rounded inline-flex items-center gap-1 no-underline',
-        className,
-      )}
-      {...rest}
-    >
-      <slot />
-      {hasIcon && <Icon name="lucide:external-link" class="size-4" aria-hidden="true" />}
-    </a>
-  )
-}
+{linkType === 'external' && (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener"
+    class={cn(
+      'link-gradient link-outline link-outline-rounded inline-flex items-center gap-1 no-underline',
+      className,
+    )}
+    {...rest}
+  >
+    <slot />
+    {hasIcon && <Icon name="lucide:external-link" class="size-4" aria-hidden="true" />}
+  </a>
+)}
 
-{
-  linkType === 'internal' && (
-    <a
-      href={href}
-      {...rest}
-      class={cn(
-        'link-gradient link-outline link-outline-rounded no-underline',
-        className,
-      )}
-    >
-      <slot />
-    </a>
-  )
-}
+{linkType === 'internal' && (
+  <a
+    href={href}
+    {...rest}
+    class={cn('link-gradient link-outline link-outline-rounded no-underline', className)}
+  >
+    <slot />
+  </a>
+)}

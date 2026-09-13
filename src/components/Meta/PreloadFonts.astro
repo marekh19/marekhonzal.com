@@ -17,34 +17,30 @@ const serifFonts = [
 ] as const
 ---
 
-{
-  type === 'sans' && (
-    <>
-      {sansFonts.map((font) => (
-        <link
-          rel="preload"
-          href={font}
-          as="font"
-          type="font/woff2"
-          crossorigin="anonymous"
-        />
-      ))}
-    </>
-  )
-}
+{type === 'sans' && (
+  <>
+    {sansFonts.map((font) => (
+      <link
+        rel="preload"
+        href={font}
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
+    ))}
+  </>
+)}
 
-{
-  type === 'serif' && (
-    <>
-      {serifFonts.map((font) => (
-        <link
-          rel="preload"
-          href={font}
-          as="font"
-          type="font/woff2"
-          crossorigin="anonymous"
-        />
-      ))}
-    </>
-  )
-}
+{type === 'serif' && (
+  <>
+    {serifFonts.map((font) => (
+      <link
+        rel="preload"
+        href={font}
+        as="font"
+        type="font/woff2"
+        crossorigin="anonymous"
+      />
+    ))}
+  </>
+)}
