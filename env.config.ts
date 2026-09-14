@@ -26,7 +26,7 @@ export const envConfig = {
     PUBLIC_UMAMI_SHARE_URL: envField.string({
       context: 'client',
       access: 'public',
-      default: 'https://cloud.umami.is',
+      default: 'https://a7s.hnzl.dev',
     }),
   },
 } as const satisfies AstroUserConfig['env']
