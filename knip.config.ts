@@ -16,6 +16,7 @@ export default {
     // Scripts below are false positives. Not recognized by knip for some reason
     'src/lib/copy-code.ts',
     'src/lib/thumbnail-transitions.ts',
+    'src/lib/disable-smooth-scroll-on-navigate.ts',
   ],
   ignoreDependencies: [
     '@iconify-json/logos',
