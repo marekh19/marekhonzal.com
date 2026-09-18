@@ -1,0 +1,214 @@
+---
+title: "Stop Running AI\u00A0Agents on Your Laptop"
+description:
+  "I run Claude Code and Codex on a home server. Close the laptop, check in from my phone,
+  and come back to work ready for review. Here's my setup."
+createdAt: 2026-09-20
+isDraft: true
+isFeatured: true
+tags:
+  - 'AI'
+  - 'DX'
+  - 'Tooling'
+---
+
+import WorkflowDiagram from './agents-home-server-diagram.svg'
+
+Your laptop is a terrible place for an AI agent to live.
+
+A couple of guys at the office told me how they keep their agents running on the way home.
+They have something set up to keep their MacBooks awake with the lid closed. Before
+leaving, they connect to a hotspot, put the laptop in a backpack, and hope the connection
+holds for the journey.
+
+I get it. I've repeatedly wanted to leave while an agent was still working. But keeping a
+computer awake in a backpack is a lot of effort just to let a task continue.
+
+For the past month or two, I've run Claude Code and Codex almost exclusively on my home
+server. I connect over SSH through Tailscale. When I close the laptop, the work continues.
+And when I have an idea before bed, I can give the agent a task from my phone and come
+back to it the next morning.
+
+I'm a terminal guy. I was already comfortable working in Neovim before coding agent
+harnesses were a thing. I prefer terminal interfaces, and I think coding agents are
+particularly well suited to them: the agent, shell, tests, and Git are all right there. If
+you want a graphical editor and agent interface, this setup isn't for you. If you're
+comfortable in a terminal, I'd say move your agents off your laptop; you won't regret it.
+
+## Leave when you want to leave
+
+Remote development has existed for years. I didn't bother with it before because I was the
+one writing the code, researching questions, and collecting resources. When I left the
+keyboard, most of that work stopped anyway. Moving it to another machine didn't offer me
+enough benefit.
+
+Agents changed that. I can assign work that continues between my check-ins, so it makes
+sense for the environment to stay available independently of the computer I'm carrying.
+
+When I have an idea before bed, I can write a short prompt from my phone and leave the
+agent working. I want to wake up to something I can review and test. Sometimes it needs
+more work or a decision from me. That's fine; I pick it up when I'm ready.
+
+Longer research fits this well too. Comparing features, reading standards, collecting
+resources, or investigating possible improvements can take a while. I can leave that
+running and come back to the findings. If the agent needs an answer, I can reconnect from
+my phone, answer, and let it continue.
+
+Even walking to a meeting room gets simpler. I can close the lid and carry the laptop like
+a sane person, instead of walking around with a cracked-open laptop to keep it awake.
+
+**The benefit is convenience.** I don't want to think about whether my laptop's battery,
+Wi-Fi connection, or lid will interrupt the work. An agent that finishes and sits idle
+until I return is doing exactly what I need. I have no interest in stressing about not
+utilizing it litrally 24/7 or not fully exhausting every 5h token limit window out of a
+subscription.
+
+## What runs where
+
+My setup has three main pieces:
+
+- **Ubuntu Server** holds the repositories, development tools, builds, tests, and agent
+  clients. I know it, it's been stable for me, and documentation is easy to find. This
+  machine runs for almost 4 years now and even changing every component but the ssd drive
+  was plug & play in all cases. This machine has proven to be **stable**. And that's what
+  I want from it.
+- **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
+  laptop or phone. I use ordinary SSH over Tailscale's private network.
+- **[herdr](https://herdr.dev/docs/)** keeps the terminal sessions running when I
+  disconnect and lets me return to them later. If you like tmux you will love herdr. I ran
+  tmux for several years and herdr is the new tmux for agentic era.
+
+<Figure caption="REPLACE ME WITH REASONABLE CAPTION TEXT" className="mx-auto max-w-lg">
+  <WorkflowDiagram className="size-full" />
+</Figure>
+
+The agent clients and their tools run on my server. The models run at the hosted AI
+providers. You don't need to buy hardware for local model inference to do this. Your
+machine needs to handle your development workload and however many tasks you run at once.
+
+Tailscale lets me reach SSH and my dev servers remotely **without exposing them to the
+public internet**. I don't have to open public ports for either. Its
+[connection guide](https://tailscale.com/docs/how-to/connect-to-devices) explains how to
+reach services using a device's Tailscale address.
+
+The persistent sessions survive a disconnected client. A server restart still stops the
+running processes; herdr distinguishes that from restoring layouts and automatically
+restores all sessions of your agent clients exactly where you left of. You just need to
+install an [integration](https://herdr.dev/docs/integrations/) for each one you use.
+
+## The same development loop, from another machine
+
+This is how I start:
+
+```bash
+ssh homelab
+hd
+```
+
+`homelab` is a short name in my SSH config, and `hd` is my alias for `herdr`. Without my
+aliases, you'd SSH to your server and run `herdr`.
+
+Once inside, I can see the state of agents in different repositories and switch between
+them. I can have several tasks running in parallel and give each one attention when it
+needs it. Reconnecting from another device brings me back to those same sessions.
+
+PLACEHOLDER: Add screenshots of the same herdr session on the MacBook and phone.
+
+For a web project, I start the dev server in a terminal on the server, just as I would on
+my MacBook:
+
+```bash
+pnpm dev --host
+```
+
+In my projects, `--host` makes the dev server listen on `0.0.0.0`, so I can reach it from
+another device. Use the equivalent option for your project's dev server. Then I open this
+address in my MacBook or phone browser:
+
+```text
+http://<my-server-local-ip>:<dev-port>
+```
+
+Use the port printed by the dev server. A resolvable Tailscale device name works too; the
+`homelab` shortcut in my SSH config doesn't automatically become a browser hostname. The
+client needs to be connected to Tailscale and allowed to reach that port.
+
+The server is headless, with no browser. I test the feature in a real browser on the
+device I'm holding: click through it, inspect the behavior, and ask for changes. Nothing
+needs to be deployed just for me to try it. `0.0.0.0` listens on all IPv4 interfaces, so
+it can also allow home LAN access; it doesn't itself restrict access to Tailscale.
+
+From there, it's the usual development workflow. Inspect the changes, run tests, try the
+feature, and ask the agent to commit, push, and open a PR when I'm satisfied. I can also
+leave it working toward a draft PR and review that later.
+
+The phone is useful for short prompts, checking progress, and answering questions. I can
+review a manageable PR through GitHub's interface on the way home and merge it when I'm
+happy with it. It's less comfortable than reviewing on a computer, but having the option
+is useful. Longer reviews can wait until I'm back at my desk.
+
+I did run into recurring subnet-routing problems when I also wanted access to other
+devices on my home network. Advertising a broader subnet finally made my setup work
+reliably; Tailscale explains the approach and its limitations in its
+[guide to LAN traffic and overlapping subnet routes](https://tailscale.com/docs/reference/troubleshooting/network-configuration/lan-traffic-overlapping-subnets).
+You don't need that subnet routing to connect directly to the server over Tailscale. I
+plan to write a deeper article about the networking and what runs on my homelab later this
+year.
+
+## The server I actually use
+
+I already had a home server, so adding development to it was an obvious choice. It runs
+around 20 containers, including Home Assistant, Jellyfin, Frigate, Umami, and more.
+
+The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small nvme-ssd, and
+two bigger 3.5-inch data HDDs** in RAID-1. I started with used parts from Aukro.cz roughly
+four years ago and upgraded it over time:
+
+| Purchase                     | What I bought or changed                          | Approximate cost |
+| ---------------------------- | ------------------------------------------------- | ---------------: |
+| Original machine             | Used parts, including an i5-9400 and 12 GB of RAM |        8,000 CZK |
+| RAM upgrade                  | Increased RAM to 32 GB, bought used               |        3,500 CZK |
+| CPU upgrade                  | Used i5-13500, replacing the i5-9400              |        4,000 CZK |
+| Motherboard upgrade          | Replacement required for the newer CPU's socket   |        2,000 CZK |
+| **Total of these purchases** |                                                   |   **17,500 CZK** |
+
+The old CPU was still usable. More parallel work, alongside the other services, motivated
+the upgrade. My smart socket reports roughly **40 W at the wall** during typical use, with
+the containers, some agent instances, a dev server, and the two data HDDs. That's an
+observation from my normal workload, not an idle-power measurement.
+
+PLACEHOLDER: Optional photo of the actual server. Remove this marker if no photo is used.
+
+I'd buy an upgradeable tower for this. I prefer a standard ATX platform, with room for
+more RAM, storage, and ordinary replacement parts. I'm happy to give it more space instead
+of paying the premiums I associate with ITX boards and SFX power supplies. The development
+workload determines what you need: builds, tests, and containers still consume resources
+even when the model runs elsewhere.
+
+## Make it feel familiar
+
+I use Fish, Neovim, ripgrep, fzf, Delta, lazygit, and the same CLI tools I used before
+agents. My [dotfiles](https://github.com/marekh19/dotfiles) keep the configuration
+familiar, with GNU Stow managing it. Connecting to the server puts me in an environment I
+already know how to work in.
+
+## Try it on a machine you already have
+
+Start with one repository on a spare machine that can stay running, or an existing home
+server:
+
+1. Install [Ubuntu Server](https://ubuntu.com/server/docs/tutorial/) if needed, then your
+   usual development tools and coding agent.
+2. [Set up Tailscale](https://tailscale.com/docs/how-to/quickstart) on the server and your
+   client devices, and configure SSH access over that network.
+3. [Install herdr](https://github.com/herdrdev/herdr#install), clone the repository, and
+   run `herdr` on the server.
+4. Start your agent inside it and give it a task.
+5. Disconnect, reconnect from another device, and run `herdr` again to return to the
+   session. For a web project, try opening its dev server in that device's browser too.
+
+You can give this article to an agent and ask it to help you set up those pieces.
+
+I'll cover skills, reviews, and how I work with concurrent agents in a separate article.
+For now, give an agent a task and close the laptop. Come back when you're ready to review
+the result.
