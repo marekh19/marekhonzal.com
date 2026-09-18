@@ -60,24 +60,24 @@ a sane person, instead of walking around with a cracked-open laptop to keep it a
 **The benefit is convenience.** I don't want to think about whether my laptop's battery,
 Wi-Fi connection, or lid will interrupt the work. An agent that finishes and sits idle
 until I return is doing exactly what I need. I have no interest in stressing about not
-utilizing it litrally 24/7 or not fully exhausting every 5h token limit window out of a
-subscription.
+utilizing it literally 24/7 or not using my subscription's full token allowance in every
+five-hour window.
 
 ## What runs where
 
 My setup has three main pieces:
 
 - **Ubuntu Server** holds the repositories, development tools, builds, tests, and agent
-  clients. I know it, it's been stable for me, and documentation is easy to find. This
-  machine runs for almost 4 years now and even changing every component but the ssd drive
-  was plug & play in all cases. This machine has proven to be **stable**. And that's what
-  I want from it.
+  clients. I know it well. It's been stable for me, and documentation is easy to find.
+  This machine has been running for almost four years now and even changing every
+  component but the SSD was plug-and-play in all cases. This machine has proven to be
+  **stable**. And that's what I want from it.
 - **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
   laptop or phone (I like to use [Termius](https://termius.com) on my phone). I use
   ordinary SSH over Tailscale's private network.
 - **[herdr](https://herdr.dev/docs/)** keeps the terminal sessions running when I
-  disconnect and lets me return to them later. If you like tmux you will love herdr. I ran
-  tmux for several years and herdr is the new tmux for agentic era.
+  disconnect and lets me return to them later. If you like tmux, you will love herdr. I
+  ran tmux for several years and herdr is the new tmux for the agentic era.
 
 <Figure
   caption="My laptop and phone connect through Tailscale. Agent clients and development tools run on the home server; AI models run at hosted providers."
@@ -97,7 +97,7 @@ reach services using a device's Tailscale address.
 
 The persistent sessions survive a disconnected client. A server restart still stops the
 running processes; herdr distinguishes that from restoring layouts and automatically
-restores all sessions of your agent clients exactly where you left of. You just need to
+restores all sessions of your agent clients exactly where you left off. You just need to
 install an [integration](https://herdr.dev/docs/integrations/) for each one you use.
 
 ## The same development loop, from another machine
@@ -142,7 +142,7 @@ device I'm holding: click through it, inspect the behavior, and ask for changes.
 needs to be deployed just for me to try it. `0.0.0.0` listens on all IPv4 interfaces, so
 it can also allow home LAN access; it doesn't itself restrict access to Tailscale.
 
-From there, it's the usual development workflow. Inspect the changes, run tests, try the
+From there, it's the usual development workflow. I inspect the changes, run tests, try the
 feature, and ask the agent to commit, push, and open a PR when I'm satisfied. I can also
 leave it working toward a draft PR and review that later.
 
@@ -164,7 +164,7 @@ year.
 I already had a home server, so adding development to it was an obvious choice. It runs
 around 20 containers, including Home Assistant, Jellyfin, Frigate, Umami, and more.
 
-The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small nvme-ssd, and
+The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small NVMe SSD, and
 two bigger 3.5-inch data HDDs** in RAID-1. I started with used parts from Aukro.cz roughly
 four years ago and upgraded it over time:
 
