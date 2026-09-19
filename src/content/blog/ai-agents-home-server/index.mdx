@@ -34,47 +34,38 @@ holds for the journey.
 I get it. I've repeatedly wanted to leave while an agent was still working. But keeping a
 computer awake in a backpack is a lot of effort just to let a task continue.
 
+I never bothered with remote development when most of the work stopped as soon as I left
+the keyboard. Agents changed that. Now I regularly leave work running, and I want to close
+my laptop without arranging my evening around it.
+
 For the past month or two, I've run Claude Code and Codex almost exclusively on my home
 server. I connect over SSH through Tailscale. When I close the laptop, the work continues.
 And when I have an idea before bed, I can give the agent a task from my phone and come
 back to it the next morning.
 
-I'm a terminal guy. I was already comfortable working in Neovim before coding agent
-harnesses were a thing. I prefer terminal interfaces, and I think coding agents are
-particularly well suited to them: the agent, shell, tests, and Git are all right there. If
-you want a graphical editor and agent interface, this setup isn't for you. If you're
-comfortable in a terminal, I'd say move your agents off your laptop; you won't regret it.
+I'm a terminal guy. I used Neovim before coding agents, and I think the terminal is the
+best place to work with them: agents, shell, tests, Git, and server administration, all in
+the same session. If you want a graphical editor and agent interface, this setup isn't for
+you.
 
 ## Leave when you want to leave
 
-Remote development has existed for years. I didn't bother with it before because I was the
-one writing the code, researching questions, and collecting resources. When I left the
-keyboard, most of that work stopped anyway. Moving it to another machine didn't offer me
-enough benefit.
-
-Agents changed that. I can assign work that continues between my check-ins, so it makes
-sense for the environment to stay available independently of the computer I'm carrying.
-
-Longer research fits this well too. Comparing features, reading standards, collecting
-resources, or investigating possible improvements can take a while. I can leave that
+Research is another reason I want the environment to stay running. Comparing features,
+reading standards, or investigating possible improvements can take a while. I leave it
 running and come back to the findings. If the agent needs an answer, I can reconnect from
-my phone, answer, and let it continue. Sometimes the result needs more work or a decision
-from me. That's fine; I pick it up when I'm ready.
+my phone, answer, and let it continue. Or I can leave it waiting until I'm ready.
 
 **The benefit is convenience.** I don't want to think about whether my laptop's battery,
-Wi-Fi connection, or lid will interrupt the work. An agent that finishes and sits idle
-until I return is doing exactly what I need. I have no interest in stressing about not
-utilizing it literally 24/7 or not using my subscription's full token allowance in every
-five-hour window.
+Wi-Fi connection, or lid will interrupt the work. I don't owe my subscription five hours
+of work every five hours. If the agent finishes and sits idle until tomorrow, good. I'll
+review it when I'm ready.
 
 ## What runs where
 
 My setup has three main pieces:
 
 - **Ubuntu Server:** The server runs Ubuntu and hosts my repositories, development tools,
-  and agent clients. Builds and tests run there too. I know Ubuntu well. It's been stable
-  for me, and documentation is easy to find. I've used this machine for almost four years,
-  replacing every component but the SSD without trouble.
+  and agent clients. Builds and tests run there too.
 - **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
   laptop or phone (I like to use [Termius](https://termius.com) on my phone). I use
   ordinary SSH over Tailscale's private network.
@@ -100,11 +91,10 @@ public internet**. I don't have to open public ports for either. Its
 [connection guide](https://tailscale.com/docs/how-to/connect-to-devices) explains how to
 reach services using a device's Tailscale address.
 
-The persistent sessions survive a disconnected client. After a server restart, herdr
-restores its spaces, windows, and panes, and resumes agent sessions for clients whose
-[integrations](https://herdr.dev/docs/integrations/) you have installed. The restart still
-stops running processes: dev servers and other processes in those panes need to be started
-again.
+Disconnecting leaves processes running. A restart stops them; herdr can restore its layout
+and resume supported agent conversations when I reconnect, with the relevant
+[integrations](https://herdr.dev/docs/integrations/) installed. Dev servers and other
+processes still need restarting.
 
 ## The same development loop, from another machine
 
@@ -115,12 +105,13 @@ ssh homelab
 hd
 ```
 
-`homelab` is a short name in my SSH config, and `hd` is my alias for `herdr`. Without my
-aliases, you'd SSH to your server and run `herdr`.
+`homelab` is a short name in my SSH config, and `hd` is my alias for `herdr`.
 
-Once inside, I can see the state of agents in different repositories and switch between
-them. I can have several tasks running in parallel and give each one attention when it
-needs it. Reconnecting from another device brings me back to those same sessions.
+Inside, I switch between agents working in different repositories. Reconnecting from
+another device brings me back to those same sessions. My usual tools are there too: Fish,
+Neovim, ripgrep, fzf, Delta, and lazygit. My
+[dotfiles](https://github.com/marekh19/dotfiles), managed with GNU Stow, keep the
+environment familiar.
 
 <Figure caption="The same herdr session on my MacBook and phone.">
   <div className="not-prose grid items-center gap-4 lg:grid-cols-[minmax(0,3.5fr)_minmax(0,1fr)]">
@@ -150,58 +141,44 @@ my MacBook:
 pnpm dev --host
 ```
 
-In my projects, `--host` makes the dev server listen on `0.0.0.0`, so I can reach it from
-another device. Use the equivalent option for your project's dev server. Then I open this
-address in my MacBook or phone browser:
+In my projects, `--host` makes the dev server listen on `0.0.0.0`, allowing access from
+other devices, including the home LAN. It doesn't restrict access to Tailscale. Use the
+equivalent option for your project's dev server, then open this in your browser:
 
 ```text
 http://<server-tailscale-ip>:<dev-port>
 ```
 
-Use the port printed by the dev server. A resolvable Tailscale device name works too; the
-`homelab` shortcut in my SSH config doesn't automatically become a browser hostname. The
-client needs to be connected to Tailscale and allowed to reach that port.
-
-In my setup, I also route my home subnet through Tailscale, so I use the server's home LAN
-IP instead. That gives me one URL at home with Tailscale off and away with Tailscale on.
-You don't need subnet routing if you use the server's Tailscale address above.
+Use the port printed by the dev server, with your client connected to Tailscale and
+allowed to reach that port. A resolvable Tailscale device name works too; an SSH shortcut
+doesn't automatically become a browser hostname.
 
 The server is headless, with no browser. I test the feature in a real browser on the
-device I'm holding: click through it, inspect the behavior, and ask for changes. Nothing
-needs to be deployed just for me to try it. `0.0.0.0` listens on all IPv4 interfaces, so
-it can also allow home LAN access; it doesn't itself restrict access to Tailscale.
+device I'm holding. Nothing needs to be deployed just for me to try it.
 
 From there, it's the usual development workflow. I inspect the changes, run tests, try the
 feature, and ask the agent to commit, push, and open a PR when I'm satisfied. I can also
 leave it working toward a draft PR and review that later.
 
-The phone is useful for short prompts, checking progress, and answering questions. I can
-review a manageable PR through GitHub's interface on the way home and merge it when I'm
-happy with it. It's less comfortable than reviewing on a computer, but having the option
-is useful. Longer reviews can wait until I'm back at my desk.
-
-I ran into subnet-routing problems with this setup. Advertising a broader subnet fixed
-them for me; Tailscale's
-[subnet routing guide](https://tailscale.com/docs/reference/troubleshooting/network-configuration/lan-traffic-overlapping-subnets)
-explains the approach and its limitations. I'll cover my networking setup and the other
-services on my homelab in a separate article later this year.
+The phone is useful for short prompts, answering questions, and reviewing manageable PRs
+through GitHub. Longer reviews can wait until I'm back at my desk.
 
 ## The server I actually use
 
 I already had a home server, so adding development to it was an obvious choice. It runs
-around 20 containers, including Home Assistant, Jellyfin, Frigate, Umami, and more.
+around 20 containers, including Home Assistant, Jellyfin, Frigate, and Umami. I've used
+this machine for almost four years, replacing every component but the SSD along the way.
+
+I'd set aside a couple of hours for the initial setup and choose a stable distro. Ubuntu
+Server has needed little attention from me; I automate updates with cron. Years ago, I ran
+Arch, and every `sudo pacman -Syu` made me wonder what would break. I don't want that
+feeling from the machine I'm leaving my work on.
 
 The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small NVMe SSD, and
 two larger 3.5-inch data HDDs configured as a RAID 1 array**. I started with used parts
-from Aukro.cz roughly four years ago and upgraded it over time:
-
-| Purchase                     | What I bought or changed                          | Approximate cost |
-| ---------------------------- | ------------------------------------------------- | ---------------: |
-| Original machine             | Used parts, including an i5-9400 and 12 GB of RAM |        8,000 CZK |
-| RAM upgrade                  | Increased RAM to 32 GB, bought used               |        3,500 CZK |
-| CPU upgrade                  | Used i5-13500, replacing the i5-9400              |        4,000 CZK |
-| Motherboard upgrade          | Replacement required for the newer CPU's socket   |        2,000 CZK |
-| **Total of these purchases** |                                                   |   **17,500 CZK** |
+from Aukro.cz: an i5-9400 machine with 12 GB of RAM for around **8,000 CZK**. That
+purchase and the later RAM, CPU, and motherboard upgrades add up to roughly **17,500
+CZK**.
 
 The old CPU was still usable. More parallel work, alongside the other services, motivated
 the upgrade. My smart socket reports roughly **40 W at the wall** during typical use, with
@@ -222,18 +199,10 @@ observation from my normal workload, not an idle-power measurement.
   />
 </Figure>
 
-I'd buy an upgradeable tower for this. I prefer a standard ATX platform, with room for
-more RAM, storage, and ordinary replacement parts. I'm happy to give it more space instead
-of paying the premiums I associate with ITX boards and SFX power supplies. The development
-workload determines what you need: builds, tests, and containers still consume resources
-even when the model runs elsewhere.
-
-## Make it feel familiar
-
-I use Fish, Neovim, ripgrep, fzf, Delta, lazygit, and the same CLI tools I used before
-agents. My [dotfiles](https://github.com/marekh19/dotfiles) keep the configuration
-familiar, with GNU Stow managing it. Connecting to the server puts me in an environment I
-already know how to work in.
+I'd buy an upgradeable tower. I want room for more RAM, storage, and standard replacement
+parts. Making the box tiny isn't worth paying extra for. The development workload
+determines what you need: builds, tests, and containers still consume resources even when
+the model runs elsewhere.
 
 ## Try it on a machine you already have
 
@@ -252,6 +221,6 @@ server:
 
 You can give this article to an agent and ask it to help you set up those pieces.
 
-I'll cover skills, reviews, and how I work with concurrent agents in a separate article.
-For now, give an agent a task and close the laptop. Come back when you're ready to review
-the result.
+If you're comfortable in a terminal, move your agents off your laptop. I don't want a
+running agent deciding when I can close the lid. Give it work, close the laptop, and
+leave. It can wait for you when it's done.
