@@ -1,8 +1,8 @@
 ---
 title: "Stop Running AI\u00A0Agents on Your Laptop"
 description:
-  "I run Claude Code and Codex on a home server. Close the laptop, check in from my phone,
-  and come back to work ready for review. Here's my setup."
+  "I run Claude Code and Codex on a home server, close my laptop, and check progress from
+  my phone. Here's my setup."
 createdAt: 2026-09-20
 isDraft: true
 isFeatured: true
@@ -12,8 +12,13 @@ tags:
   - 'Tooling'
 ---
 
+import { Image } from 'astro:assets'
+
 import BackpackIllustration from './agents-backpack.svg'
 import WorkflowDiagram from './agents-home-server-diagram.svg'
+import homelabPhoto from './homelab-photo.jpg'
+import macbookScreenshot from './screenshot-desktop.png'
+import mobileScreenshot from './screenshot-mobile.png'
 
 Your laptop is a terrible place for an AI agent to live.
 
@@ -66,10 +71,10 @@ five-hour window.
 
 My setup has three main pieces:
 
-- **Ubuntu Server** holds the repositories, development tools, builds, tests, and agent
-  clients. I know it well. It's been stable for me, and documentation is easy to find.
-  I've used this machine for almost four years, replacing every component but the SSD
-  without trouble.
+- **Ubuntu Server:** The server runs Ubuntu and hosts my repositories, development tools,
+  and agent clients. Builds and tests run there too. I know Ubuntu well. It's been stable
+  for me, and documentation is easy to find. I've used this machine for almost four years,
+  replacing every component but the SSD without trouble.
 - **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
   laptop or phone (I like to use [Termius](https://termius.com) on my phone). I use
   ordinary SSH over Tailscale's private network.
@@ -117,7 +122,26 @@ Once inside, I can see the state of agents in different repositories and switch 
 them. I can have several tasks running in parallel and give each one attention when it
 needs it. Reconnecting from another device brings me back to those same sessions.
 
-PLACEHOLDER: Add screenshots of the same herdr session on the MacBook and phone.
+<Figure caption="The same herdr session on my MacBook and phone.">
+  <div className="not-prose grid items-center gap-4 lg:grid-cols-[minmax(0,3.5fr)_minmax(0,1fr)]">
+    <Image
+      src={macbookScreenshot}
+      alt="MacBook terminal showing Claude Code ready for a prompt, with herdr's repository and agent sidebar."
+      widths={[480, 640, 960, 1280, 1600]}
+      sizes="(min-width: 1152px) 570px, (min-width: 1024px) 470px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)"
+      class="h-auto w-full rounded-md"
+      quality={90}
+    />
+    <Image
+      src={mobileScreenshot}
+      alt="Phone connected through Termius to the same Claude Code session in herdr's compact mobile layout."
+      widths={[240, 360, 480, 720]}
+      sizes="(min-width: 1152px) 165px, (min-width: 1024px) 135px, 240px"
+      class="mx-auto h-auto w-full max-w-60 rounded-md lg:max-w-none"
+      quality={90}
+    />
+  </div>
+</Figure>
 
 For a web project, I start the dev server in a terminal on the server, just as I would on
 my MacBook:
@@ -168,8 +192,8 @@ I already had a home server, so adding development to it was an obvious choice. 
 around 20 containers, including Home Assistant, Jellyfin, Frigate, Umami, and more.
 
 The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small NVMe SSD, and
-two bigger 3.5-inch data HDDs** in RAID-1. I started with used parts from Aukro.cz roughly
-four years ago and upgraded it over time:
+two larger 3.5-inch data HDDs configured as a RAID 1 array**. I started with used parts
+from Aukro.cz roughly four years ago and upgraded it over time:
 
 | Purchase                     | What I bought or changed                          | Approximate cost |
 | ---------------------------- | ------------------------------------------------- | ---------------: |
@@ -184,7 +208,19 @@ the upgrade. My smart socket reports roughly **40 W at the wall** during typical
 the containers, some agent instances, a dev server, and the two data HDDs. That's an
 observation from my normal workload, not an idle-power measurement.
 
-PLACEHOLDER: Optional photo of the actual server. Remove this marker if no photo is used.
+<Figure
+  caption="My home server runs agent clients alongside around 20 containers."
+  className="mx-auto max-w-md"
+>
+  <Image
+    src={homelabPhoto}
+    alt="Inside the server's open tower case, showing the CPU cooler, two RAM modules, and motherboard."
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+    quality={90}
+  />
+</Figure>
 
 I'd buy an upgradeable tower for this. I prefer a standard ATX platform, with room for
 more RAM, storage, and ordinary replacement parts. I'm happy to give it more space instead
@@ -208,8 +244,8 @@ server:
    usual development tools and coding agent.
 2. [Set up Tailscale](https://tailscale.com/docs/how-to/quickstart) on the server and your
    client devices, and configure SSH access over that network.
-3. [Install herdr](https://github.com/herdrdev/herdr#install), clone the repository, and
-   run `herdr` on the server.
+3. [Install herdr](https://github.com/herdrdev/herdr#install), clone your project's
+   repository, and run `herdr` on the server.
 4. Start your agent inside it and give it a task.
 5. Disconnect, reconnect from another device, and run `herdr` again to return to the
    session. For a web project, try opening its dev server in that device's browser too.
