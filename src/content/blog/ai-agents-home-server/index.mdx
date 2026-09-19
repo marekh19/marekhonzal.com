@@ -50,17 +50,11 @@ enough benefit.
 Agents changed that. I can assign work that continues between my check-ins, so it makes
 sense for the environment to stay available independently of the computer I'm carrying.
 
-When I have an idea before bed, I can write a short prompt from my phone and leave the
-agent working. I want to wake up to something I can review and test. Sometimes it needs
-more work or a decision from me. That's fine; I pick it up when I'm ready.
-
 Longer research fits this well too. Comparing features, reading standards, collecting
 resources, or investigating possible improvements can take a while. I can leave that
 running and come back to the findings. If the agent needs an answer, I can reconnect from
-my phone, answer, and let it continue.
-
-Even walking to a meeting room gets simpler. I can close the lid and carry the laptop like
-a sane person, instead of walking around with a cracked-open laptop to keep it awake.
+my phone, answer, and let it continue. Sometimes the result needs more work or a decision
+from me. That's fine; I pick it up when I'm ready.
 
 **The benefit is convenience.** I don't want to think about whether my laptop's battery,
 Wi-Fi connection, or lid will interrupt the work. An agent that finishes and sits idle
@@ -74,15 +68,16 @@ My setup has three main pieces:
 
 - **Ubuntu Server** holds the repositories, development tools, builds, tests, and agent
   clients. I know it well. It's been stable for me, and documentation is easy to find.
-  This machine has been running for almost four years now and even changing every
-  component but the SSD was plug-and-play in all cases. This machine has proven to be
-  **stable**. And that's what I want from it.
+  I've used this machine for almost four years, replacing every component but the SSD
+  without trouble.
 - **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
   laptop or phone (I like to use [Termius](https://termius.com) on my phone). I use
   ordinary SSH over Tailscale's private network.
 - **[herdr](https://herdr.dev/docs/)** keeps the terminal sessions running when I
-  disconnect and lets me return to them later. If you like tmux, you will love herdr. I
-  ran tmux for several years and herdr is the new tmux for the agentic era.
+  disconnect and lets me return to them later. I used tmux for several years; herdr adds a
+  sidebar that shows whether each agent is idle, running, done, or blocked, for example
+  waiting for an answer. I can see which session needs attention without opening each one.
+  On mobile, the sidebar collapses into a hamburger menu.
 
 <Figure
   caption="My laptop and phone connect through Tailscale. Agent clients and development tools run on the home server; AI models run at hosted providers."
@@ -100,10 +95,11 @@ public internet**. I don't have to open public ports for either. Its
 [connection guide](https://tailscale.com/docs/how-to/connect-to-devices) explains how to
 reach services using a device's Tailscale address.
 
-The persistent sessions survive a disconnected client. A server restart still stops the
-running processes; herdr distinguishes that from restoring layouts and automatically
-restores all sessions of your agent clients exactly where you left off. You just need to
-install an [integration](https://herdr.dev/docs/integrations/) for each one you use.
+The persistent sessions survive a disconnected client. After a server restart, herdr
+restores its spaces, windows, and panes, and resumes agent sessions for clients whose
+[integrations](https://herdr.dev/docs/integrations/) you have installed. The restart still
+stops running processes: dev servers and other processes in those panes need to be started
+again.
 
 ## The same development loop, from another machine
 
@@ -135,12 +131,16 @@ another device. Use the equivalent option for your project's dev server. Then I 
 address in my MacBook or phone browser:
 
 ```text
-http://<my-server-local-ip>:<dev-port>
+http://<server-tailscale-ip>:<dev-port>
 ```
 
 Use the port printed by the dev server. A resolvable Tailscale device name works too; the
 `homelab` shortcut in my SSH config doesn't automatically become a browser hostname. The
 client needs to be connected to Tailscale and allowed to reach that port.
+
+In my setup, I also route my home subnet through Tailscale, so I use the server's home LAN
+IP instead. That gives me one URL at home with Tailscale off and away with Tailscale on.
+You don't need subnet routing if you use the server's Tailscale address above.
 
 The server is headless, with no browser. I test the feature in a real browser on the
 device I'm holding: click through it, inspect the behavior, and ask for changes. Nothing
@@ -156,13 +156,11 @@ review a manageable PR through GitHub's interface on the way home and merge it w
 happy with it. It's less comfortable than reviewing on a computer, but having the option
 is useful. Longer reviews can wait until I'm back at my desk.
 
-I did run into recurring subnet-routing problems when I also wanted access to other
-devices on my home network. Advertising a broader subnet finally made my setup work
-reliably; Tailscale explains the approach and its limitations in its
-[guide to LAN traffic](https://tailscale.com/docs/reference/troubleshooting/network-configuration/lan-traffic-overlapping-subnets)
-and overlapping subnet routes. You don't need that subnet routing to connect directly to
-the server over Tailscale. I plan to write a deeper article about the networking and what
-runs on my homelab later this year.
+I ran into subnet-routing problems with this setup. Advertising a broader subnet fixed
+them for me; Tailscale's
+[subnet routing guide](https://tailscale.com/docs/reference/troubleshooting/network-configuration/lan-traffic-overlapping-subnets)
+explains the approach and its limitations. I'll cover my networking setup and the other
+services on my homelab in a separate article later this year.
 
 ## The server I actually use
 
