@@ -12,6 +12,7 @@ tags:
   - 'Tooling'
 ---
 
+import BackpackIllustration from './agents-backpack.svg'
 import WorkflowDiagram from './agents-home-server-diagram.svg'
 
 Your laptop is a terrible place for an AI agent to live.
@@ -20,6 +21,10 @@ A couple of guys at the office told me how they keep their agents running on the
 They have something set up to keep their MacBooks awake with the lid closed. Before
 leaving, they connect to a hotspot, put the laptop in a backpack, and hope the connection
 holds for the journey.
+
+<div className="mx-auto max-w-md" aria-hidden="true">
+  <BackpackIllustration />
+</div>
 
 I get it. I've repeatedly wanted to leave while an agent was still working. But keeping a
 computer awake in a backpack is a lot of effort just to let a task continue.
@@ -154,10 +159,10 @@ is useful. Longer reviews can wait until I'm back at my desk.
 I did run into recurring subnet-routing problems when I also wanted access to other
 devices on my home network. Advertising a broader subnet finally made my setup work
 reliably; Tailscale explains the approach and its limitations in its
-[guide to LAN traffic and overlapping subnet routes](https://tailscale.com/docs/reference/troubleshooting/network-configuration/lan-traffic-overlapping-subnets).
-You don't need that subnet routing to connect directly to the server over Tailscale. I
-plan to write a deeper article about the networking and what runs on my homelab later this
-year.
+[guide to LAN traffic](https://tailscale.com/docs/reference/troubleshooting/network-configuration/lan-traffic-overlapping-subnets)
+and overlapping subnet routes. You don't need that subnet routing to connect directly to
+the server over Tailscale. I plan to write a deeper article about the networking and what
+runs on my homelab later this year.
 
 ## The server I actually use
 
