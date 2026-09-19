@@ -5,7 +5,11 @@ import { z } from 'astro/zod'
 import { TECHNOLOGY_SLUGS } from '@/lib/technologies'
 
 const blogCollection = defineCollection({
-  loader: glob({ pattern: '**/*.{mdx,md}', base: './src/content/blog' }),
+  loader: glob({
+    // Allow work-in-progress .md notes prefixed with _ colocated to the article file
+    pattern: ['**/*.{mdx,md}', '!**/_*.{mdx,md}'],
+    base: './src/content/blog',
+  }),
   schema: () =>
     z.object({
       title: z.string(),

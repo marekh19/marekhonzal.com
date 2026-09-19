@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800.6 1097.3">
+  <path fill="none" stroke="var(--color-primary)" stroke-linecap="round" stroke-width="2" d="M12 252c269-4 539-4 778 1m-780 0c284-3 566-2 781-1m-1-2c2 150 4 300 0 665m1-663v661m0-1c-265 8-534 6-782 2m781-1c-245 5-492 6-780 0m-1-1V253m1 661c4-203 5-404 0-663"/>
+  <text y="17.6" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" transform="translate(15 257)">Home server · Ubuntu Server</text>
+  <path fill="none" stroke="var(--color-accent)" stroke-linecap="round" stroke-width="2" d="M52 312c210 0 423-2 698-1m-699 1 698-1m2 1c-5 64-4 124-1 287m1-287c3 88 3 181 0 287m-2-1c-163 5-323 4-696 0m697 1c-164-4-329-4-699-1m-1-1c2-66 5-140 1-284m1 286c-1-97 1-192-2-286M266 327c34-1 72 2 101-2m-105 4c38-3 76-3 104 0m-1-1q3 29-2 64m4-62c2 18-1 40 1 58m-1-2c-23 2-55 6-106 6m105-4q-57-3-104 0m2-3q3-16-4-55m4 59v-60"/>
+  <text x="21.8" y="17.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(293 346)">Shell</text>
+  <path fill="none" stroke="var(--color-accent)" stroke-linecap="round" stroke-width="2" d="M140 485c66-3 137 3 249-4m-254 2q130 2 252 0m-1 4c-4 26 1 50-4 88m2-90c5 30 2 62 2 89m-2 3-248-5m249 0c-72-3-142-4-247 1m0 0c-5-18 1-40-3-87m3 86-2-88"/>
+  <text x="115.7" y="17.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(145 503)">Agent clients</text>
+  <text x="115.7" y="42.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(145 503)">Claude Code / Codex</text>
+  <path fill="none" stroke="var(--color-accent)" stroke-linecap="round" stroke-width="2" d="M534 502c56-4 109-4 151-7m-154 2c42-1 80 0 155 2m1 0c-7 25 0 51-1 57m-1-59c2 25 0 50 0 60m3 3c-64-1-126 0-160-4m157 1-153 2m2-2c-4-14 0-35 0-55m-3 57v-59"/>
+  <text x="52.1" y="17.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(556 516)">Dev server</text>
+  <g stroke-linecap="round" mask="url(#mask--YckYb3zbtmyppnAiFV5g)">
+    <path fill="none" stroke="var(--color-accent)" stroke-width="2" d="M294 392c-14 18-27 39-31 51m29-49c-6 13-13 23-29 50m1 3c-3 5 0 22-4 28m0-30c1 5 3 12 3 33"/>
+    <path fill="none" stroke="var(--color-accent)" stroke-width="2" d="M257 461q3 11 7 17m-7-15 7 16M269 461q-5 11-5 17m4-16-4 17"/>
+  </g>
+  <mask id="mask--YckYb3zbtmyppnAiFV5g" width="423.2" height="577.4" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h423v577H0z"/>
+    <path d="M189 416h157v35H189z"/>
+  </mask>
+  <text x="73.3" y="17.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(194 421)">Start / resume</text>
+  <g stroke-linecap="round" mask="url(#mask-fkeZQ48q4DSAKZC_XM6qZ)">
+    <path fill="none" stroke="var(--color-accent)" stroke-width="2" d="M371 382c37 17 65 34 143 61m-139-62c43 21 86 37 141 64m3 2c16 14 35 35 51 43m-53-48c21 22 41 40 51 50M544 481c7 4 11 7 23 11m-21-11 22 12"/>
+    <path fill="none" stroke="var(--color-accent)" stroke-width="2" d="M556 469c5 6 5 13 11 23m-9-23 10 24"/>
+  </g>
+  <mask id="mask-fkeZQ48q4DSAKZC_XM6qZ" width="668.9" height="592.4" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h669v592H0z"/>
+    <path d="M445 410h65v35h-65z"/>
+  </mask>
+  <text x="27.5" y="17.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(450 415)">Start</text>
+  <path fill="none" stroke="var(--color-primary)" stroke-linecap="round" stroke-width="2" d="M278 741c67-3 135-2 243 1m-241-5c50 1 101 0 240 3m-2-1c2 54 5 112 0 153m4-154c1 37 1 72-2 149m-2 4c-51-7-105-2-237-3m239 0c-52 4-108 4-239-1m1 0c-2-44 1-95 1-150m-2 152c3-35 2-71 0-152"/>
+  <text x="100.5" y="17.6" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(300 763)">Repositories and</text>
+  <text x="100.5" y="42.6" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(300 763)">development tools</text>
+  <text x="100.5" y="67.6" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(300 763)">Builds and tests run</text>
+  <text x="100.5" y="92.6" fill="var(--color-primary)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(300 763)">here</text>
+  <path fill="none" stroke="var(--color-success)" stroke-linecap="round" stroke-width="2" d="M141 11c196 1 391 1 519-1m-518 0c103-2 209-3 517-1m4 0c-6 39-5 73-1 113M659 8c-1 31-2 63 0 110m1 3c-192-5-387-4-518-2m517 2c-131 0-265 1-518-1m4-1c-1-29-7-60-1-106m-3 107q-3-57 0-109"/>
+  <text x="79.3" y="17.6" fill="var(--color-success)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(321 15)">Laptop or phone</text>
+  <path fill="none" stroke="var(--color-success)" stroke-linecap="round" stroke-width="2" d="M172 39c51-6 92-5 144-1m-139-4q63-4 135 3m-1 2c4 15 1 28 2 55m-1-60c0 12 2 26 0 61m-2 1c-42-3-94 1-132-3m136 2c-53-1-104-1-137 2m-4-6c5-9 4-24 5-55m-3 61q1-29 1-63"/>
+  <text x="39.6" y="17.6" fill="var(--color-success)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(205 53)">Terminal</text>
+  <path fill="none" stroke="var(--color-success)" stroke-linecap="round" stroke-width="2" d="M489 37c58 1 107-5 139 1m-134-3c33 4 68 1 133-1m-3-1q0 39-3 59m5-57c-3 16-1 32-2 58m-1 4c-40-5-83 1-132-1m133 0q-62 4-131-2m2 4-4-65m4 63-2-60"/>
+  <text x="39.6" y="17.6" fill="var(--color-success)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(519 53)">Browser</text>
+  <path fill="none" stroke="var(--color-info)" stroke-linecap="round" stroke-width="2" d="M284 995c82 2 158-3 231 3m-232-2c76-3 150-1 235 1m-4-2c0 22 2 46 0 95m4-92q-2 39-1 88m3 4q-133-6-235-4m232 3q-113 3-233-1m0 1c-4-38 2-69 1-89m-3 88 2-92"/>
+  <text x="97.6" y="17.6" fill="var(--color-info)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(303 1005)">Hosted</text>
+  <text x="97.6" y="42.6" fill="var(--color-info)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(303 1005)">AI providers</text>
+  <text x="97.6" y="67.6" fill="var(--color-info)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(303 1005)">Models run here</text>
+  <g stroke-linecap="round" mask="url(#mask-wAiAE5DMn7idD26E0Nt5S)">
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M250 104c25 28 54 62 75 77m-77-81 76 83m-3-3c1 13-1 28 4 40m-1-38c2 15 0 25 2 42m-4 0c4 8 5 18 4 41m-2-43q0 29 2 42m-4-3c7 10 5 21 4 28m-2-25 2 24m-4 3c0 10-4 15-9 34m14-36q-8 18-11 33M274 117q-17-9-24-14m23 12-23-11"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M262 129q-11-17-12-26m11 24-11-23M316 306c-1 4-2 12 0 15m0-17-1 18"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M328 309q-10 8-12 12m11-13q-6 9-12 14"/>
+  </g>
+  <mask id="mask-wAiAE5DMn7idD26E0Nt5S" width="424.7" height="422.4" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h425v422H0z"/>
+    <path d="M231 179h188v35H231z"/>
+  </mask>
+  <text x="88.8" y="17.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(236 184)">SSH over Tailscale</text>
+  <g stroke-linecap="round" mask="url(#mask-zApm0Y3AdYKqbr6wP7K3x)">
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M559 99c18 20 40 37 84 84m-80-81c19 19 35 38 76 79m-1 1c-3 14 1 17 1 43m1-40c-2 11 0 26-2 40m2-3c1 15 0 34 3 40m-6-37q4 24 3 39m3 0-5 23m2-25-1 26m-1 3q-3 28 2 71m-2-72c3 20 3 39 0 68m4-1c0 25-5 47-1 90m0-90c0 25-2 49 0 88m0 2q-6 5-24 47m22-51c-8 12-12 26-21 49M581 109l-20-10m22 11-24-12"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M569 121q-3-6-8-22m10 23c-3-6-7-11-12-24M618 467c-1 7 1 11 2 25m-1-24-1 24"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M634 473c-5 5-7 8-14 19m15-18q-5 5-17 18"/>
+  </g>
+  <mask id="mask-zApm0Y3AdYKqbr6wP7K3x" width="739.2" height="592.4" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h739v592H0z"/>
+    <path d="M532 155h215v85H532z"/>
+  </mask>
+  <text x="102.6" y="17.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(537 160)">HTTP over Tailscale</text>
+  <text x="102.6" y="42.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(537 160)">Server address + dev</text>
+  <text x="102.6" y="67.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(537 160)">port</text>
+  <g stroke-linecap="round" mask="url(#mask-wn9iW2M689uEYnw1Eb1Rg)">
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M235 581c4 16 7 36 2 52m2-53v48m-3 4c11 8 19 27 40 58m-37-62c10 15 16 30 37 62m0-1c18 19 39 31 59 48m-59-45 57 46M307 730c11 2 22 6 24 10m-22-10 23 7"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M318 717q12 10 13 23m-11-24 12 21"/>
+  </g>
+  <mask id="mask-wn9iW2M689uEYnw1Eb1Rg" width="431.7" height="838.8" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h432v839H0z"/>
+    <path d="M156 643h216v60H156z"/>
+  </mask>
+  <text x="103.1" y="17.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(161 648)">Read / edit files and</text>
+  <text x="103.1" y="42.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(161 648)">run tools</text>
+  <g stroke-linecap="round" mask="url(#mask-rRS4gOEwsiqQjdtWzU2oN)">
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M611 562c4 10 0 23 5 40m-7-38q5 17 8 34m1-3c-1 24 0 40-3 75m4-71c-2 26 1 49 0 70m0 1c-26 13-56 30-116 59m117-60c-42 25-84 47-115 65"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M521 714q-6 9-17 22m16-21-16 19M530 729l-26 7m25-6-25 4"/>
+  </g>
+  <mask id="mask-rRS4gOEwsiqQjdtWzU2oN" width="822.3" height="832.4" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h822v832H0z"/>
+    <path d="M538 657h139v35H538z"/>
+  </mask>
+  <text x="64.6" y="17.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(543 662)">Serve project</text>
+  <g stroke-linecap="round" mask="url(#mask-3-1JuaSaiuw_u-4OjvZ3A)">
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M157 569c-13 58-20 111-26 174m22-175c-9 49-16 98-25 171m1 4c20 84 35 171 52 227m-53-227c17 56 29 116 50 229m4-2c26 7 45 13 98 36m-101-34c35 8 66 22 98 32M163 594q-5-8-5-24m3 23-4-24"/>
+    <path fill="none" stroke="currentColor" stroke-width="2" d="M147 591q0-7 11-21m-13 20 12-21M254 1004q8 3 24 1m-26-2h25M259 988q5 10 19 17m-21-18 20 16"/>
+  </g>
+  <mask id="mask-3-1JuaSaiuw_u-4OjvZ3A" width="401.8" height="1102.7" x="0" y="0" maskUnits="userSpaceOnUse">
+    <path fill="#fff" d="M0 0h402v1103H0z"/>
+    <path d="M42 750h196v85H42z"/>
+  </mask>
+  <text x="92.9" y="17.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(47 755)">API requests /</text>
+  <text x="92.9" y="42.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(47 755)">responses over the</text>
+  <text x="92.9" y="67.6" fill="currentColor" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(47 755)">internet</text>
+  <text x="71.4" y="17.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(67 323)">herdr sessions</text>
+  <text x="71.4" y="42.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(67 323)">keep running</text>
+  <text x="71.4" y="67.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(67 323)">after you</text>
+  <text x="71.4" y="92.6" fill="var(--color-accent)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="20" style="white-space:pre" text-anchor="middle" transform="translate(67 323)">disconnect</text>
+</svg>

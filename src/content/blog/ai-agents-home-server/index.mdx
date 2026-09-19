@@ -1,0 +1,226 @@
+---
+title: "Stop Running AI\u00A0Agents on Your Laptop"
+description:
+  "I run Claude Code and Codex on a home server, close my laptop, and check progress from
+  my phone. Here's my setup."
+createdAt: 2026-09-20
+isDraft: false
+isFeatured: true
+tags:
+  - 'AI'
+  - 'DX'
+  - 'Tooling'
+---
+
+import { Image } from 'astro:assets'
+
+import BackpackIllustration from './agents-backpack.svg'
+import WorkflowDiagram from './agents-home-server-diagram.svg'
+import homelabPhoto from './homelab-photo.jpg'
+import macbookScreenshot from './screenshot-desktop.png'
+import mobileScreenshot from './screenshot-mobile.png'
+
+Your laptop is a terrible place for an AI agent to live.
+
+A couple of guys at the office told me how they keep their agents running on the way home.
+They have something set up to keep their MacBooks awake with the lid closed. Before
+leaving, they connect to a hotspot, put the laptop in a backpack, and hope the connection
+holds for the journey.
+
+<div className="mx-auto max-w-md" aria-hidden="true">
+  <BackpackIllustration />
+</div>
+
+I get it. I've repeatedly wanted to leave while an agent was still working. But keeping a
+computer awake in a backpack is a lot of effort just to let a task continue.
+
+I never bothered with remote development when most of the work stopped as soon as I left
+the keyboard. Agents changed that. Now I regularly leave work running, and I want to close
+my laptop without arranging my evening around it.
+
+For the past month or two, I've run Claude Code and Codex almost exclusively on my home
+server. I connect over SSH through Tailscale. When I close the laptop, the work continues.
+And when I have an idea before bed, I can give the agent a task from my phone and come
+back to it the next morning.
+
+I'm a terminal guy. I used Neovim before coding agents, and I think the terminal is the
+best place to work with them: agents, shell, tests, Git, and server administration, all in
+the same session. If you want a graphical editor and agent interface, this setup isn't for
+you.
+
+## Leave when you want to leave
+
+Research is another reason I want the environment to stay running. Comparing features,
+reading standards, or investigating possible improvements can take a while. I leave it
+running and come back to the findings. If the agent needs an answer, I can reconnect from
+my phone, answer, and let it continue. Or I can leave it waiting until I'm ready.
+
+**The benefit is convenience.** I don't want to think about whether my laptop's battery,
+Wi-Fi connection, or lid will interrupt the work. I don't owe my subscription five hours
+of work every five hours. If the agent finishes and sits idle until tomorrow, good. I'll
+review it when I'm ready.
+
+## What runs where
+
+My setup has three main pieces:
+
+- **Ubuntu Server:** The server runs Ubuntu and hosts my repositories, development tools,
+  and agent clients. Builds and tests run there too.
+- **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
+  laptop or phone (I like to use [Termius](https://termius.com) on my phone). I use
+  ordinary SSH over Tailscale's private network.
+- **[herdr](https://herdr.dev/docs/)** keeps the terminal sessions running when I
+  disconnect and lets me return to them later. I used tmux for several years; herdr adds a
+  sidebar that shows whether each agent is idle, running, done, or blocked, for example
+  waiting for an answer. I can see which session needs attention without opening each one.
+  On mobile, the sidebar collapses into a hamburger menu.
+
+<Figure
+  caption="My laptop and phone connect through Tailscale. Agent clients and development tools run on the home server; AI models run at hosted providers."
+  className="mx-auto max-w-lg"
+>
+  <WorkflowDiagram className="size-full" />
+</Figure>
+
+The agent clients and their tools run on my server. The models run at the hosted AI
+providers. You don't need to buy hardware for local model inference to do this. Your
+machine needs to handle your development workload and however many tasks you run at once.
+
+Tailscale lets me reach SSH and my dev servers remotely **without exposing them to the
+public internet**. I don't have to open public ports for either. Its
+[connection guide](https://tailscale.com/docs/how-to/connect-to-devices) explains how to
+reach services using a device's Tailscale address.
+
+Disconnecting leaves processes running. A restart stops them; herdr can restore its layout
+and resume supported agent conversations when I reconnect, with the relevant
+[integrations](https://herdr.dev/docs/integrations/) installed. Dev servers and other
+processes still need restarting.
+
+## The same development loop, from another machine
+
+This is how I start:
+
+```bash
+ssh homelab
+hd
+```
+
+`homelab` is a short name in my SSH config, and `hd` is my alias for `herdr`.
+
+Inside, I switch between agents working in different repositories. Reconnecting from
+another device brings me back to those same sessions. My usual tools are there too: Fish,
+Neovim, ripgrep, fzf, Delta, and lazygit. My
+[dotfiles](https://github.com/marekh19/dotfiles), managed with GNU Stow, keep the
+environment familiar.
+
+<Figure caption="The same herdr session on my MacBook and phone.">
+  <div className="not-prose grid items-center gap-4 lg:grid-cols-[minmax(0,3.5fr)_minmax(0,1fr)]">
+    <Image
+      src={macbookScreenshot}
+      alt="MacBook terminal showing Claude Code ready for a prompt, with herdr's repository and agent sidebar."
+      widths={[480, 640, 960, 1280, 1600]}
+      sizes="(min-width: 1152px) 570px, (min-width: 1024px) 470px, (min-width: 768px) calc(100vw - 64px), calc(100vw - 40px)"
+      class="h-auto w-full rounded-md"
+      quality={90}
+    />
+    <Image
+      src={mobileScreenshot}
+      alt="Phone connected through Termius to the same Claude Code session in herdr's compact mobile layout."
+      widths={[240, 360, 480, 720]}
+      sizes="(min-width: 1152px) 165px, (min-width: 1024px) 135px, 240px"
+      class="mx-auto h-auto w-full max-w-60 rounded-md lg:max-w-none"
+      quality={90}
+    />
+  </div>
+</Figure>
+
+For a web project, I start the dev server in a terminal on the server, just as I would on
+my MacBook:
+
+```bash
+pnpm dev --host
+```
+
+In my projects, `--host` makes the dev server listen on `0.0.0.0`, allowing access from
+other devices, including the home LAN. It doesn't restrict access to Tailscale. Use the
+equivalent option for your project's dev server, then open this in your browser:
+
+```text
+http://<server-tailscale-ip>:<dev-port>
+```
+
+Use the port printed by the dev server, with your client connected to Tailscale and
+allowed to reach that port. A resolvable Tailscale device name works too; an SSH shortcut
+doesn't automatically become a browser hostname.
+
+The server is headless, with no browser. I test the feature in a real browser on the
+device I'm holding. Nothing needs to be deployed just for me to try it.
+
+From there, it's the usual development workflow. I inspect the changes, run tests, try the
+feature, and ask the agent to commit, push, and open a PR when I'm satisfied. I can also
+leave it working toward a draft PR and review that later.
+
+The phone is useful for short prompts, answering questions, and reviewing manageable PRs
+through GitHub. Longer reviews can wait until I'm back at my desk.
+
+## The server I actually use
+
+I already had a home server, so adding development to it was an obvious choice. It runs
+around 20 containers, including Home Assistant, Jellyfin, Frigate, and Umami. I've used
+this machine for almost four years, replacing every component but the SSD along the way.
+
+I'd set aside a couple of hours for the initial setup and choose a stable distro. Ubuntu
+Server has needed little attention from me; I automate updates with cron. Years ago, I ran
+Arch, and every `sudo pacman -Syu` made me wonder what would break. I don't want that
+feeling from the machine I'm leaving my work on.
+
+The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small NVMe SSD, and
+two larger 3.5-inch data HDDs configured as a RAID 1 array**. I started with used parts
+from Aukro.cz: an i5-9400 machine with 12 GB of RAM for around **8,000 CZK**. That
+purchase and the later RAM, CPU, and motherboard upgrades add up to roughly **17,500
+CZK**.
+
+The old CPU was still usable. More parallel work, alongside the other services, motivated
+the upgrade. My smart socket reports roughly **40 W at the wall** during typical use, with
+the containers, some agent instances, a dev server, and the two data HDDs. That's an
+observation from my normal workload, not an idle-power measurement.
+
+<Figure
+  caption="My home server runs agent clients alongside around 20 containers."
+  className="mx-auto max-w-md"
+>
+  <Image
+    src={homelabPhoto}
+    alt="Inside the server's open tower case, showing the CPU cooler, two RAM modules, and motherboard."
+    widths={[360, 480, 720, 768, 960, 1024, 1280]}
+    sizes="(max-width: 1023px) 100vw, 768px"
+    class="not-prose rounded-md"
+    quality={90}
+  />
+</Figure>
+
+I'd buy an upgradeable tower. I want room for more RAM, storage, and standard replacement
+parts. Making the box tiny isn't worth paying extra for. The development workload
+determines what you need: builds, tests, and containers still consume resources even when
+the model runs elsewhere.
+
+## Try it on a machine you already have
+
+Start with one repository on a spare machine that can stay running, or an existing home
+server:
+
+1. Install [Ubuntu Server](https://ubuntu.com/server/docs/tutorial/) if needed, then your
+   usual development tools and coding agent.
+2. [Set up Tailscale](https://tailscale.com/docs/how-to/quickstart) on the server and your
+   client devices, and configure SSH access over that network.
+3. [Install herdr](https://github.com/herdrdev/herdr#install), clone your project's
+   repository, and run `herdr` on the server.
+4. Start your agent inside it and give it a task.
+5. Disconnect, reconnect from another device, and run `herdr` again to return to the
+   session. For a web project, try opening its dev server in that device's browser too.
+
+You can give this article to an agent and ask it to help you set up those pieces.
+
+If you're comfortable in a terminal, move your agents off your laptop. I don't want a
+running agent deciding when I can close the lid. Give it work, close the laptop, and
+leave. It can wait for you when it's done.
