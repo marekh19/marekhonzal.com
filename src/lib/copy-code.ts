@@ -55,4 +55,4 @@ const enhanceCodeBlocks = () => {
   })
 }
 
-document.addEventListener('astro:page-load', enhanceCodeBlocks)
+enhanceCodeBlocks()

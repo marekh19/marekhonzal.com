@@ -42,10 +42,8 @@ const featuredProjects = getFeaturedSectionContent(projects)
 <script>
   import { umamiEventTracker } from '@/lib/utils/analytics'
 
-  document.addEventListener('astro:page-load', () => {
-    umamiEventTracker.trackOnceOnScroll(
-      `#${umamiEventTracker.selectorIds.homepage.projectsLink}`,
-      'homepage-reached-bottom',
-    )
-  })
+  umamiEventTracker.trackOnceOnScroll(
+    `#${umamiEventTracker.selectorIds.homepage.projectsLink}`,
+    'homepage-reached-bottom',
+  )
 </script>

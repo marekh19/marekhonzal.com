@@ -12,6 +12,16 @@
 
 @plugin '@tailwindcss/typography';
 
+@view-transition {
+  navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 @theme {
   /* Font */
   --font-sans:
@@ -36,14 +46,6 @@
 html {
   @apply bg-base-200 text-base-content;
   scrollbar-gutter: stable;
-
-  @media (prefers-reduced-motion: no-preference) {
-    scroll-behavior: smooth;
-  }
-
-  &[data-navigating] {
-    scroll-behavior: auto;
-  }
 }
 
 @custom-variant prose-inline-code (:root & :where(code):not(pre>code));

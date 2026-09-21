@@ -11,6 +11,7 @@ type Props = {
 const { collection, slug, class: className } = Astro.props
 
 const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
+const viewTransitionName = `thumbnail-${collection}-${slug}`
 ---
 
 <div
@@ -19,7 +20,7 @@ const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
     'motion-safe:group-hover:[&>svg]:scale-105 motion-safe:group-has-[a:focus-visible]:[&>svg]:scale-105',
     className,
   )}
-  transition:name={`thumbnail-${collection}-${slug}`}
+  style={`view-transition-name: ${viewTransitionName}`}
   data-thumbnail
   aria-hidden="true"
   set:html={svg}

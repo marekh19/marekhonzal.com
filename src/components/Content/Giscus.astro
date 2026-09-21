@@ -51,7 +51,7 @@ const { className } = Astro.props
     .matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', syncGiscusTheme)
 
-  document.addEventListener('astro:page-load', () => {
+  const loadGiscus = () => {
     const container = document.getElementById('giscus-container')
     if (!container) return
     container.innerHTML = ''
@@ -67,5 +67,7 @@ const { className } = Astro.props
     }
     script.setAttribute('data-theme', resolveTheme())
     container.appendChild(script)
-  })
+  }
+
+  loadGiscus()
 </script>
