@@ -8,8 +8,11 @@
   Permissions-Policy: accelerometer=(), autoplay=(), camera=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), usb=(), web-share=(), xr-spatial-tracking=(), screen-wake-lock=(), clipboard-write=(self), fullscreen=(self)
   Cross-Origin-Opener-Policy: same-origin
 
-# Immutable assets — content-hashed filenames, safe to cache forever.
-# 63072000 = 2 years. immutable = never even revalidate.
+# HTML routes, feeds and sitemaps use Workers Static Assets' default:
+# Cache-Control: public, max-age=0, must-revalidate. Cloudflare caches assets automatically.
+# https://developers.cloudflare.com/workers/static-assets/headers/
+
+# Content-hashed assets stay fresh for 2 years without revalidation.
 
 /_astro/*
   Cache-Control: public, max-age=63072000, immutable
@@ -29,54 +32,10 @@
 /favicon/*
   Cache-Control: public, max-age=86400
 
-# 86400 = 1 day — OG images are rebuilt from posts on deploy
-/og/*.png
+# 86400 = 1 day; OG images are rebuilt from posts on deploy
+/og/*
   Cache-Control: public, max-age=86400
-
-# Homepage & list pages — must show new posts soon after publish.
-# A redeploy does NOT purge the edge cache (same URL), so s-maxage is the
-# real staleness ceiling. Keep it short for lists.
-# max-age=0       browser always revalidates (cheap 304, always fresh)
-# s-maxage=3600   CDN serves cached for 1 hour
-# swr=86400       CDN may serve stale up to 1 day while refetching
-
-/
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-/projects
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-/blog
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-
-# Tag pages are lists — new posts must show soon, like /blog. More specific
-# than /blog/* so this wins on Cloudflare (specificity, not order).
-/blog/tags/*
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-
-# Detail pages — change only on edit.
-# s-maxage=10800  CDN serves cached for 3 hours = max wait for a fix to show
-# swr=86400       CDN may serve stale up to 1 day while refetching
-
-/projects/*
-  Cache-Control: public, max-age=0, s-maxage=10800, stale-while-revalidate=86400
-/blog/*
-  Cache-Control: public, max-age=0, s-maxage=10800, stale-while-revalidate=86400
-
-# Feeds & crawler files (production-only output)
-# s-maxage=3600   CDN 1 hour; swr=86400 stale up to 1 day
-
-/rss.xml
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-/sitemap-*.xml
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-/llms.txt
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
 
 # 86400 = 1 day
 /robots.txt
   Cache-Control: public, max-age=86400
-
-# 404 page — only /* matched it before (no Cache-Control). Keep it off the
-# browser and short at the edge so a stale error page can't get pinned.
-/404.html
-  Cache-Control: public, max-age=0, s-maxage=3600, stale-while-revalidate=86400
-
