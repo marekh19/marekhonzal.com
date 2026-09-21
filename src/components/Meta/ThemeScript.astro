@@ -1,6 +1,5 @@
 ---
-// Applies the persisted theme override before first paint (no flash), and
-// re-applies after client-router swaps, which reset <html>'s attributes.
+// Applies the persisted theme override before first paint (no flash).
 // "system" stores nothing / removes data-theme so the CSS prefers-color-scheme
 // media query decides — no JS needed for the default case.
 ---
@@ -23,11 +22,5 @@
     }
 
     apply()
-
-    // Bind once — inline scripts may re-run on navigation with the client router.
-    if (!window.__themeSwapBound) {
-      window.__themeSwapBound = true
-      document.addEventListener('astro:after-swap', apply)
-    }
   })()
 </script>

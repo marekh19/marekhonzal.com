@@ -1,6 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions'
-
 import Footer from '@/components/Layout/Footer.astro'
 import Header from '@/components/Layout/Header.astro'
 import Head from '@/components/Meta/Head.astro'
@@ -41,13 +39,12 @@ const hasCustomMain = Astro.slots.has('main')
       ogType={ogType}
     >
       <slot name="head" />
-      <ClientRouter />
     </Head>
   </head>
 
   <body>
     <SkipLink />
-    <Header transition:persist />
+    <Header />
 
     {hasCustomMain ? (
       // Page owns the whole main area (e.g., ReadingLayout with main+aside)
@@ -69,11 +66,10 @@ const hasCustomMain = Astro.slots.has('main')
       </main>
     )}
 
-    <Footer transition:persist />
+    <Footer />
 
     <slot name="endOfBody" />
 
     <script src="@/lib/thumbnail-transitions.ts"></script>
-    <script src="@/lib/disable-smooth-scroll-on-navigate.ts"></script>
   </body>
 </html>
