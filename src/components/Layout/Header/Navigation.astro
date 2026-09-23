@@ -19,6 +19,7 @@ const isActive = (targetUrl: string) => pathname.includes(targetUrl)
           },
         )}
         href={navLink.href}
+        data-astro-prefetch
       >
         {navLink.label}
       </a>

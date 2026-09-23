@@ -60,7 +60,11 @@ const sectionId = 'hero'
         '@xl:mt-12 @xl:flex-row @xl:items-center @xl:gap-10',
       )}
     >
-      <a href={ROUTES.blog._} class={cn('btn btn-primary group', '@xl:btn-lg')}>
+      <a
+        href={ROUTES.blog._}
+        class={cn('btn btn-primary group', '@xl:btn-lg')}
+        data-astro-prefetch
+      >
         Read the Blog{' '}
         <Icon
           name="lucide:arrow-right"
@@ -71,7 +75,11 @@ const sectionId = 'hero'
           )}
         />
       </a>
-      <a href={ROUTES.projects._} class={cn('btn btn-neutral', '@xl:btn-lg')}>
+      <a
+        href={ROUTES.projects._}
+        class={cn('btn btn-neutral', '@xl:btn-lg')}
+        data-astro-prefetch
+      >
         See What I'm Building
       </a>
     </div>

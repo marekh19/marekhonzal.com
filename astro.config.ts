@@ -17,6 +17,7 @@ const { SITE_URL, ENV_NAME } = loadEnv('', process.cwd(), '')
 export default defineConfig({
   env: envConfig,
   site: SITE_URL ?? 'http://localhost:4321',
+  prefetch: true,
   vite: {
     plugins: [tailwindcss()],
   },
