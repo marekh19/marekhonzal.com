@@ -17,8 +17,8 @@ import { Image } from 'astro:assets'
 import BackpackIllustration from './agents-backpack.svg'
 import WorkflowDiagram from './agents-home-server-diagram.svg'
 import homelabPhoto from './homelab-photo.jpg'
-import macbookScreenshot from './screenshot-desktop.png'
-import mobileScreenshot from './screenshot-mobile.png'
+import macbookScreenshot from './macbook-screenshot.png'
+import mobileScreenshot from './mobile-screenshot.png'
 
 Your laptop is a terrible place for an AI agent to live.
 
@@ -39,9 +39,9 @@ the keyboard. Agents changed that. Now I regularly leave work running, and I wan
 my laptop without arranging my evening around it.
 
 For the past month or two, I've run Claude Code and Codex almost exclusively on my home
-server. I connect over SSH through Tailscale. When I close the laptop, the work continues.
-And when I have an idea before bed, I can give the agent a task from my phone and come
-back to it the next morning.
+server. Herdr connects my laptop to the server over SSH through Tailscale. When I close
+the laptop, the work continues. And when I have an idea before bed, I can give the agent a
+task from my phone and come back to it the next morning.
 
 I'm a terminal guy. I used Neovim before coding agents, and I think the terminal is the
 best place to work with them: agents, shell, tests, Git, and server administration, all in
@@ -50,10 +50,10 @@ you.
 
 ## Leave when you want to leave
 
-Research is another reason I want the environment to stay running. Comparing features,
-reading standards, or investigating possible improvements can take a while. I leave it
-running and come back to the findings. If the agent needs an answer, I can reconnect from
-my phone, answer, and let it continue. Or I can leave it waiting until I'm ready.
+Long research tasks benefit from the same setup. Comparing features, reading standards, or
+investigating possible improvements can take a while. I leave it running and come back to
+the findings. If the agent needs an answer, I can reconnect from my phone, answer, and let
+it continue. Or I can leave it waiting until I'm ready.
 
 **The benefit is convenience.** I don't want to think about whether my laptop's battery,
 Wi-Fi connection, or lid will interrupt the work. I don't owe my subscription five hours
@@ -66,17 +66,19 @@ My setup has three main pieces:
 
 - **Ubuntu Server:** The server runs Ubuntu and hosts my repositories, development tools,
   and agent clients. Builds and tests run there too.
-- **[Tailscale](https://tailscale.com/) and SSH** let me connect to that machine from my
-  laptop or phone (I like to use [Termius](https://termius.com) on my phone). I use
-  ordinary SSH over Tailscale's private network.
-- **[herdr](https://herdr.dev/docs/)** keeps the terminal sessions running when I
-  disconnect and lets me return to them later. I used tmux for several years; herdr adds a
+- **[Tailscale](https://tailscale.com/) and SSH** connect my laptop and phone to the
+  server over Tailscale's private network. I use [Termius](https://termius.com) for SSH on
+  my phone.
+- **[herdr](https://herdr.dev/docs/)** runs on both my laptop and server. I add the server
+  as an [SSH machine](https://herdr.dev/docs/connecting-machines/) in my local Herdr, so
+  its workspaces and agents appear alongside my local ones in one window. Herdr keeps the
+  server sessions running when I disconnect. I used tmux for several years; Herdr adds a
   sidebar that shows whether each agent is idle, running, done, or blocked, for example
-  waiting for an answer. I can see which session needs attention without opening each one.
-  On mobile, the sidebar collapses into a hamburger menu.
+  waiting for an answer. On my phone, I connect directly to the server's Herdr instance,
+  where the sidebar collapses into a hamburger menu.
 
 <Figure
-  caption="My laptop and phone connect through Tailscale. Agent clients and development tools run on the home server; AI models run at hosted providers."
+  caption="My laptop and phone connect through Tailscale. Herdr on my laptop shows the server's sessions; my phone connects to them directly. Agent clients and development tools run on the server; AI models run at hosted providers."
   className="mx-auto max-w-lg"
 >
   <WorkflowDiagram className="size-full" />
@@ -87,7 +89,8 @@ providers. You don't need to buy hardware for local model inference to do this. 
 machine needs to handle your development workload and however many tasks you run at once.
 
 Tailscale lets me reach SSH and my dev servers remotely **without exposing them to the
-public internet**. I don't have to open public ports for either. Its
+public internet**. I don't have to open public ports for either. They can still be
+reachable on my home LAN, depending on which addresses they listen on. Tailscale's
 [connection guide](https://tailscale.com/docs/how-to/connect-to-devices) explains how to
 reach services using a device's Tailscale address.
 
@@ -98,22 +101,20 @@ processes still need restarting.
 
 ## The same development loop, from another machine
 
-This is how I start:
+On my laptop, I start my local Herdr instance with `herdr`.
 
-```bash
-ssh homelab
-hd
-```
+I added `homelab`, a short name in my SSH config, as a
+[saved machine](https://herdr.dev/docs/connecting-machines/) once. Its workspaces appear
+in the same Herdr window as my local work. Switching to one connects me to the Herdr
+instance running on the server, without a separate SSH terminal.
 
-`homelab` is a short name in my SSH config, and `hd` is my alias for `herdr`.
+On my phone, I connect to the server's Tailscale address using a saved host in Termius,
+then run Herdr there to rejoin the server sessions. Inside them, I switch between agents
+working in different repositories. My usual tools are there too: Fish, Neovim, ripgrep,
+fzf, Delta, and lazygit. My [dotfiles](https://github.com/marekh19/dotfiles), managed with
+GNU Stow, keep the environment familiar.
 
-Inside, I switch between agents working in different repositories. Reconnecting from
-another device brings me back to those same sessions. My usual tools are there too: Fish,
-Neovim, ripgrep, fzf, Delta, and lazygit. My
-[dotfiles](https://github.com/marekh19/dotfiles), managed with GNU Stow, keep the
-environment familiar.
-
-<Figure caption="The same herdr session on my MacBook and phone.">
+<Figure caption="One window on my MacBook shows local work and agents running on my home server. When an agent needs an answer, I can open its server session directly from my phone.">
   <div className="not-prose grid items-center gap-4 lg:grid-cols-[minmax(0,3.5fr)_minmax(0,1fr)]">
     <Image
       src={macbookScreenshot}
@@ -166,23 +167,24 @@ through GitHub. Longer reviews can wait until I'm back at my desk.
 ## The server I actually use
 
 I already had a home server, so adding development to it was an obvious choice. It runs
-around 20 containers, including Home Assistant, Jellyfin, Frigate, and Umami. I've used
-this machine for almost four years, replacing every component but the SSD along the way.
+around 20 containers, including Home Assistant and Frigate, which processes camera feeds
+for object detection. I've used this machine for almost four years, replacing every
+component but the SSD along the way.
 
 I'd set aside a couple of hours for the initial setup and choose a stable distro. Ubuntu
 Server has needed little attention from me; I automate updates with cron. Years ago, I ran
 Arch, and every `sudo pacman -Syu` made me wonder what would break. I don't want that
 feeling from the machine I'm leaving my work on.
 
-The current machine has an **Intel Core i5-13500, 32 GB of RAM, one small NVMe SSD, and
-two larger 3.5-inch data HDDs configured as a RAID 1 array**. I started with used parts
-from Aukro.cz: an i5-9400 machine with 12 GB of RAM for around **8,000 CZK**. That
-purchase and the later RAM, CPU, and motherboard upgrades add up to roughly **17,500
-CZK**.
+I started with used parts from Aukro.cz: an i5-9400 machine with 12 GB of RAM for around
+**8,000 CZK**. I upgraded to an **Intel Core i5-13500 and 32 GB of RAM** so I have
+headroom for several Claude Code and Codex sessions and dev servers alongside my
+containers. The server also has one small NVMe SSD and two larger 3.5-inch data HDDs in
+RAID 1. The original purchase and later RAM, CPU, and motherboard upgrades add up to
+roughly **17,500 CZK**.
 
-The old CPU was still usable. More parallel work, alongside the other services, motivated
-the upgrade. My smart socket reports roughly **40 W at the wall** during typical use, with
-the containers, some agent instances, a dev server, and the two data HDDs. That's an
+My smart socket reports roughly **40 W at the wall** during typical use, with the
+containers, some agent instances, a dev server, and the two data HDDs. That's an
 observation from my normal workload, not an idle-power measurement.
 
 <Figure
@@ -207,19 +209,21 @@ the model runs elsewhere.
 ## Try it on a machine you already have
 
 Start with one repository on a spare machine that can stay running, or an existing home
-server:
+server. If you want an agent to guide you through the setup, give it this whole article
+for context. Use these steps as a checklist:
 
 1. Install [Ubuntu Server](https://ubuntu.com/server/docs/tutorial/) if needed, then your
    usual development tools and coding agent.
 2. [Set up Tailscale](https://tailscale.com/docs/how-to/quickstart) on the server and your
    client devices, and configure SSH access over that network.
-3. [Install herdr](https://github.com/herdrdev/herdr#install), clone your project's
-   repository, and run `herdr` on the server.
-4. Start your agent inside it and give it a task.
-5. Disconnect, reconnect from another device, and run `herdr` again to return to the
-   session. For a web project, try opening its dev server in that device's browser too.
-
-You can give this article to an agent and ask it to help you set up those pieces.
+3. [Install herdr](https://github.com/herdrdev/herdr#install) on the server and your
+   laptop. Clone your project's repository on the server, then run `herdr` there.
+   [Add the server as a machine](https://herdr.dev/docs/connecting-machines/) in your
+   laptop's Herdr instance.
+4. Start an agent in a Herdr workspace on the server and give it a task.
+5. Disconnect and return through your laptop's Herdr instance, or SSH into the server from
+   your phone and run `herdr` there. For a web project, try opening its dev server in that
+   device's browser too.
 
 If you're comfortable in a terminal, move your agents off your laptop. I don't want a
 running agent deciding when I can close the lid. Give it work, close the laptop, and
