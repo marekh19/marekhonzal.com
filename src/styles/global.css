@@ -55,6 +55,20 @@ html {
 
 @custom-variant prose-inline-code (:root & :where(code):not(pre>code));
 
+/* Same rule as shiki.css: dark when forced dark, otherwise the OS preference only
+   while in system mode (no data-theme override). */
+@custom-variant dark {
+  &:where(:root[data-theme='custom-dark'] *) {
+    @slot;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
+
 @layer components {
   /* Copy button in markdown code block */
   .code-block {
