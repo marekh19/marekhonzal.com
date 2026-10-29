@@ -26,9 +26,11 @@ export const getExternalSvgFiles = () =>
  * `<use>` shadow tree and the page's @font-face applies there, so theming and
  * Excalifont keep working. Only for SVGs without `<mask>` or other `url(#id)`
  * references, which browsers resolve inconsistently across documents.
+ * `src/lib/external-svg-loader.ts` moves `data-href` to `href` when the SVG comes
+ * within one screen height of the viewport.
  */
 export const getExternalSvgReference = (svg: string) => {
   const viewBox = /viewBox="([^"]+)"/.exec(svg)?.[1]
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}"><use href="/svg/${hashSvg(svg)}.svg#${FRAGMENT_ID}"/></svg>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}"><use data-href="/svg/${hashSvg(svg)}.svg#${FRAGMENT_ID}"/></svg>`
 }

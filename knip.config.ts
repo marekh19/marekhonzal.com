@@ -15,6 +15,7 @@ export default {
   ignore: [
     // Scripts below are false positives. Not recognized by knip for some reason
     'src/lib/copy-code.ts',
+    'src/lib/external-svg-loader.ts',
     'src/lib/thumbnail-transitions.ts',
   ],
   ignoreDependencies: [
