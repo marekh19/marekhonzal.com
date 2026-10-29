@@ -1,0 +1,12 @@
+---
+import { getExternalSvgReference } from '@/lib/utils/externalSvg'
+
+type Props = {
+  /** Markup from a `?raw` import of an SVG under src/content. */
+  svg: string
+}
+
+const { svg } = Astro.props
+---
+
+<Fragment set:html={getExternalSvgReference(svg)} />

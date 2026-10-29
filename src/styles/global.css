@@ -4,10 +4,15 @@
 @import './animation.css';
 @import './shiki.css';
 
+/* Allowlist, because Tailwind also scans article prose: words like "menu" or
+   "steps" pulled in unused daisyUI components (~45 KB of render-blocking CSS).
+   Add a component here before using it. */
 @plugin 'daisyui' {
   themes: false;
   logs: false;
-  exclude: properties;
+  include:
+    rootcolor, rootscrollgutter, rootscrolllock, scrollbar, svg, badge, button, divider,
+    dropdown, mask, mockup, radio, tooltip, radius, typography;
 }
 
 @plugin '@tailwindcss/typography';
