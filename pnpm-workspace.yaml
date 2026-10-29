@@ -11,3 +11,9 @@ allowBuilds:
 overrides:
   tar: "^7.5.16"
   yaml: "^2.8.3"
+  # Not security: keeps @emnapi/core and @emnapi/runtime on the same major. The
+  # lockfile paired core 1.11.3 with runtime 2.0.0-alpha.3, which crashed the
+  # wasm-only @astrojs/astro2tsx, so `astro check` exited 0 without checking.
+  # Remove once every @napi-rs/wasm-runtime consumer resolves both to one major.
+  "@emnapi/core": "^1.11.3"
+  "@emnapi/runtime": "^1.11.3"
