@@ -1,4 +1,4 @@
-import { getTagBadgeClass, type Tag } from '@/lib/tags'
+import { getTagHueClass, type Tag } from '@/lib/tags'
 import type { Post, TagMetadata } from '@/lib/types'
 
 import { createSlugifiedString } from './string'
@@ -18,7 +18,7 @@ export const getPostTagMetadata = (
       0,
     ),
     slug: createSlugifiedString(tag),
-    badgeClass: getTagBadgeClass(tag),
+    hueClass: getTagHueClass(tag),
   }))
 
 export const getSortedTagMetadataByCount = (
@@ -30,11 +30,10 @@ export const getPostsByTag = (posts: readonly Post[], tag: Tag): readonly Post[]
 
 export const getTagsWithSlugs = (
   tags?: readonly Tag[],
-): readonly { label: Tag; slug: string; badgeClass: string }[] | null =>
+): readonly { label: Tag; slug: string }[] | null =>
   tags
     ? tags.map((tag) => ({
         label: tag,
         slug: createSlugifiedString(tag),
-        badgeClass: getTagBadgeClass(tag),
       }))
     : null

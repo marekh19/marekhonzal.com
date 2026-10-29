@@ -1,6 +1,8 @@
 import type { ImageMetadata, MarkdownHeading } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
+import type { Tag, TagHueClass } from '@/lib/tags'
+
 export type Project = CollectionEntry<'projects'>
 export type ProjectData = Project['data']
 
@@ -28,10 +30,10 @@ export type Content = {
 }
 
 export type TagMetadata = {
-  label: string
+  label: Tag
   count: number
   slug: string
-  badgeClass: string
+  hueClass: TagHueClass
 }
 
 export type TocHeading = MarkdownHeading & {

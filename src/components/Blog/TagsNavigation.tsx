@@ -24,35 +24,20 @@ export const TagsNavigation = ({ tags, className }: Props) => {
   return (
     <nav aria-label="Navigate posts by tag" className={className}>
       <ul className={cn('flex flex-wrap gap-3', 'md:gap-x-5')}>
-        {visibleTags.map(({ label, slug, count, badgeClass }) => (
+        {visibleTags.map(({ label, slug, count, hueClass }) => (
           <li>
             <a
-              className={cn(
-                'badge badge-tag badge-sm cursor-pointer transition-colors duration-200 ease-out',
-                'md:badge-md',
-                badgeClass,
-              )}
+              className={cn('badge-link tag-dot', hueClass)}
               href={ROUTES.blog.tag(slug)}
             >
               <span>{label}</span>
-              <span className="badge badge-xs text-base-100 border-(--tag-fg) bg-(--tag-fg) font-bold">
-                {count}
-              </span>
+              <span className="badge badge-xs badge-ghost font-bold">{count}</span>
             </a>
           </li>
         ))}
         {shouldShowMoreButton && (
           <li className="tooltip" data-tip="Show all tags">
-            <button
-              className={cn(
-                'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
-                'md:badge-md',
-                'hover:bg-accent/20',
-                'focus-visible:bg-accent/20',
-                'link-outline-accent',
-              )}
-              onClick={() => setShouldShowAll(true)}
-            >
+            <button className="badge-link" onClick={() => setShouldShowAll(true)}>
               <EllipsisIcon />
               <span className="sr-only">Show all tags</span>
             </button>
