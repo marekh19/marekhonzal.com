@@ -53,10 +53,9 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
               <a
                 href={ROUTES.blog.tag(tag.slug)}
                 class={cn(
-                  'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
+                  'badge badge-tag badge-sm cursor-pointer transition-colors duration-200 ease-out',
                   'md:badge-md',
-                  'hover:bg-neutral/75',
-                  'link-outline',
+                  tag.badgeClass,
                 )}
               >
                 {tag.label}

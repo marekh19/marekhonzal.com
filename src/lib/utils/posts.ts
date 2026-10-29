@@ -1,14 +1,15 @@
+import { getTagBadgeClass, type Tag } from '@/lib/tags'
 import type { Post, TagMetadata } from '@/lib/types'
 
 import { createSlugifiedString } from './string'
 
-export const getAllTags = (posts: readonly Post[]): readonly string[] => [
+export const getAllTags = (posts: readonly Post[]): readonly Tag[] => [
   ...new Set(posts.flatMap((post) => post.data.tags ?? [])),
 ]
 
 export const getPostTagMetadata = (
   posts: readonly Post[],
-  uniqueTags: readonly string[],
+  uniqueTags: readonly Tag[],
 ): readonly TagMetadata[] =>
   uniqueTags.map((tag) => ({
     label: tag,
@@ -17,21 +18,23 @@ export const getPostTagMetadata = (
       0,
     ),
     slug: createSlugifiedString(tag),
+    badgeClass: getTagBadgeClass(tag),
   }))
 
 export const getSortedTagMetadataByCount = (
   tagMetadata: readonly TagMetadata[],
 ): readonly TagMetadata[] => tagMetadata.toSorted((a, b) => b.count - a.count)
 
-export const getPostsByTag = (posts: readonly Post[], tag: string): readonly Post[] =>
+export const getPostsByTag = (posts: readonly Post[], tag: Tag): readonly Post[] =>
   posts.filter((post) => post.data.tags?.includes(tag))
 
 export const getTagsWithSlugs = (
-  tags?: readonly string[],
-): readonly { label: string; slug: string }[] | null =>
+  tags?: readonly Tag[],
+): readonly { label: Tag; slug: string; badgeClass: string }[] | null =>
   tags
     ? tags.map((tag) => ({
         label: tag,
         slug: createSlugifiedString(tag),
+        badgeClass: getTagBadgeClass(tag),
       }))
     : null

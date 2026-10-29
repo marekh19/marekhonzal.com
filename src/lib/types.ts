@@ -31,6 +31,7 @@ export type TagMetadata = {
   label: string
   count: number
   slug: string
+  badgeClass: string
 }
 
 export type TocHeading = MarkdownHeading & {

@@ -172,4 +172,63 @@ html {
   .mix-1-7 {
     --mix: 0.142857143;
   }
+
+  /* Tag badge on a 12-hue wheel: step × 30° from primary's hue, with primary's
+     lightness and chroma in each theme. The text mixes in base-content because
+     plain badge-soft text drops below 4.5:1 contrast in the light theme. */
+  .badge-tag {
+    --badge-color: oklch(from var(--color-primary) l c calc(h + var(--tag-step) * 30));
+    --tag-fg: color-mix(in oklab, var(--badge-color) 70%, var(--color-base-content));
+
+    color: var(--tag-fg);
+    background-color: color-mix(in oklab, var(--badge-color) 8%, var(--color-base-100));
+    border-color: color-mix(in oklab, var(--badge-color) 10%, var(--color-base-100));
+
+    /* Above 15%, some hues drop below 4.5:1 in the light theme. */
+    &[href]:is(:hover, :focus-visible) {
+      background-color: color-mix(in oklab, var(--badge-color) 15%, var(--color-base-100));
+    }
+
+    &[href]:focus-visible {
+      outline: 2px solid var(--tag-fg);
+      outline-offset: 2px;
+    }
+  }
+
+  .badge-tag-0 {
+    --tag-step: 0;
+  }
+  .badge-tag-1 {
+    --tag-step: 1;
+  }
+  .badge-tag-2 {
+    --tag-step: 2;
+  }
+  .badge-tag-3 {
+    --tag-step: 3;
+  }
+  .badge-tag-4 {
+    --tag-step: 4;
+  }
+  .badge-tag-5 {
+    --tag-step: 5;
+  }
+  .badge-tag-6 {
+    --tag-step: 6;
+  }
+  .badge-tag-7 {
+    --tag-step: 7;
+  }
+  .badge-tag-8 {
+    --tag-step: 8;
+  }
+  .badge-tag-9 {
+    --tag-step: 9;
+  }
+  .badge-tag-10 {
+    --tag-step: 10;
+  }
+  .badge-tag-11 {
+    --tag-step: 11;
+  }
 }

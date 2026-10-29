@@ -24,20 +24,18 @@ export const TagsNavigation = ({ tags, className }: Props) => {
   return (
     <nav aria-label="Navigate posts by tag" className={className}>
       <ul className={cn('flex flex-wrap gap-3', 'md:gap-x-5')}>
-        {visibleTags.map(({ label, slug, count }) => (
+        {visibleTags.map(({ label, slug, count, badgeClass }) => (
           <li>
             <a
               className={cn(
-                'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
+                'badge badge-tag badge-sm cursor-pointer transition-colors duration-200 ease-out',
                 'md:badge-md',
-                'hover:bg-accent/20',
-                'focus-visible:bg-accent/20',
-                'link-outline-accent',
+                badgeClass,
               )}
               href={ROUTES.blog.tag(slug)}
             >
               <span>{label}</span>
-              <span className="badge badge-xs badge-accent text-accent-content font-bold">
+              <span className="badge badge-xs text-base-100 border-(--tag-fg) bg-(--tag-fg) font-bold">
                 {count}
               </span>
             </a>

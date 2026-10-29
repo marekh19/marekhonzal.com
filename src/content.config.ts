@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
 import { z } from 'astro/zod'
 
+import { TAG_LABELS } from '@/lib/tags'
 import { TECHNOLOGY_SLUGS } from '@/lib/technologies'
 
 const blogCollection = defineCollection({
@@ -19,7 +20,7 @@ const blogCollection = defineCollection({
       isDraft: z.boolean().optional().default(false),
       isFeatured: z.boolean().optional().default(false),
       category: z.enum(['dev', 'beyond']).optional().default('dev'),
-      tags: z.array(z.string()).optional(),
+      tags: z.array(z.enum(TAG_LABELS)).optional(),
     }),
 })
 
