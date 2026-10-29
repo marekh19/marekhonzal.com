@@ -45,7 +45,9 @@ export const initScrollProgressBar = ({
     scheduleUpdate()
   }
 
-  // Observe content-size changes (images, fonts) so range stays correct
+  // Observe content-size changes (images, fonts) so range stays correct. Its first
+  // callback runs after the initial layout, so there is no synchronous measure: that
+  // would force a full layout while this module evaluates, before first paint.
   if (typeof ResizeObserver !== 'undefined') {
     ro = new ResizeObserver(recalcAndUpdate)
     ro.observe(document.documentElement)
@@ -56,8 +58,6 @@ export const initScrollProgressBar = ({
   window.addEventListener('scroll', scheduleUpdate, { passive: true, signal })
   window.addEventListener('resize', recalcAndUpdate, { signal })
   window.addEventListener('orientationchange', recalcAndUpdate, { signal })
-
-  recalcAndUpdate()
 
   // Cleanup
   return () => {

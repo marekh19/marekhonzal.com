@@ -1,6 +1,7 @@
 ---
 import { cn } from '@/lib/utils/cn'
-import { getThumbnailReference, getThumbnails } from '@/lib/utils/thumbnails'
+import { getExternalSvgReference } from '@/lib/utils/externalSvg'
+import { getThumbnails } from '@/lib/utils/thumbnails'
 
 type Props = {
   collection: 'blog' | 'projects'
@@ -12,9 +13,8 @@ type Props = {
 
 const { collection, slug, class: className, inline = false } = Astro.props
 
-const svg = inline
-  ? getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
-  : getThumbnailReference(collection, slug)
+const raw = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
+const svg = inline || !raw ? raw : getExternalSvgReference(raw)
 const viewTransitionName = `thumbnail-${collection}-${slug}`
 ---
 

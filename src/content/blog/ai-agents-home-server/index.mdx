@@ -14,7 +14,9 @@ tags:
 
 import { Image } from 'astro:assets'
 
-import BackpackIllustration from './agents-backpack.svg'
+import ExternalSvg from '@/components/ui/ExternalSvg.astro'
+
+import backpackIllustration from './agents-backpack.svg?raw'
 import WorkflowDiagram from './agents-home-server-diagram.svg'
 import homelabPhoto from './homelab-photo.jpg'
 import macbookScreenshot from './macbook-screenshot.png'
@@ -28,7 +30,7 @@ leaving, they connect to a hotspot, put the laptop in a backpack, and hope the c
 holds for the journey.
 
 <div className="mx-auto max-w-md" aria-hidden="true">
-  <BackpackIllustration />
+  <ExternalSvg svg={backpackIllustration} />
 </div>
 
 I get it. I've repeatedly wanted to leave while an agent was still working. But keeping a

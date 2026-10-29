@@ -1,6 +1,5 @@
-import type { MarkdownHeading } from 'astro'
+import type { ImageMetadata, MarkdownHeading } from 'astro'
 import type { CollectionEntry } from 'astro:content'
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 
 export type Project = CollectionEntry<'projects'>
 export type ProjectData = Project['data']
@@ -15,7 +14,8 @@ export type Technology = {
       iconName: `${'logos' | 'devicon'}:${string}`
     }
   | {
-      Icon: AstroComponentFactory
+      // Loaded as a file: these traced logos are 9-47 KB, too heavy to inline.
+      logo: ImageMetadata
     }
 )
 

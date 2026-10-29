@@ -5,20 +5,20 @@ import type {
   InferGetStaticPropsType,
 } from 'astro'
 
-import { getThumbnailFiles } from '@/lib/utils/thumbnails'
+import { getExternalSvgFiles } from '@/lib/utils/externalSvg'
 
-type ThumbnailAPIRoute = APIRoute<
+type ExternalSvgAPIRoute = APIRoute<
   InferGetStaticPropsType<typeof getStaticPaths>,
   InferGetStaticParamsType<typeof getStaticPaths>
 >
 
-export const GET: ThumbnailAPIRoute = ({ props }) =>
+export const GET: ExternalSvgAPIRoute = ({ props }) =>
   new Response(props.svg, {
     headers: { 'Content-Type': 'image/svg+xml' },
   })
 
 export const getStaticPaths = (() =>
-  getThumbnailFiles().map(({ collection, file, svg }) => ({
-    params: { collection, file },
+  getExternalSvgFiles().map(({ hash, svg }) => ({
+    params: { hash },
     props: { svg },
   }))) satisfies GetStaticPaths
