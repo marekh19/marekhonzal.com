@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components'
 
 import Thumbnail from '@/components/Content/Thumbnail.astro'
+import { getTagHueClass, type Tag } from '@/lib/tags'
 import { cn } from '@/lib/utils/cn'
 import { formatDateHuman, formatDateMachine } from '@/lib/utils/date'
 
@@ -13,7 +14,7 @@ type Props = {
   targetUrl: string
   createdAt: Date
   slug: string
-  tags?: string[]
+  tags?: readonly Tag[]
 }
 
 const { title, description, targetUrl, createdAt, slug, tags } = Astro.props
@@ -43,7 +44,9 @@ const hasTags = !!visibleTags && visibleTags.length > 0
       {hasTags && (
         <div class="flex flex-wrap gap-1.5">
           {visibleTags.map((tag) => (
-            <span class="badge badge-accent dark:badge-soft badge-sm">{tag}</span>
+            <span class={cn('badge badge-soft badge-sm tag-dot', getTagHueClass(tag))}>
+              {tag}
+            </span>
           ))}
         </div>
       )}

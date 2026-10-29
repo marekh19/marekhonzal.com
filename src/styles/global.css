@@ -55,6 +55,20 @@ html {
 
 @custom-variant prose-inline-code (:root & :where(code):not(pre>code));
 
+/* Same rule as shiki.css: dark when forced dark, otherwise the OS preference only
+   while in system mode (no data-theme override). */
+@custom-variant dark {
+  &:where(:root[data-theme='custom-dark'] *) {
+    @slot;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
+
 @layer components {
   /* Copy button in markdown code block */
   .code-block {
@@ -63,6 +77,13 @@ html {
     & > button {
       @apply btn btn-soft btn-xs absolute top-1 right-1 opacity-0 transition-opacity duration-200 ease-out lg:group-hover:opacity-100;
     }
+  }
+
+  /* Linked tag badge in the /blog filter and the post header */
+  .badge-link {
+    @apply badge badge-soft badge-sm md:badge-md cursor-pointer transition-colors duration-200 ease-out;
+    @apply hover:bg-base-content/20 focus-visible:bg-base-content/20;
+    @apply focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2;
   }
 
   /* Custom link style with expanding background */
@@ -94,14 +115,6 @@ html {
 @layer utilities {
   .link-outline {
     @apply focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2;
-
-    &.link-outline-rounded {
-      @apply focus-visible:rounded-sm;
-    }
-  }
-
-  .link-outline-accent {
-    @apply focus-visible:outline-accent focus-visible:outline-2 focus-visible:outline-offset-2;
 
     &.link-outline-rounded {
       @apply focus-visible:rounded-sm;
@@ -157,5 +170,55 @@ html {
   }
   .mix-1-7 {
     --mix: 0.142857143;
+  }
+
+  /* Tag dot on a 12-hue wheel: step × 30° from primary's hue, with primary's
+     chroma. The lightness floor lifts the light theme, where warm hues at
+     primary's lightness all look brown. The negative margin keeps the dot
+     closer to its label than the badge gap. */
+  .tag-dot::before {
+    @apply -me-0.5 size-1.5 shrink-0 rounded-full;
+
+    content: '';
+    background-color: oklch(
+      from var(--color-primary) max(l, 0.62) c calc(h + var(--tag-step) * 30)
+    );
+  }
+
+  .tag-hue-0 {
+    --tag-step: 0;
+  }
+  .tag-hue-1 {
+    --tag-step: 1;
+  }
+  .tag-hue-2 {
+    --tag-step: 2;
+  }
+  .tag-hue-3 {
+    --tag-step: 3;
+  }
+  .tag-hue-4 {
+    --tag-step: 4;
+  }
+  .tag-hue-5 {
+    --tag-step: 5;
+  }
+  .tag-hue-6 {
+    --tag-step: 6;
+  }
+  .tag-hue-7 {
+    --tag-step: 7;
+  }
+  .tag-hue-8 {
+    --tag-step: 8;
+  }
+  .tag-hue-9 {
+    --tag-step: 9;
+  }
+  .tag-hue-10 {
+    --tag-step: 10;
+  }
+  .tag-hue-11 {
+    --tag-step: 11;
   }
 }

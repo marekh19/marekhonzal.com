@@ -3,6 +3,7 @@ import { Icon } from 'astro-icon/components'
 
 import Link from '@/components/ui/Link.astro'
 import { ROUTES } from '@/config/routes'
+import { getTagHueClass } from '@/lib/tags'
 import type { PostData, ReadingTime } from '@/lib/types'
 import { cn } from '@/lib/utils/cn'
 import { getTagsWithSlugs } from '@/lib/utils/posts'
@@ -52,12 +53,7 @@ const tagsWithSlugs = getTagsWithSlugs(tags)
             <li>
               <a
                 href={ROUTES.blog.tag(tag.slug)}
-                class={cn(
-                  'badge badge-soft badge-sm cursor-pointer transition-colors duration-200 ease-out',
-                  'md:badge-md',
-                  'hover:bg-neutral/75',
-                  'link-outline',
-                )}
+                class={cn('badge-link tag-dot', getTagHueClass(tag.label))}
               >
                 {tag.label}
               </a>

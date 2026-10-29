@@ -22,7 +22,9 @@ const meta = {
 const blogPosts = await getCollection('blog', shouldIncludeItem)
 const sortedPosts = getSortedContentByDateDesc(blogPosts)
 
-const uniqueTags = getAllTags(blogPosts)
+// Collection order depends on file load order. Collecting tags from date-sorted
+// posts makes the stable count sort list tied tags by their newest post.
+const uniqueTags = getAllTags(sortedPosts)
 const tagsMetadata = getPostTagMetadata(blogPosts, uniqueTags)
 const sortedTagsMetadata = getSortedTagMetadataByCount(tagsMetadata)
 ---
