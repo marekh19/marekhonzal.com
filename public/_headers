@@ -17,6 +17,9 @@
 /_astro/*
   Cache-Control: public, max-age=63072000, immutable
 
+/thumbnails/*
+  Cache-Control: public, max-age=63072000, immutable
+
 # Fonts are versioned in the filename (lora-v36, open-sans-v43), not
 # content-hashed. 2 years is fine as long as we never edit a file in place.
 /fonts/*

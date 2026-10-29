@@ -1,16 +1,20 @@
 ---
 import { cn } from '@/lib/utils/cn'
-import { getThumbnails } from '@/lib/utils/thumbnails'
+import { getThumbnailReference, getThumbnails } from '@/lib/utils/thumbnails'
 
 type Props = {
   collection: 'blog' | 'projects'
   slug: string
   class?: string
+  /** Inline the markup for above-the-fold thumbnails; others load as a cached file. */
+  inline?: boolean
 }
 
-const { collection, slug, class: className } = Astro.props
+const { collection, slug, class: className, inline = false } = Astro.props
 
-const svg = getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
+const svg = inline
+  ? getThumbnails()[`/src/content/${collection}/${slug}/thumbnail.svg`]
+  : getThumbnailReference(collection, slug)
 const viewTransitionName = `thumbnail-${collection}-${slug}`
 ---
 
