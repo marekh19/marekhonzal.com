@@ -27,6 +27,18 @@
   }
 }
 
+/* Theme switch (ThemeSwitcher.astro). Links and buttons with color transitions
+   would trail the instant background change, so the switch would look uneven.
+   !important beats the transition utilities on those elements. */
+html:active-view-transition-type(theme) *,
+html.theme-switching * {
+  transition: none !important;
+}
+
+html:active-view-transition-type(theme)::view-transition-group(*) {
+  animation-duration: 200ms;
+}
+
 @theme {
   /* Font */
   --font-sans:
@@ -36,8 +48,14 @@
 
   /* Animation */
   --animate-slide-in: slide-in-left 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  --animate-underline-wipe: underline-wipe 800ms ease-in-out 0ms 1 both;
+  /* Two animations because Chrome ignores var() in a keyframe's timing function.
+     The retract starts when the draw ends (600ms + 550ms). */
+  --animate-underline-sweep:
+    underline-draw 550ms var(--ease-out-strong) 600ms both,
+    underline-retract 450ms var(--ease-in-out-strong) 1150ms forwards;
   --ease-springy: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
 
   /* Aspect ratio */
   --aspect-og: 1200 / 630;
@@ -70,12 +88,51 @@ html {
 }
 
 @layer components {
-  /* Copy button in markdown code block */
+  /* Copy button in markdown code block. It hides until hover only where a
+     pointer can hover; touch and keyboard users always see it. */
   .code-block {
     @apply relative;
 
     & > button {
-      @apply btn btn-soft btn-xs absolute top-1 right-1 opacity-0 transition-opacity duration-200 ease-out lg:group-hover:opacity-100;
+      @apply btn btn-soft btn-xs absolute top-1 right-1 transition-opacity duration-200 ease-out;
+      @apply pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100 focus-visible:opacity-100;
+    }
+
+    /* The labels share one grid cell, so the button keeps the width of the
+       longest one. visibility keeps hidden labels out of the accessible name. */
+    & .copy-labels {
+      @apply grid justify-items-center;
+    }
+
+    & [data-label] {
+      @apply invisible scale-90 opacity-0 transition-[opacity,scale,visibility] duration-150 ease-out-strong motion-reduce:scale-100;
+
+      grid-area: 1 / 1;
+    }
+
+    & [data-state='default'] [data-label='default'],
+    & [data-state='success'] [data-label='success'],
+    & [data-state='failed'] [data-label='failed'] {
+      @apply visible scale-100 opacity-100;
+    }
+  }
+
+  /* Tags revealed by "Show all tags" in TagsNavigation. Only revealed tags get
+     this class, because @starting-style also runs on first render and would
+     animate the initial tags on every page load. */
+  .tag-reveal {
+    @apply transition-[opacity,scale] duration-200 ease-out-strong;
+
+    @starting-style {
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition-delay: calc(var(--i) * 30ms);
+
+      @starting-style {
+        scale: 0.95;
+      }
     }
   }
 
@@ -84,6 +141,18 @@ html {
     @apply badge badge-soft badge-sm md:badge-md cursor-pointer transition-colors duration-200 ease-out;
     @apply hover:bg-base-content/20 focus-visible:bg-base-content/20;
     @apply focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2;
+  }
+
+  /* Hero tagline underline. An inline background is laid out along the text's
+     line fragments in reading order, so the line also follows the tagline when
+     it wraps. The bottom padding moves it below the descenders without changing
+     the line height. */
+  .tagline-underline {
+    padding-bottom: 0.1em;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 2px;
   }
 
   /* Custom link style with expanding background */
