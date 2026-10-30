@@ -38,7 +38,7 @@ const options = [
     style="position-anchor:--theme-anchor"
     class={cn(
       'dropdown dropdown-top dropdown-end bg-base-100 rounded-box border-base-content/10',
-      'mb-2 w-44 border p-1.5 shadow-lg',
+      'mb-2 w-44 origin-bottom-right border p-1.5 shadow-lg',
     )}
   >
     {options.map(({ value, label, icon }) => (
@@ -89,10 +89,32 @@ const options = [
     dark: 'custom-dark',
   }
 
+  const root = document.documentElement
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)')
+  const supportsThemeTransition =
+    'startViewTransition' in document &&
+    CSS.supports('selector(:active-view-transition-type(theme))')
+
   const applyTheme = (pref: string) => {
     const theme = THEME_ATTR[pref]
-    if (theme) document.documentElement.dataset.theme = theme
-    else delete document.documentElement.dataset.theme
+    if (theme) root.dataset.theme = theme
+    else delete root.dataset.theme
+  }
+
+  // Crossfade the page into the new theme. global.css turns off color transitions
+  // during the switch in both paths, so no element trails the others.
+  const switchTheme = (pref: string) => {
+    if (supportsThemeTransition && !reducedMotion.matches) {
+      document.startViewTransition({ update: () => applyTheme(pref), types: ['theme'] })
+      return
+    }
+
+    root.classList.add('theme-switching')
+    applyTheme(pref)
+    // Remove the class only after one frame has rendered the new theme.
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => root.classList.remove('theme-switching'))
+    })
   }
 
   const readPref = (): string => {
@@ -126,7 +148,7 @@ const options = [
     } catch {
       // Persisting failed — apply for this session anyway.
     }
-    applyTheme(input.value)
+    switchTheme(input.value)
   }
 
   document.addEventListener('change', onChange)

@@ -1,4 +1,4 @@
-const MESSAGE_DURATION = 700 // ms
+const MESSAGE_DURATION = 1500 // ms
 
 const labels = {
   default: 'Copy',
@@ -6,18 +6,39 @@ const labels = {
   failed: 'Failed',
 } as const
 
+type CopyState = keyof typeof labels
+
+const createLabels = (): HTMLSpanElement => {
+  const wrapper = document.createElement('span')
+  wrapper.classList.add('copy-labels')
+
+  for (const [state, label] of Object.entries(labels)) {
+    const span = document.createElement('span')
+    span.dataset.label = state
+    span.textContent = label
+    wrapper.appendChild(span)
+  }
+
+  return wrapper
+}
+
 const createCopyButton = (pre: HTMLPreElement): HTMLButtonElement => {
   const code = pre.querySelector('code')
   if (!code) throw new Error('<pre> block has no <code>')
 
   const button = document.createElement('button')
   button.type = 'button'
-  button.textContent = labels.default
+  button.appendChild(createLabels())
+
+  const setState = (state: CopyState) => {
+    button.dataset.state = state
+  }
+  setState('default')
 
   let timeoutId: number | undefined
 
   const resetLabel = () => {
-    button.textContent = labels.default
+    setState('default')
     timeoutId = undefined
   }
 
@@ -26,9 +47,9 @@ const createCopyButton = (pre: HTMLPreElement): HTMLButtonElement => {
 
     try {
       await navigator.clipboard.writeText(code.innerText)
-      button.textContent = labels.success
+      setState('success')
     } catch {
-      button.textContent = labels.failed
+      setState('failed')
     }
 
     timeoutId = window.setTimeout(resetLabel, MESSAGE_DURATION)

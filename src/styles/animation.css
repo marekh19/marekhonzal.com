@@ -33,14 +33,23 @@
   }
 }
 
-@keyframes underline-wipe {
-  0% {
-    transform: translate3d(0, 0, 0) scale3d(0, 1, 1);
+@keyframes underline-draw {
+  from {
+    background-size: 0% 2px;
   }
-  50% {
-    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  to {
+    background-size: 100% 2px;
   }
-  100% {
-    transform: translate3d(100%, 0, 0) scale3d(0, 1, 1);
+}
+
+/* Anchored to the end of the text, so the tail follows the line out. */
+@keyframes underline-retract {
+  from {
+    background-position: 100% 100%;
+    background-size: 100% 2px;
+  }
+  to {
+    background-position: 100% 100%;
+    background-size: 0% 2px;
   }
 }
