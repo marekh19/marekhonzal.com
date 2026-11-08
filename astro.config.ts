@@ -10,6 +10,7 @@ import { loadEnv } from 'vite'
 
 import { envConfig } from './env.config.ts'
 import { remarkReadingTime } from './plugins/remark-reading-time'
+import { meowsootDawn, meowsootMoon } from './plugins/shiki-meowsoot'
 
 const { SITE_URL, ENV_NAME } = loadEnv('', process.cwd(), '')
 
@@ -34,8 +35,8 @@ export default defineConfig({
     },
     shikiConfig: {
       themes: {
-        light: 'catppuccin-latte',
-        dark: 'catppuccin-mocha',
+        light: meowsootDawn,
+        dark: meowsootMoon,
       },
     },
     processor: unified({
