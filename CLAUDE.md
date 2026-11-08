@@ -17,6 +17,15 @@ All four must pass before considering a change done.
 
 pnpm only. Node >=24, pnpm >=10 (`engineStrict`).
 
+## Versioning
+
+Bump `version` in `package.json` once for each change that reaches `main`: once per PR, or
+in the commit itself when you push straight to `main`. Use minor if the change includes a
+`feat`, and patch otherwise. If the branch already bumps the version compared with `main`,
+keep that one bump, and raise it to minor when you add a `feat`. Dependabot dependency
+updates are the only changes without a bump. The `app:version` meta tag publishes the
+version, so it shows which build is deployed.
+
 ## Performance
 
 Every page scores 100 on mobile PageSpeed Insights. Lighthouse loads the whole HTML
