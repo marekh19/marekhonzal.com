@@ -71,13 +71,13 @@ My setup has three main pieces:
 - **[Tailscale](https://tailscale.com/) and SSH** connect my laptop and phone to the
   server over Tailscale's private network. I use [Termius](https://termius.com) for SSH on
   my phone.
-- **[herdr](https://herdr.dev/docs/)** runs on both my laptop and server. I add the server
-  as an [SSH machine](https://herdr.dev/docs/connecting-machines/) in my local Herdr, so
-  its workspaces and agents appear alongside my local ones in one window. Herdr keeps the
-  server sessions running when I disconnect. I used tmux for several years; Herdr adds a
-  sidebar that shows whether each agent is idle, running, done, or blocked, for example
-  waiting for an answer. On my phone, I connect directly to the server's Herdr instance,
-  where the sidebar collapses into a hamburger menu.
+- **[herdr](https://herdr.dev/tui/docs/)** runs on both my laptop and server. I add the
+  server as an [SSH machine](https://herdr.dev/tui/docs/connecting-machines/) in my local
+  Herdr, so its workspaces and agents appear alongside my local ones in one window. Herdr
+  keeps the server sessions running when I disconnect. I used tmux for several years;
+  Herdr adds a sidebar that shows whether each agent is idle, running, done, or blocked,
+  for example waiting for an answer. On my phone, I connect directly to the server's Herdr
+  instance, where the sidebar collapses into a hamburger menu.
 
 <Figure
   caption="My laptop and phone connect through Tailscale. Herdr on my laptop shows the server's sessions; my phone connects to them directly. Agent clients and development tools run on the server; AI models run at hosted providers."
@@ -98,7 +98,7 @@ reach services using a device's Tailscale address.
 
 Disconnecting leaves processes running. A restart stops them; herdr can restore its layout
 and resume supported agent conversations when I reconnect, with the relevant
-[integrations](https://herdr.dev/docs/integrations/) installed. Dev servers and other
+[integrations](https://herdr.dev/tui/docs/integrations/) installed. Dev servers and other
 processes still need restarting.
 
 ## The same development loop, from another machine
@@ -106,9 +106,9 @@ processes still need restarting.
 On my laptop, I start my local Herdr instance with `herdr`.
 
 I added `homelab`, a short name in my SSH config, as a
-[saved machine](https://herdr.dev/docs/connecting-machines/) once. Its workspaces appear
-in the same Herdr window as my local work. Switching to one connects me to the Herdr
-instance running on the server, without a separate SSH terminal.
+[saved machine](https://herdr.dev/tui/docs/connecting-machines/) once. Its workspaces
+appear in the same Herdr window as my local work. Switching to one connects me to the
+Herdr instance running on the server, without a separate SSH terminal.
 
 On my phone, I connect to the server's Tailscale address using a saved host in Termius,
 then run Herdr there to rejoin the server sessions. Inside them, I switch between agents
@@ -223,7 +223,7 @@ for context. Use these steps as a checklist:
    client devices, and configure SSH access over that network.
 3. [Install herdr](https://github.com/herdrdev/herdr#install) on the server and your
    laptop. Clone your project's repository on the server, then run `herdr` there.
-   [Add the server as a machine](https://herdr.dev/docs/connecting-machines/) in your
+   [Add the server as a machine](https://herdr.dev/tui/docs/connecting-machines/) in your
    laptop's Herdr instance.
 4. Start an agent in a Herdr workspace on the server and give it a task.
 5. Disconnect and return through your laptop's Herdr instance, or SSH into the server from
