@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1321 622.4">
-  <style>@keyframes thumb-z-float{from{opacity:0;translate:-70px 70px;scale:.4}}@keyframes thumb-glimmer{10%,34%{opacity:.35}22%,46%{opacity:1}60%{opacity:.6}}@keyframes thumb-blink{0%,50%{opacity:.5}25%,75%{opacity:1}}</style>
+  <style>@keyframes thumb-z-float{from{opacity:0;translate:-70px 70px;scale:.4}}@keyframes thumb-glimmer{10%,34%{fill:#fab005}22%,46%{fill:#ffec99}60%{fill:#fcc419}}@keyframes thumb-blink{0%,50%{opacity:.5}25%,75%{opacity:1}}</style>
   <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="#ced4da" stroke-width="0" d="M37 450c43-25 211-119 263-146 51-27 29-19 46-17 18 1 28 9 58 24 30 16 93 51 121 68 29 18 49 27 50 37 1 11 5-1-42 27L289 585c-49 27-31 21-49 21-19 0-31-7-63-23S74 527 46 509c-29-17-38-21-39-30-1-10 26-21 32-25"/>
     <path fill="none" stroke="#868e96" stroke-width="4" d="M41 451c43-25 211-122 262-149s27-17 44-15c16 2 24 9 53 25 30 15 95 49 124 66 28 17 48 26 49 38 2 12 5 4-42 33-48 29-193 113-242 140s-34 24-52 23c-19-1-28-12-59-29L49 508c-27-17-34-20-36-29s22-21 26-26m-2-5c43-26 212-123 263-151 52-27 28-16 45-15 17 2 25 9 56 25 30 16 98 53 126 71s41 25 42 36c0 12 8 4-37 33-46 29-187 114-237 141-50 28-43 23-62 22-20-2-24-11-54-29-30-17-101-61-129-79-28-17-37-16-39-25-2-8 23-20 28-25"/>
