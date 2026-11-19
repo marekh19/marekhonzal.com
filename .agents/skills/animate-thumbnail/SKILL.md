@@ -49,11 +49,20 @@ focuses its link. The animation lives inside `thumbnail.svg`. Worked example:
 - **Rest state is the last frame.** Write keyframes that end at the element's normal
   look, and leave out the `to` frame. A pointer that leaves early makes the element
   jump to the rest state, so the rest state must look correct by itself.
-- **Total length is at most 1.2 s**, delays included. Every element finishes inside it.
+- **Total length is 1 to 2 s**, delays included. A quick action (a blink, a click) stays
+  near 1 s. Slow motion (floating debris) or a sequence of steps can take up to 2 s.
+  Every element finishes inside the total.
 - **One focal animation.** An accent that pulls attention from the focal element is too
   strong: animate fewer elements, lower the contrast, or use fewer repeats.
-- **Match the motion to the object.** A light blinks with `step-end`. A floating or
-  growing object uses an ease-out curve.
+- **Move the object the way it works.** A lock opens and clicks shut, a flame pulses
+  from the nozzle, a rocket shakes. A plain opacity fade suits only a light. A light
+  blinks with `step-end`. A floating or growing object uses an ease-out curve.
+- **Offer variants when the motion is unclear.** Build two to four variants as temporary
+  SVG files on a temporary page, let the user compare them side by side, then delete
+  the temporary files.
+- **A shape that exists only during the animation** (a sparkle) gets the attribute
+  `opacity="0"`. Its keyframes set `opacity:1` in every frame and start and end at
+  `scale:0`. It then stays hidden at rest and in the OG image.
 - **Animate `opacity`, `translate`, and `scale`.** Excalidraw puts a `transform`
   attribute on `<text>` and on some groups, and a CSS `transform` replaces it. Wrap such
   an element in a `<g>` and animate the `<g>`.
@@ -74,6 +83,9 @@ focuses its link. The animation lives inside `thumbnail.svg`. Worked example:
 
 ## Verifying
 
+- Check the light and the dark theme. A change of opacity or brightness on a pale fill
+  can disappear against one of the two backgrounds, while a change of shape or position
+  shows in both.
 - Preview URLs have no trailing slash: `/blog`, `/projects`.
 - The dev server keeps old inline SVG markup after a CSS hot update. Reload the page
   before you judge a change.
