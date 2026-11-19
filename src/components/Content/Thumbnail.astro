@@ -20,8 +20,7 @@ const viewTransitionName = `thumbnail-${collection}-${slug}`
 
 <div
   class={cn(
-    'thumb-surface border-base-content/10 size-full border-b p-3 [&>svg]:size-full [&>svg]:transition-transform [&>svg]:duration-300 [&>svg]:ease-out',
-    'motion-safe:group-hover:[&>svg]:scale-105 motion-safe:group-has-[a:focus-visible]:[&>svg]:scale-105',
+    'thumb-surface border-base-content/10 size-full border-b p-3 [&>svg]:size-full',
     className,
   )}
   style={`view-transition-name: ${viewTransitionName}`}
