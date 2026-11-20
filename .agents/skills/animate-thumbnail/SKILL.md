@@ -71,6 +71,17 @@ focuses its link. The animation lives inside `thumbnail.svg`. Worked example:
 - **Delayed entrances need `backwards`.** An element that starts hidden and has a delay
   uses the `backwards` fill mode, so it is hidden during the delay.
 - **Lengths are viewBox units.** `70px` in a keyframe is 70 units of the SVG's viewBox.
+- **A cycle repeats with an iteration count.** A walk, a wag, or a hop is one short
+  keyframe cycle with a count in the shorthand: `var(--thumb-play,thumb-trot) .35s linear 4`.
+- **A stroke draws itself with a dash offset.** Give the path `pathLength="1"` and
+  animate `stroke-dashoffset` from 1. Set `stroke-dasharray:1` inside the keyframes
+  only, so the rest state and the OG image keep a solid stroke.
+- **An object can leave and come back.** The SVG clips at its edges. Move the object
+  out on one side, jump to the other side between two keyframes 0.01% apart, and slide
+  it in to the rest position.
+- **Set the easing in the shorthand.** A keyframe that holds only
+  `animation-timing-function` has no effect. Add a timing function to a keyframe that
+  also sets a property.
 - **Animate the fill path only** when a shape should dim or flicker. The outline stays
   still and keeps the shape readable.
 - **One name, one definition.** Keyframe names are global on a page that shows several
