@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1112.1 576.9">
-  <g stroke-linecap="round">
+  <style>@keyframes thumb-rock{20%{rotate:-11deg}45%{rotate:9deg}70%{rotate:-5deg}88%{rotate:2deg}}@keyframes thumb-press{30%{scale:.86}65%{scale:1.05}}@keyframes thumb-beat{25%,65%{scale:1.3}45%{scale:1}}</style>
+<g style="transform-box:fill-box;transform-origin:50% 100%;animation:var(--thumb-play,thumb-rock) .7s 0s ease-in-out">  <g stroke-linecap="round">
     <path fill="#000" stroke-width="0" d="M22 189c102 1 204 4 370 0 5-5 9 8 10 10q-4 6 0 20c2 12-1 7-10 10q-191-4-370 0c-12-2-5 2-10-10q2 0 0-20 3-8 10-10"/>
     <path fill="none" stroke="#000" stroke-width="4" d="M22 189c110-2 214-2 370 0m-370 0c139-2 279-2 370 0m0 0c6-1 12 2 10 10m-10-10q15 4 10 10m0 0v20m0-20v20m0 0c2 7-2 13-10 10m10-10c3 4-7 15-10 10m0 0H22m370 0H22m0 0c-4 2-11-5-10-10m10 10q-6 0-10-10m0 0c-2-8 1-10 0-20m0 20q-3-7 0-20m0 0c1-7-1-12 10-10m-10 10q-3-15 10-10"/>
   </g>
@@ -19,8 +20,8 @@
   <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="#fff" stroke-width="0" d="M285 227c21 0 111-26 120-5 8 22-39 105-69 136q-47 48-113 50c-42 1-106-16-140-46-35-31-76-113-68-136s91-10 116-2c26 7 18 39 37 48 19 10 58 14 78 6 19-7 33-42 38-50"/>
     <path fill="none" stroke="#000" stroke-width="4" d="M278 228c21-1 113-24 123-2 11 21-30 101-60 131s-79 49-122 49c-43 1-103-17-138-46-34-29-78-107-70-129 7-22 89-10 115-3s21 37 41 44c19 8 56 8 75 1 19-8 32-40 39-48m-1 6c21-1 114-29 123-9 10 21-36 102-67 133-31 30-77 49-119 49-41 1-100-16-133-46-34-30-77-110-69-132 8-23 91-10 117-2 25 8 18 42 36 50 19 9 59 9 77 1 18-9 28-41 34-50"/>
-  </g>
-  <g stroke-linecap="round">
+  </g></g>
+<g style="transform-box:fill-box;transform-origin:50% 100%;animation:var(--thumb-play,thumb-rock) .7s 0.3s ease-in-out">  <g stroke-linecap="round">
     <path fill="#000" stroke-width="0" d="M720 190c107 2 212-2 370 0 9 5 7 2 10 10 1 8 5 10 0 20 2 6-5 14-10 10-97 1-202-2-370 0-8-3-8 1-10-10 4-3 0-13 0-20 5-8 7-15 10-10"/>
     <path fill="none" stroke="#000" stroke-width="4" d="M720 190c133-4 266-6 370 0m-370 0h370m0 0c3-1 13 5 10 10m-10-10c3 2 10 7 10 10m0 0c3 9-2 12 0 20m0-20v20m0 0c4 4-2 10-10 10m10-10c3 7 1 7-10 10m0 0c-113 3-228 4-370 0m370 0H720m0 0c-3-1-9-1-10-10m10 10c-11-3-10-6-10-10m0 0q-5-4 0-20m0 20q-2-12 0-20m0 0q0-8 10-10m-10 10c-1-7 7-7 10-10"/>
   </g>
@@ -40,16 +41,16 @@
   <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="#fff" stroke-width="0" d="M980 225c20-1 110-23 119-2 9 22-35 103-64 133-30 30-73 47-115 48-42 0-103-16-138-45s-79-109-72-131c7-21 88-6 114 1s22 34 42 41c20 8 60 10 79 2s28-42 33-49"/>
     <path fill="none" stroke="#000" stroke-width="4" d="M983 225c20 0 107-24 117-3 9 21-29 100-59 130s-78 48-120 49c-43 1-102-14-137-44-34-29-79-110-72-132 6-22 87-5 113 2 26 8 22 35 42 42s58 9 77 2c19-8 31-39 37-46m-2 3c20 0 112-23 122-2 9 21-35 101-65 131-31 30-73 47-116 49-43 1-106-12-140-42s-72-114-64-138c9-23 89-10 115-3 25 7 20 39 38 47s52 10 71 3c18-8 32-40 39-48"/>
-  </g>
+  </g></g>
   <text y="144.2" fill="var(--color-base-content)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="163.6" style="white-space:pre" transform="translate(457 102)">VS</text>
-  <g stroke-linecap="round">
+<g style="transform-box:fill-box;transform-origin:center;animation:var(--thumb-play,thumb-press) .3s 1s">  <g stroke-linecap="round">
     <path fill="oklch(from var(--color-neutral) 0.9 c h)" stroke-width="0" d="M171 448c28-4 47 5 67 0q31-6 30 29c-4 23 3 43 0 60 2 19-10 26-30 30-13 4-31 2-67 0-15 0-26-15-30-30-3-22 6-39 0-60 6-16 13-25 30-29"/>
     <path fill="none" stroke="#000" stroke-width="4" d="M171 448h67m-67 0c19-1 40 3 67 0m0 0c22-3 34 13 30 29m-30-29c18 0 31 11 30 29m0 0c-4 18-1 30 0 60m0-60v60m0 0c1 23-10 28-30 30m30-30q2 29-30 30m0 0c-19 0-33 2-67 0m67 0h-67m0 0c-16 0-28-13-30-30m30 30c-24-1-26-7-30-30m0 0c3-20 3-36 0-60m0 60v-60m0 0c4-16 7-32 30-29m-30 29c-2-24 14-33 30-29"/>
   </g>
-  <g fill-rule="evenodd" stroke-linecap="round">
+<g style="transform-box:fill-box;transform-origin:center;animation:var(--thumb-play,thumb-beat) .5s 1.15s">  <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="oklch(from var(--color-error) 1 c h)" stroke-width="0" d="M199 554c7-8 41-39 49-51 7-11-2-12-5-18s-9-16-15-16-17 14-20 17c-4 4 1 6-1 3s-6-16-12-20c-5-4-16-5-20-2s-7 13-6 22q2 14 9 31c6 10 21 25 24 30"/>
     <path fill="none" stroke="var(--color-error)" stroke-width="4" d="M202 551c7-8 36-33 43-45 7-13 2-21-1-28-4-7-13-14-19-13-6 2-15 17-18 20s1 4-1 0c-3-3-8-17-13-20q-9-4-17 3t-8 22q3 16 12 34c6 10 18 24 22 29m-2 3c7-7 37-34 44-47 7-12 2-22-2-29-3-7-11-14-17-13-7 1-18 14-21 18-2 4 7 8 6 5-2-3-8-18-14-21q-12-6-23-1-9 6-9 20c1 9 11 24 18 35l21 33"/>
-  </g>
+  </g></g></g>
   <g stroke-linecap="round">
     <path fill="oklch(from var(--color-neutral) 0.9 c h)" stroke-width="0" d="M871 448q46 7 67 0c15 5 30 10 30 29 3 14-1 29 0 60q3 28-30 30c-12 4-32 1-67 0-14 2-25-13-30-30v-60c-1-14 6-31 30-29"/>
     <path fill="none" stroke="#000" stroke-width="4" d="M871 448c18 3 35-1 67 0m-67 0h67m0 0c24-1 30 12 30 29m-30-29c24 4 34 9 30 29m0 0c3 10 3 25 0 60m0-60c1 21-2 43 0 60m0 0c-2 21-6 27-30 30m30-30c1 23-8 28-30 30m0 0c-21 0-39 4-67 0m67 0c-21-2-44 1-67 0m0 0q-30-1-30-30m30 30c-24 3-33-12-30-30m0 0c1-21 3-36 0-60m0 60v-60m0 0c2-18 8-28 30-29m-30 29c0-23 7-31 30-29"/>

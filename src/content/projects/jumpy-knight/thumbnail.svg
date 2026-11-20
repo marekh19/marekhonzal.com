@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 718.6 300.3">
-  <g fill-rule="evenodd" stroke-linecap="round">
+  <style>@keyframes thumb-scroll{60%{translate:-650px 0}60.01%{translate:445px 0;animation-timing-function:cubic-bezier(.2,.7,.2,1)}}@keyframes thumb-jump{6%{translate:0 4px;scale:1.04 .94}10%{translate:0;scale:1;animation-timing-function:cubic-bezier(.2,.6,.4,1)}28%{translate:0 -125px;rotate:-10deg;animation-timing-function:cubic-bezier(.6,0,.8,.4)}44%{translate:0;rotate:0deg}48%{translate:0 4px;scale:1.05 .93}54%{translate:0;scale:1}}@keyframes thumb-streak{50%{translate:-10px 0}}@keyframes thumb-pass{8%{clip-path:inset(-9px -9px -9px -9px) fill-box}40%,60%{clip-path:inset(-9px -9px -9px 100%) fill-box}60.01%{clip-path:inset(-9px -9px -9px -9px) fill-box}}</style>
+<g style="transform-box:fill-box;transform-origin:50% 100%;animation:var(--thumb-play,thumb-jump) 1.5s linear">  <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="var(--color-neutral)" stroke-width="0" d="m155 166-11 9-10 8c-3 1-7-5-10 0-2 4-6 16-4 24s11 20 18 23q12 3 25-5c7-4 17-11 21-18 4-6 5-16 3-21-2-6-10-11-15-14q-9-3-14-4"/>
     <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="m156 169-14 4q-6 2-10 6c-4 2-10 1-12 6-1 5 1 15 4 22q7 12 17 20 10 4 21 1c7-3 17-9 20-15q3-12-1-23-1-11-8-17c-4-3-16-2-20-3m1 4q-5 2-12 3l-11 3q-7 2-11 8c-1 5-2 15 1 21q5 11 15 15c7 3 20 3 27 1q11-3 16-12c4-7 6-20 6-26q-2-11-10-14c-5-3-18 0-21 0"/>
   </g>
@@ -34,13 +35,13 @@
   <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="var(--color-base-content)" stroke-width="0" d="M208 211c2-3 10-18 16-20 5-2 15 8 17 8 1 0-12-3-8-9s25-15 33-25c9-9 21-29 18-31-2-3-22 8-32 17-9 8-19 26-25 31-6 6-8-1-9 0-2 2 1 5 0 10l-7 18"/>
     <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M213 210c2-2 7-12 12-13 5-2 16 4 17 3 1-2-14-6-9-12 4-6 26-14 34-23 8-10 16-32 14-35-1-2-15 10-24 19-9 10-23 32-30 37-6 4-8-9-9-8-1 0 2 5 1 11l-9 22m0-3c3-3 14-15 19-16 6-1 11 11 12 10 1 0-11-5-7-12s22-21 30-31l20-31c-1-1-14 16-24 26s-27 27-34 32c-8 4-10-5-11-4-1 2 7 7 6 13-1 5-10 15-11 18"/>
-  </g>
+  </g></g>
   <path fill="none" stroke="var(--color-base-content)" stroke-linecap="round" stroke-width="4" d="m13 288 696 2m-699-5 696 1"/>
-  <g fill-rule="evenodd" stroke-linecap="round">
+<g style="animation:var(--thumb-play,thumb-scroll) 1.5s linear">  <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="var(--color-neutral)" stroke-width="0" d="m396 278 94-1c20 0 21 5 25 1 5-5 3-16 3-25 0-10 6-24-1-34-6-10-25-21-39-26q-22-9-45-4c-16 3-35 16-46 24-11 9-23 15-22 26s24 34 29 41"/>
     <path fill="none" stroke="var(--color-base-content)" stroke-width="4" d="M396 282c17 0 80 0 99-2 20-1 15-3 20-7q7-3 9-16c1-9 3-29-5-39-8-11-27-22-42-26q-25-4-49 0c-15 3-32 8-42 16s-20 22-18 34c1 12 24 33 29 39m-4 0c16 0 81 3 101 2 20 0 13-2 19-7 5-5 12-14 13-24 1-9-1-24-9-33-7-9-23-17-38-22s-35-8-51-7c-16 2-34 8-43 16q-16 14-14 33c3 12 24 34 28 41"/>
   </g>
-  <path fill="none" stroke="var(--color-base-content)" stroke-dasharray="8 12" stroke-linecap="round" stroke-width="4.5" d="M282 254c27-23 102-136 160-137 57 0 153 111 183 134"/>
+  <path style="animation:var(--thumb-play,thumb-pass) 1.5s linear" fill="none" stroke="var(--color-base-content)" stroke-dasharray="8 12" stroke-linecap="round" stroke-width="4.5" d="M282 254c27-23 102-136 160-137 57 0 153 111 183 134"/></g>
   <text y="31.7" fill="var(--color-base-content)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="36" style="white-space:pre" transform="translate(281 10)">Score: 19</text>
-  <path fill="none" stroke="var(--color-base-content)" stroke-linecap="round" stroke-width="4" d="M72 248c-4 1-18 2-23 4-4 2-2 6-2 7m27-12c-3 1-18 1-22 3q-6 6-6 10M55 209c-2 0-10-2-14-1s-8 6-10 7m26-4c-2 0-12-2-16-1q-8 3-11 6M55 166c-3-1-13-1-17-3q-5-2-8-5m26 7-19-3-8-6"/>
+  <path style="animation:var(--thumb-play,thumb-streak) .25s linear 6" fill="none" stroke="var(--color-base-content)" stroke-linecap="round" stroke-width="4" d="M72 248c-4 1-18 2-23 4-4 2-2 6-2 7m27-12c-3 1-18 1-22 3q-6 6-6 10M55 209c-2 0-10-2-14-1s-8 6-10 7m26-4c-2 0-12-2-16-1q-8 3-11 6M55 166c-3-1-13-1-17-3q-5-2-8-5m26 7-19-3-8-6"/>
 </svg>
