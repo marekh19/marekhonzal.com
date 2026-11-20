@@ -31,6 +31,10 @@ export const getExternalSvgFiles = () =>
  */
 export const getExternalSvgReference = (svg: string) => {
   const viewBox = /viewBox="([^"]+)"/.exec(svg)?.[1]
+  // Firefox resolves keyframe names in the `<use>` shadow tree from the page, and
+  // Chromium resolves them from the SVG file. Copying the file's `<style>` into the
+  // page covers both.
+  const style = /<style>[\s\S]*?<\/style>/.exec(svg)?.[0] ?? ''
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}"><use data-href="/svg/${hashSvg(svg)}.svg#${FRAGMENT_ID}"/></svg>`
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}">${style}<use data-href="/svg/${hashSvg(svg)}.svg#${FRAGMENT_ID}"/></svg>`
 }

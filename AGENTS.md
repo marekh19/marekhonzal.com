@@ -43,6 +43,9 @@ Keep these rules when you change pages or content:
   `<Thumbnail>` without `inline`, or `<ExternalSvg>` with a `?raw` import in MDX. Keep an
   SVG inline (`import X from './x.svg'`) when it uses `<mask>` or `url(#id)`, because
   browsers resolve those references inconsistently through `<use>`.
+- **Thumbnail animations**: a `thumbnail.svg` can animate on card hover through a
+  `<style>` element and inline `animation` styles. A re-export removes them. Use the
+  `animate-thumbnail` skill to add or restore them.
 - **Excalidraw exports**: run `pnpm strip-fonts`, then SVGO 4 with `floatPrecision: 1` and
   the `preset-default` override `cleanupIds: false`. Shortened IDs collide between inline
   SVGs on the same page and break their masks.

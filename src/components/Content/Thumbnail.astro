@@ -20,8 +20,7 @@ const viewTransitionName = `thumbnail-${collection}-${slug}`
 
 <div
   class={cn(
-    'thumb-surface border-base-content/10 size-full border-b p-3 [&>svg]:size-full [&>svg]:transition-transform [&>svg]:duration-300 [&>svg]:ease-out',
-    'motion-safe:group-hover:[&>svg]:scale-105 motion-safe:group-has-[a:focus-visible]:[&>svg]:scale-105',
+    'thumb-surface border-base-content/10 size-full border-b p-3 [&>svg]:size-full',
     className,
   )}
   style={`view-transition-name: ${viewTransitionName}`}
@@ -49,5 +48,19 @@ const viewTransitionName = `thumbnail-${collection}-${slug}`
     background-size:
       15px 15px,
       100% 100%;
+
+    /* A thumbnail SVG animates an element with `animation: var(--thumb-play, <keyframes>)`
+       in an inline style, and defines the keyframes in its own `<style>`. `none` keeps
+       it still. `initial` makes the variable invalid, so the fallback keyframes run
+       once. The variable inherits into the `<use>` shadow tree, where page selectors
+       and page keyframes do not apply. */
+    --thumb-play: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.group):hover .thumb-surface,
+    :global(.group):has(a:focus-visible) .thumb-surface {
+      --thumb-play: initial;
+    }
   }
 </style>

@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 608.8 258.7">
+  <style>@keyframes thumb-thrust{10%,50%{scale:.88 1.06}20%,60%{scale:1.03 .96}30%,70%{scale:.92 1.04}40%,80%{scale:1.02 .97}90%{scale:.95 1.02}}@keyframes thumb-shake{10%{translate:1px -3px}20%{translate:3px 2px}30%{translate:2px -3px}40%{translate:4px 3px}50%{translate:3px -2px}60%{translate:4px 2px}70%{translate:2px -3px}80%{translate:2px 2px}90%{translate:1px -1px}}</style>
+  <g style="animation:var(--thumb-play,thumb-shake) 1.2s linear">
   <g fill-rule="evenodd" stroke-linecap="round">
     <path fill="#e9ecef" stroke-width="0" d="M523 82c-23-3-88-26-134-27-47-1-119 8-147 21-27 12-19 35-18 54 0 19-3 48 22 60 25 11 84 11 129 9 45-1 118 2 142-17 24-20 2-84 3-102"/>
     <path fill="none" stroke="#1e1e1e" stroke-width="4" d="M521 81c-23-4-89-25-135-26-46-2-115 3-142 15-28 12-20 36-21 56 0 20-8 53 17 66 26 12 87 11 134 9s122-2 147-21c25-20 1-81 2-97m2-2c-22-5-93-29-140-31s-116 9-143 22c-27 12-21 36-20 56 1 19-1 48 25 60s86 14 130 12c45-1 113 1 137-19 24-19 5-82 6-99"/>
@@ -19,7 +21,7 @@
     <path fill="#e9ecef" stroke-width="0" d="M225 92c-5 1-19-3-25 5-6 7-13 28-12 40 0 12 7 27 13 32s18 9 21-4c4-12 0-59 0-72"/>
     <path fill="none" stroke="#1e1e1e" stroke-width="4" d="M222 88c-3 1-15-3-21 5-5 8-11 32-11 44q0 20 9 29c5 5 19 15 23 2 3-12-1-64 0-77m-5 1c-4 0-15-4-19 3-5 6-7 25-7 37 0 13 1 30 7 36 6 7 23 17 27 4 5-13 0-67 0-81"/>
   </g>
-  <g fill-rule="evenodd" stroke-linecap="round">
+  <g fill-rule="evenodd" stroke-linecap="round" style="transform-box:fill-box;transform-origin:100% 50%;animation:var(--thumb-play,thumb-thrust) 1.2s linear">
     <path fill="#ffec99" stroke-width="0" d="M195 95c-4-2-10-12-20-13-10-2-37 1-40 3-4 3 27 8 19 11-9 3-60 6-68 8s34 1 21 5c-13 5-98 18-98 21 0 4 84-2 98 0 13 2-20 11-18 13 3 2 32-2 34 1 1 2-28 12-24 15 3 3 38 2 44 5s-13 14-9 15c5 0 27-7 36-10q16-1 21-7c3-5-4-12-3-24 1-11 7-39 9-46"/>
     <path fill="none" stroke="#f08c00" stroke-width="4" d="M194 96c-3-1-6-11-16-12s-39 1-42 5c-4 3 28 12 19 14-8 1-61-6-70-5-8 1 34 4 21 10-12 5-96 19-96 23 0 5 83 2 97 4 13 2-18 7-15 8 3 2 29-2 30 0 1 3-28 12-24 15 4 4 43 2 49 5s-17 11-13 12 28-2 38-4c9-2 16-2 18-8 3-6-5-19-4-30s9-30 11-37m-6-3c-4-1-7-7-16-7-10 0-38 4-42 5-4 2 26 3 19 4-8 1-55 2-62 4s33 1 20 7-99 25-100 30c-1 4 82-4 95-2s-20 10-18 12c3 3 33 2 34 4 2 2-27 9-23 11 4 1 40-3 46 0 6 2-12 11-8 13 4 3 23 4 32 2 10-2 22-7 24-14 3-7-8-14-7-26s11-39 13-46"/>
   </g>
@@ -53,4 +55,5 @@
   <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(364 66)">Caching</text>
   <path fill="none" stroke="var(--color-error)" stroke-linecap="round" stroke-width="2" d="M474 124c5 0 15 5 19 8q6 4 5 10 2 8-1 15-4 6-12 9-11 3-20 2-9-5-13-12-4-6-2-14c1-4-1-10 7-11s34 2 41 6c6 4 1 17 0 17m-20-29q11 2 17 9t6 15q0 7-5 10-7 7-18 10-11 1-19-3-9-4-12-12 0-7 5-15 1-9 7-13c5-3 18-1 21 0h-2M458 162l34-27m-37 24 35-29"/>
   <text y="24.7" fill="var(--color-neutral)" dominant-baseline="alphabetic" font-family="Excalifont, Xiaolai, sans-serif, Segoe UI Emoji" font-size="28" style="white-space:pre" transform="translate(457 134)">JS</text>
+  </g>
 </svg>
