@@ -31,7 +31,7 @@ if (linkType === 'anchor') {
     target="_blank"
     rel="noopener"
     class={cn(
-      'link-gradient link-outline link-outline-rounded inline-flex items-center gap-1 no-underline',
+      'link-scribble link-outline link-outline-rounded inline-flex items-center gap-1 no-underline',
       className,
     )}
     {...rest}
@@ -45,7 +45,7 @@ if (linkType === 'anchor') {
   <a
     href={href}
     {...rest}
-    class={cn('link-gradient link-outline link-outline-rounded no-underline', className)}
+    class={cn('link-scribble link-outline link-outline-rounded no-underline', className)}
   >
     <slot />
   </a>
