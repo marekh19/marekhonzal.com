@@ -181,10 +181,13 @@ html {
       0% 100%,
       100% 0.4em;
 
-    &:hover {
-      background-size:
-        100% 100%,
-        100% 0.4em;
+    /* A tap on a touch screen leaves :hover set, so only real pointers get it. */
+    @media (hover: hover) {
+      &:hover {
+        background-size:
+          100% 100%,
+          100% 0.4em;
+      }
     }
 
     /* The marker leaves faster than it enters. */
