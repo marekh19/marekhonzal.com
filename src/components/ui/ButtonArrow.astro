@@ -1,0 +1,15 @@
+---
+import { Icon } from 'astro-icon/components'
+
+import { cn } from '@/lib/utils/cn'
+---
+
+<!-- The parent link or button needs the `group` class. -->
+<Icon
+  name="lucide:arrow-right"
+  class={cn(
+    'ease-springy size-[1.25em] transition-transform duration-300',
+    'motion-safe:group-hover:translate-x-1.25',
+    'motion-safe:group-focus-visible:translate-x-1.25',
+  )}
+/>

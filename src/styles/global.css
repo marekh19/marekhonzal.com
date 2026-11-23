@@ -182,6 +182,34 @@ html {
 }
 
 @layer utilities {
+  /* Calm hover for a soft button (btn-soft): the tint gets stronger, where
+     daisyUI fills the button with its solid colour. This layer wins over the
+     daisyUI rules, which sit in a nested layer. */
+  .btn-calm {
+    --btn-calm-color: var(--btn-color, var(--color-base-content));
+    --btn-calm-tint: 20%;
+
+    &:hover,
+    &:focus-visible,
+    &:active {
+      color: var(--btn-calm-color);
+      background-color: color-mix(
+        in oklab,
+        var(--btn-calm-color) var(--btn-calm-tint),
+        transparent
+      );
+      border-color: color-mix(
+        in oklab,
+        var(--btn-calm-color) var(--btn-calm-tint),
+        transparent
+      );
+    }
+
+    &:active {
+      --btn-calm-tint: 25%;
+    }
+  }
+
   .link-outline {
     @apply focus-visible:outline-primary focus-visible:outline-2 focus-visible:outline-offset-2;
 
