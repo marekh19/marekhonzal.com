@@ -37,7 +37,13 @@ if (linkType === 'anchor') {
     {...rest}
   >
     <slot />
-    {hasIcon && <Icon name="lucide:external-link" class="size-4" aria-hidden="true" />}
+    {hasIcon && (
+      <Icon
+        name="lucide:external-link"
+        class="text-base-content/60 size-4"
+        aria-hidden="true"
+      />
+    )}
   </a>
 )}
 
