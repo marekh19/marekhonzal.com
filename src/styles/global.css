@@ -236,6 +236,10 @@ html {
     &.link-outline-rounded {
       @apply focus-visible:rounded-sm;
     }
+
+    &.link-outline-accent {
+      @apply focus-visible:outline-accent;
+    }
   }
 
   .link-outline-daisy {
