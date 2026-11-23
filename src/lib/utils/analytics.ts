@@ -9,7 +9,7 @@ type TrackOnceOnScrollOptions = {
 class UmamiEventTracker {
   public selectorIds = {
     homepage: {
-      projectsLink: 'see-all-projects-btn',
+      projectsEnd: 'projects-section-end',
     },
   } as const
 

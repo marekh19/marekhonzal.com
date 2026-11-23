@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 
 import ProjectGrid from '@/components/Content/ProjectGrid.astro'
+import ButtonArrow from '@/components/ui/ButtonArrow.astro'
 import { ROUTES } from '@/config/routes'
 import { umamiEventTracker } from '@/lib/utils/analytics'
 import { cn } from '@/lib/utils/cn'
@@ -19,32 +20,47 @@ const projects = await getCollection('projects', shouldIncludeItem)
 const featuredProjects = getFeaturedSectionContent(projects)
 ---
 
-<section aria-labelledby={sectionId} class={className}>
+<section
+  aria-labelledby={sectionId}
+  class={cn(
+    'grid grid-cols-1',
+    'md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline md:gap-x-6',
+    className,
+  )}
+>
   <h2
     id={sectionId}
     class={cn('mb-3 scroll-mt-8 text-3xl leading-[140%] font-semibold', 'md:text-4xl')}
   >
     Stuff I’ve Built
   </h2>
-  <p class="mb-5 text-lg">
+  <p class="mb-5 text-lg md:col-span-2">
     A small selection of personal projects. More below if you’re into that kind of thing.
   </p>
-  <ProjectGrid projects={featuredProjects} className="mb-8" />
+  <ProjectGrid projects={featuredProjects} className="md:col-span-2" />
   <a
-    id={umamiEventTracker.selectorIds.homepage.projectsLink}
-    class="btn btn-lg btn-primary"
+    class={cn(
+      'text-primary group inline-flex items-center gap-1.5 text-lg font-semibold',
+      'link-outline link-outline-rounded mt-8 justify-self-start',
+      'md:col-start-2 md:row-start-1 md:mt-0 md:justify-self-end',
+    )}
     href={ROUTES.projects._}
     data-astro-prefetch
   >
-    See all projects
+    See all projects <ButtonArrow />
   </a>
+  <div
+    id={umamiEventTracker.selectorIds.homepage.projectsEnd}
+    class="md:col-span-2"
+    aria-hidden="true"
+  ></div>
 </section>
 
 <script>
   import { umamiEventTracker } from '@/lib/utils/analytics'
 
   umamiEventTracker.trackOnceOnScroll(
-    `#${umamiEventTracker.selectorIds.homepage.projectsLink}`,
+    `#${umamiEventTracker.selectorIds.homepage.projectsEnd}`,
     'homepage-reached-bottom',
   )
 </script>

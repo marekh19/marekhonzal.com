@@ -1,6 +1,5 @@
 ---
-import { Icon } from 'astro-icon/components'
-
+import ButtonArrow from '@/components/ui/ButtonArrow.astro'
 import Link from '@/components/ui/Link.astro'
 import { ROUTES } from '@/config/routes'
 import { cn } from '@/lib/utils/cn'
@@ -66,22 +65,14 @@ const sectionId = 'hero'
         class={cn('btn btn-primary group', '@xl:btn-lg')}
         data-astro-prefetch
       >
-        Read the Blog{' '}
-        <Icon
-          name="lucide:arrow-right"
-          class={cn(
-            'ease-springy size-[1.25em] transition-transform duration-300',
-            'motion-safe:group-hover:translate-x-1.25',
-            'motion-safe:group-focus-visible:translate-x-1.25',
-          )}
-        />
+        Read the Blog <ButtonArrow />
       </a>
       <a
         href={ROUTES.projects._}
-        class={cn('btn btn-neutral', '@xl:btn-lg')}
+        class={cn('btn btn-soft btn-primary btn-calm group', '@xl:btn-lg')}
         data-astro-prefetch
       >
-        See What I'm Building
+        See What I'm Building <ButtonArrow />
       </a>
     </div>
   </div>
